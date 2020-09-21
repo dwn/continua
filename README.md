@@ -139,6 +139,7 @@ Create an app in Heroku
 In Heroku Deploy settings, connect the app to your Github repo, and enable automatic deploys
 
 Deploy using Git from the commandline
+
 ```
 git init
 git add .
