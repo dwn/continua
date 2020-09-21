@@ -1,0 +1,7 @@
+* { font: 28px Helvetica, Arial; margin: 0; padding: 0; box-sizing: border-box; }
+form { background: #000; padding: 3px; position: relative; width: 100%; }
+form input { background-color: white; border: 0; padding: 1em; width: 90%; height: 3em; }
+form button { color: darkgray; width: 10%; background: dimgray; border: 0px; padding: 10px; height: 3em; }
+#messages { list-style-type: none; margin: 0; padding: 0; white-space: pre-wrap; }
+#messages li { padding: 5px 10px; }
+#messages li:nth-child(odd) { background: #fea; }

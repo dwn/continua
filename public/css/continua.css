@@ -1,0 +1,217 @@
+/*//////////////////////////////////////////
+// Dan Nielsen
+//////////////////////////////////////////*/
+@font-face{font-family:standard;src:url(../img/continua.ttf)}
+.menu-element{display:none;} .select-selected-element{display:inline-block;} .conscript-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .username-element{display:inline-block;} .pen-progress-element{display:none;} .play-element{display:none;} .script-element{display:none;} /*.gloss-element{display:none;}*/
+* {-webkit-font-smoothing: antialiased;}
+body {
+  font-family: standard;
+  background: black url(../img/continua.svg);
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  border: 0;
+  margin: 0;
+  font-size: 1em;
+  color: gold;
+}
+@media only screen and (min-width: 768px) {
+  body { background-position: 50% 100%; }
+}
+#page-container {
+  text-align:center;
+  background-color:transparent;
+  width:100vw;
+  height:100vh;
+}
+textarea {
+  float:left;
+  width:100%;
+  font-size:calc(.5vw + 16px);
+  resize:none;
+  border:1px;
+  margin:0;
+  padding:0;
+  letter-spacing:0;
+  height:10vh;
+  background-color: #402240;
+  color: darkgray;
+}
+div {
+  white-space:pre;
+}
+select {
+  width:133px;
+}
+.half-width {
+  width: calc(50% - 3px);
+}
+.right {
+  border-left:0;
+}
+.under {
+  border-top:0;
+}
+.norm-height {
+  height:58vh;
+}
+.narrow-height {
+  height:10vh;
+}
+#utf-table {
+  float:left;
+  width:400px;
+  height:400px;  
+}
+#font-canvas {
+  display: inline-block;
+  float: left;
+  width: auto;
+  height: calc(50vh + 180px);
+  background-image: url(../img/font-bkg.jpg);
+  background-size: cover;
+  background-color: lemonchiffon;
+  transform: scaleY(-1);
+}
+#font-code {
+  float: left;
+  width: calc(50% - 3px);
+  height: 50vh;
+}
+#font-code, #kerning-map, .active-textarea {
+  color: lemonchiffon;
+  background-color: #500050;
+}
+#console, #font-svg-container-container {
+  background-image: linear-gradient(to bottom,#a040a0,#680068);
+  float: left;
+  background-color: transparent;
+  color: darkgray;
+}
+#console {
+  height: 10vh;
+}
+#font-svg-container-container {
+  width: calc(50% - 3px);
+  height: 180px;
+  font-size: 40px;
+}
+#svg-preview {
+  transform:scaleY(-1);
+  z-index:10;
+}
+#kerning-map {
+  float:left;
+  width:400px;
+  height:400px;
+}
+@media only screen and (max-width: 150vh) {
+  #font-canvas {
+    float: none;
+    width: auto;
+  }
+  #font-code {
+    width: calc(100% - 200px);
+    height: 180px;
+  }
+  #font-svg-container-container {
+    width: 195px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  #kerning-map {
+    height:200px;
+  }
+}
+.custom-select { width:100%; background-color:#680068; }
+.custom-select select { display:none; }
+.select-hide { display: none; }
+.select-items div,.select-selected-element {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  color: ivory;
+  padding: calc(16px + 0.5vw) 0;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+}
+.select-selected-element {
+  display:inline-block;
+  background-color:#680068;
+  font-weight:bold;
+}
+.select-items div {
+  float:left;
+  width:calc(50% - 3px);
+  background-color: rgba(0, 0, 0, .5);
+}
+.menu-element, .save-needed-element {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  float: left;
+  color: ivory;
+  padding: calc(16px + 0.5vw) 0;
+  border: 0px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  width:12%;
+  background-color:#680068;
+  outline:none;
+}
+.save-needed-element {
+  cursor: auto;  
+}
+#menu-button-container {
+}
+#download-button, #fullscreen-button, .otf-button-element, .otf-loading-element, .chat-button-element, .chat-loading-element {
+  border:0;
+  margin:0 0 0 3.5em;
+  height:1.33em;
+  width:auto;
+}
+#conscript-text-container {
+  position:relative;
+}
+.file-upload input {
+  display:none;
+}
+input[type=text] {
+  width:400px;
+  padding:5px;
+  margin:0;
+  box-sizing:border-box;
+}
+progress[value] {
+  width:400px;
+}
+.donate-element {
+  position:absolute;
+  top:20px;
+  left:5px;
+}
+input[type=text].username-element {
+  position:absolute;
+  top:20px;
+  right:5px;
+  width:150px;
+  color:ivory;
+  background-color:#424;
+  border:0;
+}
+.play-element {
+  position:absolute;
+  top:70vh;
+  left:88vw;
+  -webkit-filter:drop-shadow(3px 3px 3px #222);
+  filter:drop-shadow(3px 3px 3px #222);
+}
+.help-element {
+  position:absolute;
+  top:20px;
+  left:5px;
+  height:1.33em;
+  width:auto;
+}

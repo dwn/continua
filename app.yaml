@@ -1,0 +1,9 @@
+runtime: nodejs
+env: flex
+manual_scaling:
+  instances: 1
+network:
+  forwarded_ports:
+  - 65080
+  session_affinity: true
+  instance_tag: websocket

@@ -1,0 +1,47 @@
+
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+<desc>{
+ "font": {
+ },
+ "kerning-map": "",
+ "phoneme-map": "",
+ "grapheme-map": "",
+ "conscript-text": "",
+ "user-text": "",
+ "font-code": "",
+ "name": "2019-01-01_00_00_00_000_NEW",
+ "direction": "right-down",
+ "pen": "medium",
+ "weight": "bold",
+ "size": "large",
+ "style": "plain",
+ "space": ".5",
+ "note" : "",
+ "view": "view single page"
+}</desc>
+<defs>
+<font id="NEW">
+  <font-face 
+    font-family="NEW"
+    font-weight="100"
+    font-style="oblique"
+    font-stretch="normal"
+    units-per-em="256"
+    panose-1="1 1 1 1 1 1 1 1 1 1"
+    ascent="218"
+    descent="38"
+    x-height="77"
+    cap-height="154"
+    underline-thickness="8"
+    underline-position="-32"
+    slope="41"
+    unicode-range="U+0020-FFFD"
+  />
+<missing-glyph horiz-adv-x="0"
+d="M529 701q51 0 89 -15t56.5 -39.5t27 -48.5t8.5 -48q0 -52 -22 -93.5t-55 -69.5t-67 -53t-64 -57.5t-41 -70.5l-10 -47h-90l12 55q9 41 37.5 76t62 60.5t66 52t54 60.5t21.5 75q0 38 -30 62t-77 24q-66 0 -103.5 -37.5t-54.5 -119.5h-85q47 234 265 234zM431 63l-22 -103h-90l22 103h90zM-15 -139l200 939h730l-200 -939h-730zM83 -69h564l170 799h-564z" />
+<glyph glyph-name="space" unicode="&#x20;" horiz-adv-x="1248" />
+<glyph glyph-name="plus" unicode="&#x2b;" horiz-adv-x="1872" />
+<glyph glyph-name="minus" unicode="&#x2d;" horiz-adv-x="187.2" />
+<glyph glyph-name="vbar" unicode="&#x7c;" horiz-adv-x="936" />
+<glyph glyph-name="nbsp" unicode="&#xa0;" horiz-adv-x="1248" />
+</font></defs></svg>
