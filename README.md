@@ -118,14 +118,33 @@ Then in your browser, go to
 
 `localhost:8080`
 
-## Deploy to App Engine
+## Deploying to Google App Engine (NOT RECOMMENDED)
 
-If everything is set up, then just run from the main project directory
+If you want to deploy to Google's App Engine, you can do the following, but it is NOT RECOMMENDED, since it can be much more expensive than Heroku.
 
 ```
 gcloud app deploy
 gcloud app browse
 gcloud app logs tail -s default
+```
+
+## Deploying to Heroku and Github (RECOMMENDED)
+
+Create a repo in Github
+
+Set up an SSH key in Github settings for easier deployment without authentication
+
+Create an app in Heroku
+
+In Heroku Deploy settings, connect the app to your Github repo, and enable automatic deploys
+
+Deploy using Git from the commandline
+```
+git init
+git add .
+git commit -m update
+git remote add origin https://github.com/dwn/continua.git
+git push -u origin master
 ```
 
 ## Check Billing
