@@ -143,7 +143,7 @@ Deploy using Git from the commandline
 git init
 git add .
 git commit -m update
-git remote add origin https://github.com/dwn/continua.git
+git remote add origin https://github.com/<github-name>/<repo-name>.git
 git push -u origin master
 ```
 
