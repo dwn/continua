@@ -52,7 +52,7 @@ gsutil cors set cors.json gs://<bucket-name>
 
 ## Set up Cloud Run
 
-Now we cill create the background service that converts SVG font files into OTF files
+Now we will create the background service that converts SVG font files into OTF files
 
 Go to Cloud Run, and create a service
 
@@ -146,6 +146,11 @@ git add .
 git commit -m update
 git remote add origin https://github.com/<github-name>/<repo-name>.git
 git push -u origin master
+```
+
+To view logs
+```
+heroku logs --tail -a <app-name>
 ```
 
 ## Check Billing

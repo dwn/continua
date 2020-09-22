@@ -151,9 +151,9 @@ app.use((err, req, res) => { //Basic error handler
 ////////////////////////////////////////////
 if (module === require.main) {
   //Start server
-  server.listen(PORT, () => {
+  server.listen(process.env.PORT || PORT, () => {
+    console.log(`Giving all users read access to bucket ${CLOUD_BUCKET}`);
     bucket.acl.default.add({entity: "allUsers", role: storage.acl.READER_ROLE}, function (err) {});
-    console.log(`Gave all users read access to bucket ${CLOUD_BUCKET}`);
     const port = server.address().port;
     console.log(`App listening on port ${port}`);
   });
