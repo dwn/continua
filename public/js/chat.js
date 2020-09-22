@@ -33,7 +33,7 @@ $(function () {
     msg = msg.split(':');
     const username = msg[0];
     const fontFilename = msg[1];
-    const addr = 'https://storage.googleapis.com/continua/' + fontFilename;
+    const addr = 'https://storage.googleapis.com/continua-bucket/' + fontFilename;
     var newFont = new FontFace(username, 'url(' + addr + ')');
     newFont.load().then(function(loadedFace) {
       document.fonts.add(loadedFace);

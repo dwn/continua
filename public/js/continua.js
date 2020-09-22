@@ -167,7 +167,7 @@ $(document).ready(function() {
   });
 });
 ////////////////////////////////////////////
-const bucketURI = 'https://storage.googleapis.com/continua/';
+const bucketURI = 'https://storage.googleapis.com/continua-bucket/';
 var username='';
 var tmpTxt;
 var arrTxt;

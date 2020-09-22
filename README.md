@@ -50,6 +50,10 @@ Enable bucket permissions
 gsutil cors set cors.json gs://<bucket-name>
 ```
 
+In the console Storage Permissions, add `allUsers` with role `Storage Object Creator`
+
+In Storage Lifecycle Rules, create a rule `Delete object` when `Age` is 1 day
+
 ## Set up Cloud Run
 
 Now we will create the background service that converts SVG font files into OTF files
