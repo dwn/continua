@@ -82,16 +82,6 @@ Logs viewable in console
 
 [console.cloud.google.com/run](https://console.cloud.google.com/run)
 
-## Open Port
-
-Open Google Cloud firewall port for socket communication - this is used by the chat feature
-
-```
-gcloud compute firewall-rules create default-allow-websockets --allow tcp:65080 --target-tags websocket --description "Allow websocket traffic on port 65080"
-```
-
-If it asks you to enable, say yes
-
 ## Set Variables
 
 Add these lines with correct information to `~/.bashrc`
@@ -120,13 +110,23 @@ Then in your browser, go to
 
 ## Deploying to Google App Engine (NOT RECOMMENDED)
 
-If you want to deploy to Google's App Engine, you can do the following, but it is NOT RECOMMENDED, since it can be much more expensive than Heroku.
+If you want to deploy to Google's App Engine, you can do the following, but it is NOT RECOMMENDED, since it can be much more expensive than Heroku
 
 ```
 gcloud app deploy
 gcloud app browse
 gcloud app logs tail -s default
 ```
+
+### Open Port
+
+Open Google Cloud firewall port for socket communication - this is used by the chat feature
+
+```
+gcloud compute firewall-rules create default-allow-websockets --allow tcp:65080 --target-tags websocket --description "Allow websocket traffic on port 65080"
+```
+
+If it asks you to enable, say yes
 
 ## Deploying to Heroku and Github (RECOMMENDED)
 

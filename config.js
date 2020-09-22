@@ -27,8 +27,8 @@ nconf
   // .file({file: path.join(__dirname, 'config.json')}) // Uncomment to allow override by data file
   // 4. Defaults
   .defaults({
-    CLOUD_BUCKET: 'continua-user-files',
-    SVG_TO_OTF_SERVICE_URL: 'https://svg-to-otf-2ijgjxgg6q-uc.a.run.app',
+    CLOUD_BUCKET: 'continua-bucket',
+    SVG_TO_OTF_SERVICE_URL: 'https://svg-to-otf-ujzvhu72lq-uc.a.run.app',
     PORT: 8080,
   });
 
