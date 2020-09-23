@@ -6,7 +6,9 @@
 
 Create new project in Google Cloud web console - set project id as you wish
 
-Install Google Cloud SDK
+Install Google Cloud SDK - if it was installed at sometime in the past, you may want to update
+
+`gcloud components update`
 
 From commandline, run
 
@@ -19,6 +21,12 @@ gcloud config set project <project-id>
 If at any time you forget your project id, you can check with
 
 `gcloud config get-value project`
+
+Also set your default region
+
+`gcloud config set run/region <region>`
+
+WARNING: Selecting certain regions may invalidate your free-of-charge service, and then you may get a high bill - I use `us-central1`, since it has been safe for me
 
 ## Credentials
 
@@ -59,8 +67,6 @@ In Storage Lifecycle Rules, create a rule `Delete object` when `Age` is 1 day
 Now we will create the background service that converts SVG font files into OTF files
 
 Go to Cloud Run, and create a service
-
-Do not change the default region - selecting a different region may invalidate your free-of-charge service, and then you may get a high bill
 
 Service name `svg-to-otf`
 
