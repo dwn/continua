@@ -99,14 +99,15 @@ function svgToOTF(filename, string) {
     console.log(`Exiting: not .svg file`);
     return;
   }
-  request(`${SVG_TO_OTF_SERVICE_URL}/` + filename,
+  const serviceAddr = `${SVG_TO_OTF_SERVICE_URL}/` + filename;
+  console.log(serviceAddr);
+  request(serviceAddr,
     { json: true }, (err, res, body) => {
       if (err) { return console.log(err); }
     });
 };
 ////////////////////////////////////////////
 app.post('/upload-file-to-cloud', function(req, res) {
-console.log(`UPLOAD-FILE-TO-CLOUD`);
   if (req.method == 'POST') {
     var string = '';
     req.on('data', function(data) {
@@ -123,7 +124,7 @@ console.log(`UPLOAD-FILE-TO-CLOUD`);
         svgToOTF(filename, string);
         setTimeout(function() {
           res.end('{"success" : "Updated successfully", "status" : 200}');
-        }, 1000); 
+        }, 2000); 
       });
     });
   }

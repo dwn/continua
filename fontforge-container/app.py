@@ -11,7 +11,7 @@ from google.cloud import storage
 
 app = Flask(__name__)
 ext_out = 'otf' #No dot
-bucket_name = 'continua'
+bucket_name = 'continua-bucket'
 bucket_http_path = 'https://storage.googleapis.com/' + bucket_name + '/'
 
 def upload_to_bucket(bucket_name, filename):

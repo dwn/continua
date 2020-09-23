@@ -78,7 +78,10 @@ Go to the folder with the container
 
 Update and deploy by running
 
-`gcloud builds submit --tag gcr.io/<project-id>/svg-to-otf && gcloud alpha run deploy --image gcr.io/<project-id>/svg-to-otf --platform managed`
+```
+gcloud builds submit --tag gcr.io/<project-id>/svg-to-otf
+gcloud alpha run deploy --image gcr.io/<project-id>/svg-to-otf --platform managed
+```
 
 If it asks you to enable, say yes - also, if it asks you to select a region, choose the same region as before
 
@@ -100,6 +103,24 @@ Set the following entries in `config.js`
 ```
 CLOUD_BUCKET: '<bucket-name>',
 SVG_TO_OTF_SERVICE_URL: '<url-provided-in-cloud-run>',
+```
+
+Set the following in `fontforge-container\app.py`
+
+```
+bucket_name = '<bucket-name>'
+```
+
+Set the following in `public/js/continua.js`
+
+```
+const bucketURI = 'https://storage.googleapis.com/<bucket-name>/';
+```
+
+Set the following in `public/js/chat.js`
+
+```
+const addr = 'https://storage.googleapis.com/<bucket-name>/' + fontFilename;
 ```
 
 ## Run Locally
