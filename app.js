@@ -106,6 +106,7 @@ function svgToOTF(filename, string) {
 };
 ////////////////////////////////////////////
 app.post('/upload-file-to-cloud', function(req, res) {
+console.log(`UPLOAD-FILE-TO-CLOUD`);
   if (req.method == 'POST') {
     var string = '';
     req.on('data', function(data) {
