@@ -72,7 +72,7 @@ Set up an SSH key in Github settings for easier deployment without authenticatio
 
 Now we will create the background service that converts SVG font files into OTF files
 
-Go to Cloud Run, and create a service
+Go to Cloud Run and create a service
 
 Choose a service name
 
@@ -84,7 +84,7 @@ Container image URL `gcr.io/<project-id>/<service-name>`
 
 You should see a message 'image not found' - that's okay, no image has yet been deployed
 
-Enable Continuous Deployment - you'll be asked to log in to Github
+Enable Continuous Deployment - you'll be asked to log into Github
 
 Set your Dockerfile path as `fontforge-container/Dockerfile`
 
