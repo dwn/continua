@@ -26,7 +26,7 @@ Also set your default region
 
 `gcloud config set run/region <region>`
 
-WARNING: Selecting certain regions may invalidate your free-of-charge service, and then you may get a high bill - I use `us-central1`, since it has been safe for me
+WARNING: Selecting certain regions may invalidate your free-of-charge service, and then you may get a high bill - I use `us-central1`, since it's been safe for me
 
 ## Credentials
 
@@ -62,34 +62,31 @@ In the console Storage Permissions, add `allUsers` with role `Storage Object Cre
 
 In Storage Lifecycle Rules, create a rule `Delete object` when `Age` is 1 day
 
+## Set up Github
+
+Create a repo in Github and add or fork the project
+
+Set up an SSH key in Github settings for easier deployment without authentication
+
 ## Set up Cloud Run
 
 Now we will create the background service that converts SVG font files into OTF files
 
 Go to Cloud Run, and create a service
 
-Service name `svg-to-otf`
+Choose a service name
 
 Authentication `Allow unauthenticated invocations`
 
 Configure the service's first revision `Deploy one revision...`
 
-Container image URL `gcr.io/<project-id>/svg-to-otf`
+Container image URL `gcr.io/<project-id>/<service-name>`
 
 You should see a message 'image not found' - that's okay, no image has yet been deployed
 
-Go to the folder with the container
+Enable Continuous Deployment - you'll be asked to log in to Github
 
-`cd fontforge-container`
-
-Update and deploy by running
-
-```
-gcloud builds submit --tag gcr.io/<project-id>/svg-to-otf
-gcloud alpha run deploy --image gcr.io/<project-id>/svg-to-otf --platform managed
-```
-
-If it asks you to enable, say yes - also, if it asks you to select a region, choose the same region as before
+Set your Dockerfile path as `fontforge-container/Dockerfile`
 
 Logs viewable in console
 
@@ -111,7 +108,7 @@ CLOUD_BUCKET: '<bucket-name>',
 SVG_TO_OTF_SERVICE_URL: '<url-provided-in-cloud-run>',
 ```
 
-Set the following in `fontforge-container\app.py`
+Set the following in `fontforge-container/app.py`
 
 ```
 bucket_name = '<bucket-name>'
@@ -139,16 +136,6 @@ Then in your browser, go to
 
 `localhost:8080`
 
-## Deploying to Google App Engine (NOT RECOMMENDED)
-
-If you want to deploy to Google's App Engine, you can do the following, but it is NOT RECOMMENDED, since it can be much more expensive than Heroku
-
-```
-gcloud app deploy
-gcloud app browse
-gcloud app logs tail -s default
-```
-
 ### Open Port
 
 Open Google Cloud firewall port for socket communication - this is used by the chat feature
@@ -159,11 +146,7 @@ gcloud compute firewall-rules create default-allow-websockets --allow tcp:65080 
 
 If it asks you to enable, say yes
 
-## Deploying to Heroku and Github (RECOMMENDED)
-
-Create a repo in Github
-
-Set up an SSH key in Github settings for easier deployment without authentication
+## Deploying to Heroku
 
 Create an app in Heroku
 

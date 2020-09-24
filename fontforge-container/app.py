@@ -39,6 +39,7 @@ def fontforge(filename_in):
   filename_out = os.path.splitext(filename_in)[0] + '.' + ext_out
   rsp = requests.get(bucket_http_path+filename_in)
   with open(filename_in, 'wb') as f:
+    print 'Saving input file to container'
     f.write(rsp.content)
   cmd = "\"Open('%s'); Generate('%s')\"" % (filename_in, filename_out)
   out = subprocess.check_output('fontforge -lang=ff -c ' + cmd, shell=True)
