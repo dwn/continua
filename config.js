@@ -28,7 +28,7 @@ nconf
   // 4. Defaults
   .defaults({
     CLOUD_BUCKET: 'continua-bucket',
-    SVG_TO_OTF_SERVICE_URL: 'https://svg-to-otf-ujzvhu72lq-uc.a.run.app',
+    SVG_TO_OTF_SERVICE_URL: 'https://svg2otf-ujzvhu72lq-uc.a.run.app',
     PORT: 8080,
   });
 
