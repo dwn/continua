@@ -30,7 +30,7 @@ Also set your default region
 
 `gcloud config set run/region <region>`
 
-WARNING: Selecting certain regions may invalidate your free-of-charge service, and then you may get a high bill - I use `us-central1`, since it's been safe for me
+WARNING: Selecting certain regions may invalidate free-of-charge service, and then you may get a high bill - I use `us-central1`, since it's been safe for me
 
 ## Credentials
 
@@ -56,27 +56,41 @@ gsutil mb gs://<bucket-name>
 
 If your bucket name has already been used, you must try a new name
 
-Enable bucket permissions
+Enable bucket permissions with CORS, which allows transactions with other web addresses
 
 ```
 gsutil cors set cors.json gs://<bucket-name>
 ```
 
-In the console Storage Permissions, add `allUsers` with role `Storage Object Creator`
+Add `allUsers` with role `Owner` - you can use this line
+
+```
+gsutil defacl ch -u allUsers:OWNER gs://<bucket-name>
+```
 
 In Storage Lifecycle Rules, create a rule `Delete object` when `Age` is 1 day
 
+The console should show that Public Access is `Subject to ACLs`
+
+Access Control should be `Fine-grained: Object-level ACLs enabled`
+
+NOTE: Fine-grained control isn't really required, but, as I'm not particularly knowledgeable about the higher-level IAM permissions, and don't particularly care, I just use the ACL permissions
+
 ## Set up Github
 
-Create a repo in Github and add or fork the project
+If you haven't already, set up an SSH key in Github settings for easier deployment without authentication
 
-Set up an SSH key in Github settings for easier deployment without authentication
+[github.com/settings/keys](https://github.com/settings/keys)
+
+In Github, fork the Continua project to your own user account
 
 ## Set up Cloud Run
 
 Now we will create the background service that converts SVG font files into OTF files
 
 Go to Cloud Run and create a service
+
+[console.cloud.google.com/run](https://console.cloud.google.com/run)
 
 Choose a service name
 
@@ -94,9 +108,7 @@ Select any other options required to enable Continuous Deployment
 
 Set your Dockerfile path as `fontforge-container/Dockerfile`
 
-Logs viewable in console
-
-[console.cloud.google.com/run](https://console.cloud.google.com/run)
+Logs are viewable in the console
 
 ## Set Variables
 
@@ -163,6 +175,8 @@ heroku logs --tail -a <app-name>
 
 ## Check Billing
 
-To ensure that you will not incur charges, periodically check the billing projection for the month in the web console
+To ensure that you will not incur unexpected charges, periodically check the billing projection for the month
 
 [console.cloud.google.com/billing](https://console.cloud.google.com/billing)
+
+[dashboard.heroku.com/account/billing](https://dashboard.heroku.com/account/billing)
