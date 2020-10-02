@@ -165,9 +165,20 @@ $(document).ready(function() {
     ctx.stroke();
     setTimeout(function() { getSVG(ctx,canvas,lineIndex,xAdvance,xExtra,yExtra,numHoles,numLastPaths); alreadyProcessingLine = false; }, 100);
   });
+////////////////////////////////////////////
+  $.ajax({
+    type: 'GET',
+    url: '/bucket-uri',
+    dataType: 'text',
+    success: function(res) {
+      bucketURI=res;
+    },
+    error: function(res){
+    }
+  });
 });
 ////////////////////////////////////////////
-const bucketURI = 'https://storage.googleapis.com/continua-bucket/';
+var bucketURI;
 var username='';
 var tmpTxt;
 var arrTxt;

@@ -4,7 +4,11 @@
 
 ## Initial
 
-Create new project in Google Cloud web console - set project id as you wish
+We're going to set up the auxillary services on Google Cloud, such as Storage and a Cloud Run service that converts font formats
+
+For the main Node.js app, we'll use Heroku, which is not cheap, but which has a more stable pricing structure, is very easy to use, and is well-integrated with Git
+
+Create a new project in [console.cloud.google.com](https://console.cloud.google.com) - set project id as you wish
 
 Install Google Cloud SDK - if it was installed at sometime in the past, you may want to update
 
@@ -86,6 +90,8 @@ You should see a message 'image not found' - that's okay, no image has yet been 
 
 Enable Continuous Deployment - you'll be asked to log into Github
 
+Select any other options required to enable Continuous Deployment
+
 Set your Dockerfile path as `fontforge-container/Dockerfile`
 
 Logs viewable in console
@@ -112,18 +118,6 @@ Set the following in `fontforge-container/app.py`
 
 ```
 bucket_name = '<bucket-name>'
-```
-
-Set the following in `public/js/continua.js`
-
-```
-const bucketURI = 'https://storage.googleapis.com/<bucket-name>/';
-```
-
-Set the following in `public/js/chat.js`
-
-```
-const addr = 'https://storage.googleapis.com/<bucket-name>/' + fontFilename;
 ```
 
 ## Run Locally

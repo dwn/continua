@@ -86,13 +86,13 @@ app.get('/chat', function(req, res) {
 // Main
 ////////////////////////////////////////////
 // ////////////////////////////////////////////
-// function getPublicUrl(filename) {
-//   return `https://storage.googleapis.com/${CLOUD_BUCKET}/${filename}`;
-// }
-// ////////////////////////////////////////////
 // function typedArrayToBuffer(array) {
 //     return array.buffer.slice(array.byteOffset, array.byteLength + array.byteOffset)
 // }
+// ////////////////////////////////////////////
+app.get('/bucket-uri', (req, res) => {
+  res.send(`https://storage.googleapis.com/${CLOUD_BUCKET}/`);
+});
 ////////////////////////////////////////////
 function svgToOTF(filename, string) {
   if (path.extname(filename) !== '.svg') {
