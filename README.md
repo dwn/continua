@@ -68,11 +68,15 @@ Add `allUsers` with role `Owner` - you can use this line
 gsutil defacl ch -u allUsers:OWNER gs://<bucket-name>
 ```
 
-In Storage Lifecycle Rules, create a rule `Delete object` when `Age` is 1 day
+Create a Lifecycle Rule `Delete object` when `Age` is 1 day
+
+`gsutil lifecycle set lifecycle.json gs://<bucket-name>`
 
 The console should show that Public Access is `Subject to ACLs`
 
 Access Control should be `Fine-grained: Object-level ACLs enabled`
+
+[console.cloud.google.com/storage](https://console.cloud.google.com/storage)
 
 NOTE: Fine-grained control isn't really required, but, as I'm not particularly knowledgeable about the higher-level IAM permissions, and don't particularly care, I just use the ACL permissions
 
