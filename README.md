@@ -6,7 +6,7 @@
 
 We're going to set up the auxillary services on Google Cloud, such as Storage and a Cloud Run service that converts font formats
 
-For the main Node.js app, we'll use Heroku, which has stable pricing structure, is very convenient to use, and is well-integrated with Git
+For the main Node.js app, we'll use Heroku, which has a stable pricing structure, is very convenient to use, and is well-integrated with Git
 
 Create a new project in [console.cloud.google.com](https://console.cloud.google.com) - set project id as you wish
 
