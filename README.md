@@ -6,7 +6,7 @@
 
 We're going to set up the auxillary services on Google Cloud, such as Storage and a Cloud Run service that converts font formats
 
-For the main Node.js app, we'll use Heroku, which is not cheap, but which has a more stable pricing structure, is very easy to use, and is well-integrated with Git
+For the main Node.js app, we'll use Heroku, which has stable pricing structure, is very convenient to use, and is well-integrated with Git
 
 Create a new project in [console.cloud.google.com](https://console.cloud.google.com) - set project id as you wish
 
@@ -20,6 +20,7 @@ From commandline, run
 gcloud auth login
 gcloud config set project <project-id>
 ```
+
 (Replace `<project-id>`)
 
 If at any time you forget your project id, you can check with
@@ -162,7 +163,17 @@ Create an app in Heroku
 
 In Heroku Deploy settings, connect the app to your Github repo, and enable automatic deploys
 
-Deploy using Git from the commandline
+Even though we've enabled storage permissions and CORS for transmitting data to other sites, we still must also enable basic credentials that will permit Google Cloud to talk to other services through the API
+
+Under your Heroku project's `Settings`, create two `Config Vars`
+
+Name the first `GCP_CRED`
+
+Copy and paste the data from your Google Cloud credential JSON file
+
+Name another variable `GOOGLE_APPLICATION_CREDENTIALS`, and assign it the value `./gcp-config.json`
+
+Deploy the app using Git from the commandline
 
 ```
 git init
@@ -176,6 +187,8 @@ To view logs
 ```
 heroku logs --tail -a <app-name>
 ```
+
+Your app should be visible at `<heroku-app-name>.herokuapp.com`
 
 ## Check Billing
 
