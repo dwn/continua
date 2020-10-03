@@ -147,16 +147,6 @@ Then in your browser, go to
 
 `localhost:8080`
 
-### Open Port
-
-Open Google Cloud firewall port for socket communication - this is used by the chat feature
-
-```
-gcloud compute firewall-rules create default-allow-websockets --allow tcp:65080 --target-tags websocket --description "Allow websocket traffic on port 65080"
-```
-
-If it asks you to enable, say yes
-
 ## Deploying to Heroku
 
 Create an app in Heroku
