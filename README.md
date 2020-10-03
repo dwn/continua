@@ -163,7 +163,7 @@ Create an app in Heroku
 
 In Heroku Deploy settings, connect the app to your Github repo, and enable automatic deploys
 
-Even though we've enabled storage permissions and CORS for transmitting data to other sites, we still must also enable basic credentials that will permit Google Cloud to talk to other services through the API
+Even though we've enabled ACL and CORS, we still must also set up credentials that will permit Heroku services to talk to Google Cloud Storage through the API - whew! using Storage is a lot of work
 
 Under your Heroku project's `Settings`, create two `Config Vars`
 
