@@ -63,11 +63,7 @@ Enable bucket permissions with CORS, which allows transactions with other web ad
 gsutil cors set cors.json gs://<bucket-name>
 ```
 
-Add `allUsers` with role `Owner` - you can use this line
-
-```
-gsutil defacl ch -u allUsers:OWNER gs://<bucket-name>
-```
+In the console permissions for your bucket, add `allUsers` with role `Storage Object Owner`
 
 Create a Lifecycle Rule `Delete object` when `Age` is 1 day
 
@@ -87,7 +83,7 @@ If you haven't already, set up an SSH key in Github settings for easier deployme
 
 [github.com/settings/keys](https://github.com/settings/keys)
 
-In Github, fork the Continua project to your own user account
+In Github, clone this project
 
 ## Set up Cloud Run
 
