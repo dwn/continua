@@ -1,9 +1,9 @@
 {
   "name": "continua",
-  "description": "End to end sample for running Node.js applications on Google Cloud Platform",
+  "description": "conlang creation utility",
   "version": "1.0.0",
   "license": "Apache-2.0",
-  "author": "Google Inc.",
+  "author": "malkachi software",
   "engines": {
     "node": ">=8"
   },
