@@ -4,7 +4,7 @@
 
 ## Initial
 
-We're going to set up the auxillary services on Google Cloud, such as Storage and a Cloud Run services
+We're going to set up the auxillary services on Google Cloud, such as Storage and Cloud Run services
 
 For the main Node.js app, we'll use Heroku, which has a stable pricing structure, is very convenient to use, and is well-integrated with Git
 
@@ -169,6 +169,12 @@ git add .
 git commit -m update
 git remote add origin https://github.com/<github-name>/<repo-name>.git
 git push -u origin master
+```
+
+In the future, you can just use
+
+```
+git add . && git commit --allow-empty -m update && git push -u origin master
 ```
 
 To view logs
