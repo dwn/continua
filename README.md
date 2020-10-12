@@ -161,6 +161,8 @@ Copy and paste the data from your Google Cloud credential JSON file
 
 Name another variable `GOOGLE_APPLICATION_CREDENTIALS`, and assign it the value `./gcp-config.json`
 
+Also under Settings, check that the buildpack is `Node.js`, and delete any other buildpacks that may've been installed instead
+
 Deploy the app using Git from the commandline
 
 ```
