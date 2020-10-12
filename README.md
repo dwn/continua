@@ -4,7 +4,7 @@
 
 ## Initial
 
-We're going to set up the auxillary services on Google Cloud, such as Storage and a Cloud Run service that converts font formats
+We're going to set up the auxillary services on Google Cloud, such as Storage and a Cloud Run services
 
 For the main Node.js app, we'll use Heroku, which has a stable pricing structure, is very convenient to use, and is well-integrated with Git
 
@@ -87,7 +87,7 @@ In Github, clone this project
 
 ## Set up Cloud Run
 
-Now we will create the background service that converts SVG font files into OTF files
+Now we will create the background service - this will install a Docker container with programs used for processing files, coverting file formats, etc.
 
 Go to Cloud Run and create a service
 
@@ -107,7 +107,7 @@ Enable Continuous Deployment - you'll be asked to log into Github
 
 Select any other options required to enable Continuous Deployment
 
-Set your Dockerfile path as `fontforge-container/Dockerfile`
+Set your Dockerfile path as `service-container/Dockerfile`
 
 Logs are viewable in the console
 
@@ -127,7 +127,7 @@ CLOUD_BUCKET: '<bucket-name>',
 SVG_TO_OTF_SERVICE_URL: '<url-provided-in-cloud-run>',
 ```
 
-Set the following in `fontforge-container/app.py`
+Set the following in `service-container/app.py`
 
 ```
 bucket_name = '<bucket-name>'
