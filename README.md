@@ -77,13 +77,13 @@ Access Control should be `Fine-grained: Object-level ACLs enabled`
 
 NOTE: Fine-grained control isn't really required, but, as I'm not particularly knowledgeable about the higher-level IAM permissions, and don't particularly care, I just use the ACL permissions
 
-## Set up Github
+## Set up GitHub
 
-If you haven't already, set up an SSH key in Github settings for easier deployment without authentication
+If you haven't already, set up an SSH key in GitHub settings for easier deployment without authentication
 
 [github.com/settings/keys](https://github.com/settings/keys)
 
-In Github, clone this project
+From GitHub, clone this project
 
 ## Set up Cloud Run
 
@@ -103,7 +103,7 @@ Container image URL `gcr.io/<project-id>/<service-name>`
 
 You should see a message 'image not found' - that's okay, no image has yet been deployed
 
-Enable Continuous Deployment - you'll be asked to log into Github
+Enable Continuous Deployment - you'll be asked to log into GitHub
 
 Select any other options required to enable Continuous Deployment
 
@@ -147,7 +147,9 @@ Then in your browser, go to
 
 Create an app in Heroku
 
-In Heroku Deploy settings, connect the app to your Github repo, and enable automatic deploys
+In Heroku Deploy settings, select `Deployment method` as `GitHub` and find your GitHub project
+
+Enable `Automatic deploys` from `master`
 
 Even though we've enabled ACL and CORS, we still must also set up credentials that will permit Heroku services to talk to Google Cloud Storage through the API - whew! using Storage is a lot of work
 
