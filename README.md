@@ -159,7 +159,7 @@ Name the first `GCP_CRED`
 
 Copy and paste the data from your Google Cloud credential JSON file
 
-Name another variable `GOOGLE_APPLICATION_CREDENTIALS`, and assign it the value `./gcp-config.json`
+Name another variable `GOOGLE_APPLICATION_CREDENTIALS`, and assign it the value `./gcp-setup.json`
 
 Also under Settings, check that the buildpack is `Node.js`, and delete any other buildpacks that may've been installed instead
 
