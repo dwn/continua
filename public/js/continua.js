@@ -747,7 +747,7 @@ function setAdjustSetting() {
   } else if (json['style'] === 'fire') {
     el.style.overflowWrap = 'break-word';
     el.style.float = 'left';
-    el.style.backgroundImage = 'url(img/bkg-fire.jpg)';
+    el.style.backgroundImage = 'url(img/bkg-fire.gif)';
     el.style.backgroundSize = 'cover';
     el.style.backgroundRepeat = 'repeat-y';
     el.style.backgroundBlendMode = null;
