@@ -166,14 +166,10 @@ Also under Settings, check that the buildpack is `Node.js`, and delete any other
 Deploy the app using Git from the commandline
 
 ```
-git init
-git add .
-git commit -m update
-git remote add origin https://github.com/<github-name>/<repo-name>.git
-git push -u origin master
+git init && git remote add origin https://github.com/<github-name>/<repo-name>.git
 ```
 
-In the future, you can just use
+Then to deploy new code, just use
 
 ```
 git add . && git commit --allow-empty -m update && git push -u origin master
