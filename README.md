@@ -163,7 +163,7 @@ Name another variable `GOOGLE_APPLICATION_CREDENTIALS`, and assign it the value 
 
 Also under Settings, check that the buildpack is `Node.js`, and delete any other buildpacks that may've been installed instead
 
-Deploy the app using Git from the commandline
+Connect your files to the git repo using
 
 ```
 git init && git remote add origin https://github.com/<github-name>/<repo-name>.git
