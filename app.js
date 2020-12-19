@@ -120,7 +120,9 @@ app.post('/upload-file-to-cloud', function(req, res) {
       var json = JSON.parse(dat);
       var filename = json["name"]+".svg";
       const file = bucket.file(filename);
+      console.log('Uploading file to cloud');
       file.save(string).then(function() {
+        console.log('Done uploading');
         svgToOTF(filename, string);
         setTimeout(function() {
           res.end('{"success" : "Updated successfully", "status" : 200}');
