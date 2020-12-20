@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GoogleCloudPlatform/nodejs-getting-started.git"
+    "url": "git+https://github.com/dwn/continua.git"
   },
   "main": "app.js",
   "private": true,
@@ -21,7 +21,7 @@
         "args": [
           "app.js"
         ],
-        "msg": "Bookshelf - Node.js on Google Cloud Platform"
+        "msg": "Node.js on Google Cloud Platform"
       }
     }
   },
