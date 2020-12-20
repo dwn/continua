@@ -27,7 +27,7 @@
   },
   "scripts": {
     "heroku-postbuild": "node gcp-setup.js",
-    "start": "node app.js",
+    "start": "node app.js"
   },
   "dependencies": {
     "@google-cloud/storage": "^1.7.0",
