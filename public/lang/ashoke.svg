@@ -213,13 +213,13 @@
    "rightening": 0
   }
  },
- "kerning-map": "",
+ "kerning-map": "74&lt;&lt;68 6b&lt;&lt;64 62&lt;&lt;72 74&lt;&lt;66",
  "phoneme-map": "",
  "grapheme-map": "A,*a",
- "conscript-text": "\nIvle nye' Izs*anz' *azye C' *aspese.\nIthbr' Ith' erye,\nInkdr' Ith' Inkdre,\nest' It' Utfre,\n*anj' Irainz' uryelvz' Ut' Ith'\ninyufl*awans' *avy' IT' erwoldje.\n⟨Live each season as it passes.⟩\n⟨Breathe the air,⟩\n⟨drink the drink,⟩\n⟨taste the fruit,⟩\n⟨and resign yourself to the⟩\n⟨influence of the Earth.⟩",
- "user-text": "\nIvle nye' IzsAnz' Azye C' Aspese.\nIthbr' Ith' erye,\nInkdr' Ith' Inkdre,\nest' It' Utfre,\nAnj' Irainz' uryelvz' Ut' Ith'\ninyuflAwans' Avy' IT' erwoldje.\n⟨Live each season as it passes.⟩\n⟨Breathe the air,⟩\n⟨drink the drink,⟩\n⟨taste the fruit,⟩\n⟨and resign yourself to the⟩\n⟨influence of the Earth.⟩",
+ "conscript-text": "\nIvle nye' Izs*anz' *azye C' *aspese.\nIthbr' Ith' erye,\nInkdr' Ith' Inkdre,\nest' It' Utfre,\n*anj' Irainz' uryelvz' Ut' Ith'\ninyufl*awans' *avy' IT' erwoldje.\n⟨Live each season as it passes.\nBreathe the air,\ndrink the drink,\ntaste the fruit,\nand resign yourself to the\ninfluence of the Earth.⟩",
+ "user-text": "\nIvle nye' IzsAnz' Azye C' Aspese.\nIthbr' Ith' erye,\nInkdr' Ith' Inkdre,\nest' It' Utfre,\nAnj' Irainz' uryelvz' Ut' Ith'\ninyuflAwans' Avy' IT' erwoldje.\n⟨Live each season as it passes.\nBreathe the air,\ndrink the drink,\ntaste the fruit,\nand resign yourself to the\ninfluence of the Earth.⟩",
  "font-code": "\n\n\n\n\n\n---b/a+\n\n\n^@c/cd/d\n\n--u/u-/u|\n\n--u-/u-\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n-------@@f2b1m2v1pb+/p+l-/l+\n\n\n\n----------g1i2m1s-2w|1p+p|8q|\n\n\n\n\n\n---------@@k/nq/qr/r\n\n\n\n\n\n\n\n\n\n\n---------a/db-/l+u-2l+1w-f+/h+\n---------@@k2v1m-b|2f|b+2h+\n\n\n\n\n\n\n\n\n\n\n\n-----------a/d-1p-2w|1s-1q-\n--------a/u8w-\n---------f-1h-2l-1s2v+1u\n--------c/w|2p\n---------@@b-1m-2v-1k-2b-d/u\n----------a/d/vm/n\n---------@@l-2b-1l-/v-/k/n\n---------a/db-/l+u-2l+1w-\n---------@k/nq-/q-\n---------a/c-1m2v1p2k+\n----------b-/v-a/f2l-1i/d\n------a|/a-1b|b|/q|2v-/r|\n----------@u4k+5c|1b|4m+5x\n---------@u2l-1w-c|2g|\n---------h-2b-1f0r-2v-1p\n------c-2a+/u-\n--------@l2b1l/v8w-\n---------a|8d|b+/v-\n---------@b-1n2v-1k2b-\n--------a-/u-k-8m-\n---------@k2v1m-c|2g|\n---------a9w-c-/u\n----------@a4f+5r|2v-1q|4h+5d\n---------d/v-/a\n----------@u/b-b-/x|2u\n----------@@f/il/mp/s",
- "name": "2020-12-23_19_59_27_198_ashoke",
+ "name": "2020-12-23_20_27_18_272_ashoke",
  "direction": "right-down",
  "pen": "medium",
  "weight": "bold",
@@ -574,6 +574,10 @@ d="M529 701q51 0 89 -15t56.5 -39.5t27 -48.5t8.5 -48q0 -52 -22 -93.5t-55 -69.5t-6
 <glyph glyph-name="bullet" unicode="&#x2022;" horiz-adv-x="1160" vert-adv-y="1872" d="M208 595Q208 672 237 740T317 858T434 938T578 968Q655 968 723 939T841 859T921 740T951 595Q951 518 922 451T842 333T723 254T578 224Q502 224 435 253T317 333T238 450T208 595Z"/>
 <glyph glyph-name="guilsinglleft" unicode="&#x2039;" horiz-adv-x="632" vert-adv-y="1872" d="M138 518V541L387 930L445 902Q459 895 466 884T473 860Q473 843 463 827L304 566Q290 542 276 529Q291 515 304 493L463 232Q468 224 470 215T473 198Q473 170 445 157L387 129L138 518Z"/>
 <glyph glyph-name="guilsinglright" unicode="&#x203a;" horiz-adv-x="632" vert-adv-y="1872" d="M485 541V518L236 129L178 157Q150 170 150 198Q150 215 160 232L319 493Q332 517 346 529Q334 540 319 566L160 827Q150 844 150 861Q150 889 178 902L236 930L485 541Z"/>
+<hkern u1="&#x74;" u2="&#x68;" k="374.4"/>
+<hkern u1="&#x6b;" u2="&#x64;" k="374.4"/>
+<hkern u1="&#x62;" u2="&#x72;" k="374.4"/>
+<hkern u1="&#x74;" u2="&#x66;" k="374.4"/>
 
 <glyph glyph-name="space" unicode="&#x20;" horiz-adv-x="936" vert-adv-y="936" />
 <glyph glyph-name="plus" unicode="&#x2b;" horiz-adv-x="1872" vert-adv-y="2808" />
