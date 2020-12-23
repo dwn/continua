@@ -126,7 +126,7 @@ app.post('/upload-file-to-cloud', function(req, res) {
         svgToOTF(filename, string);
         setTimeout(function() {
           res.end('{"success" : "Updated successfully", "status" : 200}');
-        }, 2000); 
+        }, 3000);
       });
     });
   }
