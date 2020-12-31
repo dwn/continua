@@ -19,8 +19,22 @@ body {
   font-size: 1em;
   color: gold;
 }
+@media only screen and (max-width:600px) {
+  #warning {
+    color:ivory;
+    text-shadow:0 0 4px black;
+    background-color:red;
+  }
+}
+@media only screen and (min-width:600px) {
+  #warning {
+    display:none;
+  }
+}
 @media only screen and (min-width: 768px) {
-  body { background-position: 50% 100%; }
+  body {
+    background-position: 50% 100%;
+  }
 }
 #page-container {
   text-align:center;
