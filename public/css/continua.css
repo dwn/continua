@@ -1,7 +1,7 @@
 /*//////////////////////////////////////////
 // Dan Nielsen
 //////////////////////////////////////////*/
-@font-face{font-family:standard;src:url(../img/continua.ttf)}
+@font-face{font-family:standard;src:url(continua.ttf)}
 .menu-element{display:none;} .select-selected-element{display:inline-block;} .conscript-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .username-element{display:inline-block;} .pen-progress-element{display:none;} .play-element{display:none;} .script-element{display:none;} /*.gloss-element{display:none;}*/
 * {-webkit-font-smoothing: antialiased;}
 body {

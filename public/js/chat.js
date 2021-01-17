@@ -1,15 +1,3 @@
-var bucketURI;
-$.ajax({
-  type: 'GET',
-  url: '/bucket-uri',
-  dataType: 'text',
-  success: function(res) {
-    bucketURI=res;
-  },
-  error: function(res){
-  }
-});
-////////////////////////////////////////////
 $(function () {
   function getParameterByName(name, url) {
       if (!url) url = window.location.href;

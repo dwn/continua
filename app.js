@@ -28,8 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Chat
 ////////////////////////////////////////////
 var dicFontFilename = {};
-var connections = new Set();
 ////////////////////////////////////////////
+var connections = new Set();
 io.on('connection', (socket) => {
   connections.add(socket);
   for(var user in dicFontFilename) {
