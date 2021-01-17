@@ -1,6 +1,5 @@
-$(function () {
 ////////////////////////////////////////////
-// Basic functions
+// Basic
 ////////////////////////////////////////////
   var bucketURI;
   $.ajax({
@@ -14,6 +13,7 @@ $(function () {
     }
   });
 ////////////////////////////////////////////
+$(function () {
   function getParameterByName(name, url) {
       if (!url) url = window.location.href;
       name = name.replace(/[\[\]]/g, '\\$&');
@@ -23,9 +23,10 @@ $(function () {
       if (!results[2]) return '';
       return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
-  var socket = io();
 ////////////////////////////////////////////
-// Chat functions
+// Chat
+////////////////////////////////////////////
+  var socket = io();
 ////////////////////////////////////////////
   $('form').submit(function(){
     if (!$('#m').val()) return false;
