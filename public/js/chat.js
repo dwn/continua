@@ -11,20 +11,13 @@ $.ajax({
 });
 ////////////////////////////////////////////
 $(function () {
-  function getParameterByName(name, url) {
-      if (!url) url = window.location.href;
-      name = name.replace(/[\[\]]/g, '\\$&');
-      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-          results = regex.exec(url);
-      if (!results) return null;
-      if (!results[2]) return '';
-      return decodeURIComponent(results[2].replace(/\+/g, ' '));
-  }
   var socket = io();
 ////////////////////////////////////////////
   $('form').submit(function(){
     if (!$('#m').val()) return false;
-    const username = getParameterByName('username');
+    const urlParams = new URLSearchParams(window.location.search); 
+    const username = urlParams.get('username');
+    const  = getParameterByName();
     socket.emit('chat message', username + ':' + $('#m').val());
     $('#m').val('');
     return false;
