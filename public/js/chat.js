@@ -15,7 +15,7 @@ $(function () {
 ////////////////////////////////////////////
   $('form').submit(function(){
     if (!$('#m').val()) return false;
-    const urlParams = new URLSearchParams(window.location.search); 
+    const urlParams = new URLSearchParams(window.location.href);
     const username = urlParams.get('username');
     const  = getParameterByName();
     socket.emit('chat message', username + ':' + $('#m').val());
