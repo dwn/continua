@@ -3,10 +3,9 @@
 ////////////////////////////////////////////
 'use strict';
 const config = require('./config');
-const CLOUD_BUCKET = config.get('CLOUD_BUCKET');
 const PORT = config.get('PORT');
-const SOCKET_PORT = config.get('SOCKET_PORT');
 const SVG_TO_OTF_SERVICE_URL = config.get('SVG_TO_OTF_SERVICE_URL');
+const CLOUD_BUCKET = config.get('CLOUD_BUCKET');
 const storage = require('@google-cloud/storage')();
 const bucket = storage.bucket(CLOUD_BUCKET);
 const path = require('path');

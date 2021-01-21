@@ -1,6 +1,10 @@
-$(function () {
 ////////////////////////////////////////////
-// Basic
+// Dan Nielsen
+////////////////////////////////////////////
+//Requires jquery
+$(function(){
+////////////////////////////////////////////
+// Basic or copied code
 ////////////////////////////////////////////
   var bucketURI;
   $.ajax({
@@ -15,13 +19,13 @@ $(function () {
   });
 ////////////////////////////////////////////
   function getParameterByName(name, url) {
-      if (!url) url = window.location.href;
-      name = name.replace(/[\[\]]/g, '\\$&');
-      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-          results = regex.exec(url);
-      if (!results) return null;
-      if (!results[2]) return '';
-      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    var results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
   }
 ////////////////////////////////////////////
 // Chat
@@ -29,10 +33,10 @@ $(function () {
   var socket = io();
 ////////////////////////////////////////////
   $('form').submit(function(){
-    if (!$('#m').val()) return false;
+    if (!$('#messages-input').val()) return false;
     const username = getParameterByName('username');
-    socket.emit('chat message', username + ':' + $('#m').val());
-    $('#m').val('');
+    socket.emit('chat message', username + ':' + $('#messages-input').val());
+    $('#messages-input').val('');
     return false;
   });
 ////////////////////////////////////////////
@@ -45,7 +49,8 @@ $(function () {
     if (shortUsername==='connected') {
       socket.emit('chat font', msg);
     }
-    $('#messages').append($("<li style='font" + (shortUsername==='connected'? ': 18px Helvetica, Arial;' : '-family:'+username+';font-size:3em') + "'>").html("<span style='font-family:default'>" + shortUsername + '&nbsp;</span>' + msg));
+    $('#messages').append($("<li " + (shortUsername==='connected'? "style='font:18px Helvetica,Arial'" : (username? "" : "style='font-family:"+username+"'")) + ">").html("<span style='font-family:default'>" + shortUsername + '&nbsp;</span>' + msg));
+    //HTML manipulation specific to this app
     window.scrollTo(0, document.body.scrollHeight);
   });
 ////////////////////////////////////////////

@@ -1,3 +1,6 @@
+////////////////////////////////////////////
+// Dan Nielsen
+////////////////////////////////////////////
 'use strict';
 // Hierarchical node.js config with commandline args, env vars, and files
 const nconf = (module.exports = require('nconf'));
