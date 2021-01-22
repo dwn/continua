@@ -37,7 +37,8 @@ $(function(){
     const username = getParameterByName('username');
     socket.emit('chat message', username + ':' + $('#messages-input').val());
     $('#messages-input').val('');
-    return false;
+    $('#messages-input').focus();
+    return false; //Non-refreshing submit
   });
 ////////////////////////////////////////////
   socket.on('chat message', function(msg){
