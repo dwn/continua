@@ -1284,7 +1284,7 @@ function grProcess() {
   if (conscriptTextReady) {
     var conscriptTextEl = document.getElementById('conscript-text');
     conscriptTextEl.innerText = txt;
-    conscriptTextEl.innerHTML = conscriptTextEl.innerText.replace(/⟨/,"<span style='font-family:arial;font-size:.5em'>").replace(/⟩/,'</span>');
+    conscriptTextEl.innerHTML = conscriptTextEl.innerText.replace(/⟨/g,"<span style='font-family:arial;font-size:.5em'>").replace(/⟩/g,'</span>');
   }
   json['conscript-text'] = txt;
   //XML safeguarding
