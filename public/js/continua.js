@@ -1717,7 +1717,7 @@ function loadConscriptFont(family, addr) {
       selectFirstPage();
       setVisibility('play',true);
     }).catch(err => alert(err));
-  },100); //I think timeout should not be necessary, but it is
+  },100); //I think timeout should not be necessary, but it is, since the 'new Fontface' before it seems to run async
 }
 ////////////////////////////////////////////
 // CUSTOM SELECT DROPDOWN
