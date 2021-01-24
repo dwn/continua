@@ -1707,15 +1707,17 @@ function loadConscriptFont(family, addr) {
   var tmp = document.getElementById('conscript-text').value;
   document.getElementById('conscript-text').innerHTML = "<img src='img/progress.gif'></img>";
   setVisibility('play',false);
-  var newFont = new FontFace(family, 'url(' + addr + ')');
-  newFont.load().then(function(loadedFace) {
-    document.fonts.add(loadedFace);
-    document.getElementById('conscript-text').style.fontFamily = family;
-    document.getElementById('conscript-text').innerText = tmp;
-    conscriptTextReady = true;
-    selectFirstPage();
-    setVisibility('play',true);
-  }).catch(err => alert(err));
+  setTimeout(function() {
+    var newFont = new FontFace(family, 'url(' + addr + ')');
+    newFont.load().then(function(loadedFace) {
+      document.fonts.add(loadedFace);
+      document.getElementById('conscript-text').style.fontFamily = family;
+      document.getElementById('conscript-text').innerText = tmp;
+      conscriptTextReady = true;
+      selectFirstPage();
+      setVisibility('play',true);
+    }).catch(err => alert(err));
+  },1000);
 }
 ////////////////////////////////////////////
 // CUSTOM SELECT DROPDOWN
