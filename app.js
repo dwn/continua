@@ -66,7 +66,6 @@ function romanNumeral(number){
 app.get('/unique-username', function(req, res) {
   var n = 1;
   var un = (req.query.name? req.query.name : arrUser[Math.floor(Math.random()*arrUser.length)]);
-console.log('GENERATED:'+req.query.name);
   for(var user in dicFontFilename) {
     var un2=user.split('_')[2].split('-')[0];
     if (un===un2) n++;
