@@ -1707,8 +1707,8 @@ function loadConscriptFont(family, addr) {
   var tmp = document.getElementById('conscript-text').value;
   document.getElementById('conscript-text').innerHTML = "<img src='img/progress.gif'></img>";
   setVisibility('play',false);
+  var newFont = new FontFace(family, 'url(' + addr + ')');
   setTimeout(function() {
-    var newFont = new FontFace(family, 'url(' + addr + ')');
     newFont.load().then(function(loadedFace) {
       document.fonts.add(loadedFace);
       document.getElementById('conscript-text').style.fontFamily = family;
@@ -1717,7 +1717,7 @@ function loadConscriptFont(family, addr) {
       selectFirstPage();
       setVisibility('play',true);
     }).catch(err => alert(err));
-  },100); //Timeout shoul not be necessaary, but sometimes it takes an extra second to propagate on the cloud
+  },100); //I think timeout should not be necessary, but it is
 }
 ////////////////////////////////////////////
 // CUSTOM SELECT DROPDOWN
