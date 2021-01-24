@@ -1708,16 +1708,16 @@ function loadConscriptFont(family, addr) {
   document.getElementById('conscript-text').innerHTML = "<img src='img/progress.gif'></img>";
   setVisibility('play',false);
   var newFont = new FontFace(family, 'url(' + addr + ')');
-  setTimeout(function() {
     newFont.load().then(function(loadedFace) {
-      document.fonts.add(loadedFace);
-      document.getElementById('conscript-text').style.fontFamily = family;
-      document.getElementById('conscript-text').innerText = tmp;
-      conscriptTextReady = true;
-      selectFirstPage();
-      setVisibility('play',true);
+      setTimeout(function() {
+        document.fonts.add(loadedFace);
+        document.getElementById('conscript-text').style.fontFamily = family;
+        document.getElementById('conscript-text').innerText = tmp;
+        conscriptTextReady = true;
+        selectFirstPage();
+        setVisibility('play',true);
+      },100); //I think timeout should not be necessary, but it is
     }).catch(err => alert(err));
-  },500); //I think timeout should not be necessary, but it is, since the 'new Fontface' before it seems to run async
 }
 ////////////////////////////////////////////
 // CUSTOM SELECT DROPDOWN
