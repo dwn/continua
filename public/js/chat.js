@@ -4,19 +4,7 @@
 //Requires jquery
 $(function(){
 ////////////////////////////////////////////
-// Basic or copied code
-////////////////////////////////////////////
-  var bucketURI;
-  $.ajax({
-    type: 'GET',
-    url: '/bucket-uri',
-    dataType: 'text',
-    success: function(res) {
-      bucketURI=res;
-    },
-    error: function(res){
-    }
-  });
+// Basic
 ////////////////////////////////////////////
   function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -31,11 +19,11 @@ $(function(){
 // Chat
 ////////////////////////////////////////////
   var socket = io();
+  var uniqueUsername = getParameterByName('username');
 ////////////////////////////////////////////
   $('form').submit(function(){
     if (!$('#messages-input').val()) return false;
-    const username = getParameterByName('username');
-    socket.emit('chat message', username + ':' + $('#messages-input').val());
+    socket.emit('chat message', uniqueUsername + ':' + $('#messages-input').val());
     $('#messages-input').val('');
     $('#messages-input').focus();
     return false; //Non-refreshing submit
@@ -50,8 +38,8 @@ $(function(){
     if (shortUsername==='connected') {
       socket.emit('chat font', msg);
     }
-    $('#messages').append($("<li " + (shortUsername==='connected'? "style='font:18px Helvetica,Arial'" : (username? "" : "style='font-family:"+username+"'")) + ">").html("<span style='font-family:default'>" + shortUsername + '&nbsp;</span>' + msg));
-    //HTML manipulation specific to this app
+    $('#messages').append($("<li " + (shortUsername==='connected'? "style='font:18px Helvetica,Arial'" : (username? "style='font-family:"+username+"'" : '')) + ">").html("<span style='font-family:default'>" + shortUsername + '&nbsp;</span>' + msg));
+    //Specific to this app
     window.scrollTo(0, document.body.scrollHeight);
   });
 ////////////////////////////////////////////
@@ -60,10 +48,15 @@ $(function(){
     msg = msg.split(':');
     const username = msg[0];
     const fontFilename = msg[1];
-    const addr = bucketURI + fontFilename;
-    var newFont = new FontFace(username, 'url(' + addr + ')');
-    newFont.load().then(function(loadedFace) {
-      document.fonts.add(loadedFace);
-    });
+    //Ajax bucket-uri/ -> bucketURI
+    $.ajax({type:'GET',dataType:'text',url:'/bucket-uri',
+      success:function(bucketURI){
+        const addr = bucketURI + fontFilename;
+        var newFont = new FontFace(username, 'url(' + addr + ')');
+        newFont.load().then(function(loadedFace) {
+          document.fonts.add(loadedFace);
+        });
+      },error:function(r){}
+    }); //bucketURI
   });
 });

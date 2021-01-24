@@ -1,7 +1,7 @@
 ////////////////////////////////////////////
 // Dan Nielsen
 ////////////////////////////////////////////
-console.log = function() {}; //Disable log
+// console.log = function() {}; //Disable log
 meSpeak.loadConfig('json/mespeak_config.json');
 meSpeak.loadVoice('json/en.json');
 ////////////////////////////////////////////
@@ -165,21 +165,14 @@ $(document).ready(function() {
     ctx.stroke();
     setTimeout(function() { getSVG(ctx,canvas,lineIndex,xAdvance,xExtra,yExtra,numHoles,numLastPaths); alreadyProcessingLine = false; }, 100);
   });
-////////////////////////////////////////////
-  $.ajax({
-    type: 'GET',
-    url: '/bucket-uri',
-    dataType: 'text',
-    success: function(res) {
-      bucketURI=res;
-    },
-    error: function(res){
-    }
-  });
 });
 ////////////////////////////////////////////
 var bucketURI;
-var username='';
+//Okay to call this async since it cannot be called quickly
+//Ajax bucket-uri/ -> bucketURI
+$.ajax({type:'GET',dataType:'text',url:'/bucket-uri',
+  success:function(r){bucketURI=r;},error:function(res){}})
+var myUsername;
 var tmpTxt;
 var arrTxt;
 var txt = '';
@@ -569,21 +562,6 @@ document.querySelector('.username-element').addEventListener('blur', e => {
     document.querySelector('.username-element').value = '';
   }
 });
-function setUsername() {
-  const usernameInInputBox = document.querySelector('.username-element').value;
-  if (usernameInInputBox!=='') username = usernameInInputBox;
-  if (username.includes('_')) return; //Just in case it somehow got called twice
-  $.ajax({
-    type: 'GET',
-    url: '/unique-username?name='+username,
-    dataType: 'text',
-    success: function(res) {
-      username=res;
-    },
-    error: function(res){
-    }
-  });
-}
 ////////////////////////////////////////////
 function nastyHack(key) { //Dollar sign followed by tick would crash the program
   const s = json[key];
@@ -1629,7 +1607,8 @@ function downloadOTF() {
 function openChat() {
   setVisibility('chat-button',false);
   if (!openedChat) {
-    const url = 'chat?username='+username+'&fontFilename='+json['name']+".otf";
+    const url = 'chat?username='+myUsername+'&fontFilename='+json['name']+".otf";
+    console.log(url);
     document.getElementsByClassName('chat-element')[0].src = url;
     setVisibility('chat',true);
     openedChat = true;
@@ -1648,7 +1627,11 @@ function setTextAreaDisplay(on, titleEl, title = null, dat = null) {
       dat = loadServerFile('lang/'+titleEl.innerHTML+'.svg');
       setVisibility('conscript-loading',false);
       setVisibility('select-selected',true);
-      setUsername();
+      const nameInInputBox = document.querySelector('.username-element').value;
+      //Okay to call this async since it cannot be called quickly
+      //Ajax unique-username -> myUsername
+      $.ajax({type:'GET',dataType:'text',url:'/unique-username?name='+(nameInInputBox? nameInInputBox : ''),
+        success:function(r){myUsername=r;},error:function(r){}})
     }
     dat = dat.split('<desc>');
     dat = dat[1].split('</desc>')[0];
@@ -1719,21 +1702,20 @@ function selectFirstPage() {
 }
 ////////////////////////////////////////////
 function loadConscriptFont(family, addr) {
+  console.log('loadConscriptFont');
   conscriptTextReady = false;
   var tmp = document.getElementById('conscript-text').value;
   document.getElementById('conscript-text').innerHTML = "<img src='img/progress.gif'></img>";
   setVisibility('play',false);
-  setTimeout(function() {
-    var newFont = new FontFace(family, 'url(' + addr + ')');
-    newFont.load().then(function(loadedFace) {
-      document.fonts.add(loadedFace);
-      document.getElementById('conscript-text').style.fontFamily = family;
-      document.getElementById('conscript-text').innerText = tmp;
-      conscriptTextReady = true;
-      selectFirstPage();
-      setVisibility('play',true);
-    }).catch(err => alert(err));
-  },4000);
+  var newFont = new FontFace(family, 'url(' + addr + ')');
+  newFont.load().then(function(loadedFace) {
+    document.fonts.add(loadedFace);
+    document.getElementById('conscript-text').style.fontFamily = family;
+    document.getElementById('conscript-text').innerText = tmp;
+    conscriptTextReady = true;
+    selectFirstPage();
+    setVisibility('play',true);
+  }).catch(err => alert(err));
 }
 ////////////////////////////////////////////
 // CUSTOM SELECT DROPDOWN
