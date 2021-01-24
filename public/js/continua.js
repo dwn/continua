@@ -1717,7 +1717,7 @@ function loadConscriptFont(family, addr) {
       selectFirstPage();
       setVisibility('play',true);
     }).catch(err => alert(err));
-  },1000);
+  },100); //Timeout shoul not be necessaary, but sometimes it takes an extra second to propagate on the cloud
 }
 ////////////////////////////////////////////
 // CUSTOM SELECT DROPDOWN
