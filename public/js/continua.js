@@ -1708,6 +1708,7 @@ function loadConscriptFont(family, addr) {
   document.getElementById('conscript-text').innerHTML = "<img src='img/progress.gif'></img>";
   setVisibility('play',false);
   var newFont = new FontFace(family, 'url(' + addr + ')');
+  setTimeout(function() {
     newFont.load().then(function(loadedFace) {
       setTimeout(function() {
         document.fonts.add(loadedFace);
@@ -1718,6 +1719,7 @@ function loadConscriptFont(family, addr) {
         setVisibility('play',true);
       },500); //I think timeout should not be necessary, but it is
     }).catch(err => alert(err));
+  },500); //I think timeout should not be necessary, but it is
 }
 ////////////////////////////////////////////
 // CUSTOM SELECT DROPDOWN
