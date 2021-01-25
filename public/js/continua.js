@@ -1,7 +1,7 @@
 ////////////////////////////////////////////
 // Dan Nielsen
 ////////////////////////////////////////////
-console.log = function() {}; //Disable log
+// console.log = function() {}; //Disable log
 meSpeak.loadConfig('json/mespeak_config.json');
 meSpeak.loadVoice('json/en.json');
 ////////////////////////////////////////////
@@ -1701,6 +1701,12 @@ function selectFirstPage() {
   }
 }
 ////////////////////////////////////////////
+function retryForever(fn) {
+  return fn().catch(function(err) { 
+    console.log('FAILED TO LOAD FONT');
+    return retryForever(fn); 
+  });
+}
 function loadConscriptFont(family, addr) {
   console.log('loadConscriptFont');
   conscriptTextReady = false;
@@ -1708,18 +1714,17 @@ function loadConscriptFont(family, addr) {
   document.getElementById('conscript-text').innerHTML = "<img src='img/progress.gif'></img>";
   setVisibility('play',false);
   var newFont = new FontFace(family, 'url(' + addr + ')');
-  setTimeout(function() {
+  retryForever(function() {
+    console.log('Trying to load font');
     newFont.load().then(function(loadedFace) {
-      setTimeout(function() {
-        document.fonts.add(loadedFace);
-        document.getElementById('conscript-text').style.fontFamily = family;
-        document.getElementById('conscript-text').innerText = tmp;
-        conscriptTextReady = true;
-        selectFirstPage();
-        setVisibility('play',true);
-      },500); //I think timeout should not be necessary, but it is
-    }).catch(err => alert(err));
-  },500); //I think timeout should not be necessary, but it is
+      document.fonts.add(loadedFace);
+      document.getElementById('conscript-text').style.fontFamily = family;
+      document.getElementById('conscript-text').innerText = tmp;
+      conscriptTextReady = true;
+      selectFirstPage();
+      setVisibility('play',true);
+    })
+  });
 }
 ////////////////////////////////////////////
 // CUSTOM SELECT DROPDOWN
