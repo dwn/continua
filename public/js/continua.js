@@ -1716,14 +1716,14 @@ function loadConscriptFont(family, addr) {
   var newFont = new FontFace(family, 'url(' + addr + ')');
   retryForever(function() {
     console.log('Trying to load font');
-    newFont.load().then(function(loadedFace) {
-      document.fonts.add(loadedFace);
-      document.getElementById('conscript-text').style.fontFamily = family;
-      document.getElementById('conscript-text').innerText = tmp;
-      conscriptTextReady = true;
-      selectFirstPage();
-      setVisibility('play',true);
-    })
+    newFont.load();
+  }).then(function(loadedFace) {
+    document.fonts.add(loadedFace);
+    document.getElementById('conscript-text').style.fontFamily = family;
+    document.getElementById('conscript-text').innerText = tmp;
+    conscriptTextReady = true;
+    selectFirstPage();
+    setVisibility('play',true);
   });
 }
 ////////////////////////////////////////////
