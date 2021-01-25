@@ -1701,10 +1701,10 @@ function selectFirstPage() {
   }
 }
 ////////////////////////////////////////////
-function retryForever(fn) {
-  return fn().catch(function(err) { 
-    console.log('FAILED TO LOAD FONT');
-    return retryForever(fn); 
+function loadTryForever(font) {
+  return font.load().catch(function(err) { 
+    console.log('FAILED TO LOAD FONT\nTrying again');
+    return loadTryForever(font); 
   });
 }
 function loadConscriptFont(family, addr) {
@@ -1714,10 +1714,7 @@ function loadConscriptFont(family, addr) {
   document.getElementById('conscript-text').innerHTML = "<img src='img/progress.gif'></img>";
   setVisibility('play',false);
   var newFont = new FontFace(family, 'url(' + addr + ')');
-  retryForever(function() {
-    console.log('Trying to load font');
-    newFont.load();
-  }).then(function(loadedFace) {
+  loadTryForever(newFont).then(function(loadedFace) {
     document.fonts.add(loadedFace);
     document.getElementById('conscript-text').style.fontFamily = family;
     document.getElementById('conscript-text').innerText = tmp;
