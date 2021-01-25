@@ -1716,7 +1716,7 @@ function loadConscriptFont(family, addr) {
         conscriptTextReady = true;
         selectFirstPage();
         setVisibility('play',true);
-      },100); //I think timeout should not be necessary, but it is
+      },500); //I think timeout should not be necessary, but it is
     }).catch(err => alert(err));
 }
 ////////////////////////////////////////////
