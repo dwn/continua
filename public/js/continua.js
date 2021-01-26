@@ -1,7 +1,7 @@
 ////////////////////////////////////////////
 // Dan Nielsen
 ////////////////////////////////////////////
-console.log = function() {}; //Disable log
+// console.log = function() {}; //Disable log
 meSpeak.loadConfig('json/mespeak_config.json');
 meSpeak.loadVoice('json/en.json');
 ////////////////////////////////////////////
@@ -168,7 +168,7 @@ $(document).ready(function() {
 });
 ////////////////////////////////////////////
 var bucketURI;
-//Okay to call this async since it cannot be called quickly
+//Okay to call this async since it cannot be used quickly
 //Ajax bucket-uri/ -> bucketURI
 $.ajax({type:'GET',dataType:'text',url:'/bucket-uri',
   success:function(r){bucketURI=r;},error:function(res){}})
@@ -1628,7 +1628,7 @@ function setTextAreaDisplay(on, titleEl, title = null, dat = null) {
       setVisibility('conscript-loading',false);
       setVisibility('select-selected',true);
       const nameInInputBox = document.querySelector('.username-element').value;
-      //Okay to call this async since it cannot be called quickly
+      //Okay to call this async since it cannot be used quickly
       //Ajax unique-username -> myUsername
       $.ajax({type:'GET',dataType:'text',url:'/unique-username?name='+(nameInInputBox? nameInInputBox : ''),
         success:function(r){myUsername=r;},error:function(r){}})

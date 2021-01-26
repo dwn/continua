@@ -6,8 +6,6 @@ const config = require('./config');
 const PORT = config.get('PORT');
 const SVG_TO_OTF_SERVICE_URL = config.get('SVG_TO_OTF_SERVICE_URL');
 const CLOUD_BUCKET = config.get('CLOUD_BUCKET');
-const storage = require('@google-cloud/storage')();
-const bucket = storage.bucket(CLOUD_BUCKET);
 const path = require('path');
 const request = require('request');
 const express = require('express');
@@ -58,8 +56,8 @@ const arrUser = [
 'sage','haven','indigo','jordan','lennox','morgan','onyx','peyton',
 'quinn','reese','riley','robin','rory','sawyer','shae','shiloh'];
 function romanNumeral(number){
-  var a, roman = ""; const romanNumList = {M:1000,CM:900, D:500,CD:400, C:100, XC:90,L:50, XV: 40, X:10, IX:9, V:5, IV:4, I:1};
-  if(number < 1 || number > 3999) return "Enter a number between 1 and 3999";
+  var a, roman = ''; const romanNumList = {M:1000,CM:900,D:500,CD:400,C:100, XC:90,L:50,XV:40,X:10,IX:9,V:5,IV:4,I:1};
+  if(number<1 || number>3999) return 'Enter a number between 1 and 3999';
   else for(let key in romanNumList) { a = Math.floor(number / romanNumList[key]); if(a >= 0) for(let i = 0; i < a; i++) roman += key; number = number % romanNumList[key]; }
   return roman;
 }
@@ -74,21 +72,18 @@ app.get('/unique-username', function(req, res) {
   res.send('_'+ ULID.ulid() +'_' + un);
 });
 ////////////////////////////////////////////
-app.get('/chat', function(req, res) {
-  const fontFilename = req.query.fontFilename;
-  const username = req.query.username;
+function chat(username,fontFilename) {
   io.emit('chat message', '__connected:'+username+':'+fontFilename);
   dicFontFilename[username] = fontFilename;
-  res.render('chat.pug');
-});
+}
 ////////////////////////////////////////////
 // Main
 ////////////////////////////////////////////
-// ////////////////////////////////////////////
-// function typedArrayToBuffer(array) {
-//     return array.buffer.slice(array.byteOffset, array.byteLength + array.byteOffset)
-// }
-// ////////////////////////////////////////////
+app.get('/chat', (req, res) => {
+  chat(req.query.username,req.query.fontFilename);
+  res.render('chat.pug');
+});
+////////////////////////////////////////////
 app.get('/bucket-uri', (req, res) => {
   res.send(`https://storage.googleapis.com/${CLOUD_BUCKET}/`);
 });
@@ -106,7 +101,9 @@ function svgToOTF(filename, string) {
     });
 };
 ////////////////////////////////////////////
-app.post('/upload-file-to-cloud', function(req, res) {
+const storage = require('@google-cloud/storage')();
+const bucket = storage.bucket(CLOUD_BUCKET);
+app.post('/upload-file-to-cloud', (req, res) => {
   if (req.method == 'POST') {
     var string = '';
     req.on('data', function(data) {
@@ -125,7 +122,7 @@ app.post('/upload-file-to-cloud', function(req, res) {
         svgToOTF(filename, string);
         setTimeout(function() {
           res.end('{"success" : "Updated successfully", "status" : 200}');
-        }, 3000);
+        }, 4000);
       });
     });
   }
@@ -155,8 +152,6 @@ app.use((err, req, res) => { //Basic error handler
 if (module === require.main) {
   //Start server
   server.listen(process.env.PORT || PORT, () => {
-    // console.log(`Giving all users access to bucket ${CLOUD_BUCKET}`);
-    // bucket.acl.default.add({entity: "allUsers", role: storage.acl.OWNER_ROLE}, function (err) {});
     const port = server.address().port;
     console.log(`App listening on port ${port}`);
   });

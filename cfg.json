@@ -1,0 +1,5 @@
+{
+  "CLOUD_BUCKET": "continua-bucket",
+  "SVG_TO_OTF_SERVICE_URL": "https://svg2otf-ujzvhu72lq-uc.a.run.app",
+  "PORT": 8080
+}

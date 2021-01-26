@@ -38,7 +38,14 @@ $(function(){
     if (shortUsername==='connected') {
       socket.emit('chat font', msg);
     }
-    $('#messages').append($("<li " + (shortUsername==='connected'? "style='font:18px Helvetica,Arial'" : (username? "style='font-family:"+username+"'" : '')) + ">").html("<span style='font-family:default'>" + shortUsername + '&nbsp;</span>' + msg));
+    $('#messages')
+    .append($("<li "+
+      (shortUsername==='connected'?
+        "style='font:18px Helvetica,Arial'" :
+        (username? "style='font-family:"+username+"'" : '')
+      ) + ">")
+    .html("<span style='font-family:default'>"+
+      shortUsername+'&nbsp;</span>' + msg));
     //Specific to this app
     window.scrollTo(0, document.body.scrollHeight);
   });
