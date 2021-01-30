@@ -31,9 +31,12 @@ $(function(){
 ////////////////////////////////////////////
   socket.on('chat message', function(msg){
     msg = msg.split(':');
-    const username = msg[0];
+    var username = msg[0];
     msg.shift();
     msg = msg.join(':');
+    if (msg.substr(0,12)=='[[username]]') { //Possible to set a new username with [[username]]
+      username=uniqueUsername=msg.substr(12);
+    }
     const shortUsername=username.split('_')[2]; //Without uid
     if (shortUsername==='connected') {
       socket.emit('chat font', msg);
@@ -44,9 +47,9 @@ $(function(){
         "style='font:18px Helvetica,Arial'" :
         (username? "style='font-family:"+username+"'" : '')
       ) + ">")
+    //Specific to this app
     .html("<span style='font-family:default'>"+
       shortUsername+'&nbsp;</span>' + msg));
-    //Specific to this app
     window.scrollTo(0, document.body.scrollHeight);
   });
 ////////////////////////////////////////////
