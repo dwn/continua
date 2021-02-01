@@ -1717,7 +1717,9 @@ function loadConscriptFont(family, addr) {
   setVisibility('play',false);
   var newFont = new FontFace(family, 'url(' + addr + ')');
   loadTryForever(newFont).then(function(loadedFace) {
-    document.fonts.add(loadedFace);
+    setTimeout(function() { //Occasionally even after the font was successfully loaded, it needs a brief moment before adding
+      document.fonts.add(loadedFace);
+    }, 500);
     document.getElementById('conscript-text').style.fontFamily = family;
     document.getElementById('conscript-text').innerText = tmp;
     conscriptTextReady = true;
