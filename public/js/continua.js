@@ -1703,8 +1703,10 @@ function selectFirstPage() {
 ////////////////////////////////////////////
 function loadTryForever(font) {
   return font.load().catch(function(err) { 
-    console.log('FAILED TO LOAD FONT\nTrying again');
-    return loadTryForever(font); 
+    setTimeout(function() {
+      console.log('FAILED TO LOAD FONT\nTrying again');
+      return loadTryForever(font); 
+    }, 500);
   });
 }
 function loadConscriptFont(family, addr) {
