@@ -1719,7 +1719,7 @@ function loadConscriptFont(family, addr) {
   loadTryForever(newFont).then(function(loadedFace) {
     setTimeout(function() { //Occasionally even after the font was successfully loaded, it needs a brief moment before adding
       document.fonts.add(loadedFace);
-    }, 500);
+    }, 200);
     document.getElementById('conscript-text').style.fontFamily = family;
     document.getElementById('conscript-text').innerText = tmp;
     conscriptTextReady = true;
