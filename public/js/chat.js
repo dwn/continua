@@ -23,7 +23,7 @@ $(function(){
 ////////////////////////////////////////////
   $('form').submit(function(){
     if (!$('#messages-input').val()) return false;
-    socket.emit('chat message', uniqueUsername + ':' + $('#messages-input').val());
+    socket.emit('chat message', uniqueUsername+':'+$('#messages-input').val());
     $('#messages-input').val('');
     $('#messages-input').focus();
     return false; //Non-refreshing submit
@@ -37,7 +37,7 @@ $(function(){
     if (msg.substr(0,12)=='[[username]]') { //Possible to set a new username with [[username]]
       username=uniqueUsername=msg.substr(12);
     }
-    const shortUsername=username.split('_')[2]; //Without uid
+    const shortUsername=username.split('_')[1]; //Without uid
     if (shortUsername==='connected') {
       socket.emit('chat font', msg);
     }
@@ -49,7 +49,7 @@ $(function(){
       ) + ">")
     //Specific to this app
     .html("<span style='font-family:default'>"+
-      shortUsername+'&nbsp;</span>' + msg));
+      shortUsername+'&nbsp;</span>'+msg));
     window.scrollTo(0, document.body.scrollHeight);
   });
 ////////////////////////////////////////////
@@ -64,7 +64,9 @@ $(function(){
         const addr = bucketURI + fontFilename;
         var newFont = new FontFace(username, 'url(' + addr + ')');
         newFont.load().then(function(loadedFace) {
-          document.fonts.add(loadedFace);
+          setTimeout(function() { //Occasionally even after the font was successfully loaded, it needs a brief moment before adding
+            document.fonts.add(loadedFace);
+          }, 200);
         });
       },error:function(r){}
     }); //bucketURI

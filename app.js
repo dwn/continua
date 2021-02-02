@@ -34,15 +34,15 @@ io.on('connection', (socket) => {
   }
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
-    console.log('MSG'+msg);
+    console.log('MSG.'+msg);
   });
   socket.on('chat font', (msg) => {
     io.emit('chat font', msg);
-    console.log('FONT'+msg);
+    console.log('FONT.'+msg);
   });
   socket.once('disconnect', function () {
     connections.delete(socket);
-    console.log('DESOCKET_'+socket.id);
+    console.log('DESOCKET.'+socket.id);
   });
 });
 ////////////////////////////////////////////
@@ -57,7 +57,7 @@ const arrUser = [
 'quinn','reese','riley','robin','rory','sawyer','shae','shiloh'];
 function romanNumeral(number){
   var a, roman = ''; const romanNumList = {M:1000,CM:900,D:500,CD:400,C:100, XC:90,L:50,XV:40,X:10,IX:9,V:5,IV:4,I:1};
-  if(number<1 || number>3999) return 'Enter a number between 1 and 3999';
+  if (number<1 || number>3999) return 'Enter a number between 1 and 3999';
   else for(let key in romanNumList) { a = Math.floor(number / romanNumList[key]); if(a >= 0) for(let i = 0; i < a; i++) roman += key; number = number % romanNumList[key]; }
   return roman;
 }
@@ -65,15 +65,15 @@ app.get('/unique-username', function(req, res) {
   var n = 1;
   var un = (req.query.name? req.query.name : arrUser[Math.floor(Math.random()*arrUser.length)]);
   for(var user in dicFontFilename) {
-    var un2=user.split('_')[2].split('-')[0];
+    var un2=user.split('_')[1].split('-')[0];
     if (un===un2) n++;
   }
-  un += (n>1?  '-' + romanNumeral(n) : '');
-  res.send('_'+ ULID.ulid() +'_' + un);
+  un += (n>1? '-' + romanNumeral(n) : '');
+  res.send('x' + ULID.ulid() + '_' + un); //Starts with a letter because sometimes uid gets interpretted as a number otherwise
 });
 ////////////////////////////////////////////
 function chat(username,fontFilename) {
-  io.emit('chat message', '__connected:'+username+':'+fontFilename);
+  io.emit('chat message', '_connected:'+username+':'+fontFilename);
   dicFontFilename[username] = fontFilename;
 }
 ////////////////////////////////////////////
