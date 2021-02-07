@@ -9,8 +9,8 @@ head
   meta(name='mobile-web-app-capable', content='yes')
   meta(name='viewport', content='width=device-width, initial-scale=1.0')
   script(src='js/imagetracer.js')
-  script(src='js/mespeak.js')
-  script(src='js/jquery-3.3.1.min.js')
+  script(src='common/js/mespeak.js')
+  script(src='common/js/jquery-3.3.1.min.js')
 div#page-container
   .custom-select
     a(href='https://www.youtube.com/watch?v=JCspg3Nxjxg&list=PL0RyYrt3lUnWLK_sNwurzMSkce2uTtaTO' target='_blank')
@@ -51,30 +51,7 @@ div#page-container
   // FONT
   /////////////////////////////
   canvas#font-canvas.font-element(width='500' height='500' style="display:none")
-  textarea#font-code.font-element(type='text' spellcheck='false' placeholder='FONT\n\
-POINTS\n\
-a b c d e\n\
-f g h i j\n\
-k l m n o\n\
-p q r s t\n\
-u v w x y\n\
-SPECIAL CHARACTERS\n\
-0 TO 9 ARE CONNECTING CURVES\n\
-/ IS CONNECTING LINE\n\
-- HALFSTEP RIGHT\n\
-| HALFSTEP DOWN\n\
-+ HALFSTEP DOWN AND RIGHT\n\
-PREFIX SPECIAL CHARACTERS\n\
-- ADVANCE MINISPACE\n\
-| ADVANCE HALF SPACE\n\
-+ ADVANCE FULL SPACE\n\
-@ TRACE ANOTHER PATH\n\
-* FIX PATH\n\
-^ NUDGE GLYPH UP\n\
-> NUDGE GLYPH RIGHT\n\
-EXAMPLE\n\
-+a2b5c-m/x\n\
-|--m8j0l8xa5f4b2h')
+  textarea#font-code.font-element(type='text' spellcheck='false' placeholder='FONT CODE')
   #font-svg-container-container.font-element
     #font-svg-container.font-element
       p(style='font-size:.5em') Don&apos;t see the font you loaded? Scroll the textbox
@@ -141,7 +118,6 @@ EXAMPLE\n\
       option(value='view full text') view full text
     br
   textarea#kerning-map.adjust-element(type='text' spellcheck='false' onblur='loadKerningMap(); setVisibility("save-needed",true)' placeholder='KERNING MAP\n\
-SPECIAL CHARACTERS\n\
 < MINISPACE LEFT\n\
 > MINISPACE RIGHT\n\
 EXAMPLE\n\
@@ -151,27 +127,14 @@ EXAMPLE\n\
   // SCRIPT
   /////////////////////////////
   iframe.chat-element.script-element(src='' width='100%' height='50%' frameborder='0')
-  textarea#phoneme-map.script-element.half-width.under(type='text' spellcheck='false' onblur='loadPhonemeMap()' placeholder="PHONEME MAP\n\
-EXAMPLE\n\
-sh,ʃ th,θ c,k x,tʃ T,th q,ŋ %,ð á,a à,a í,I î,I i,I ë,ε (,' ),' !,' ?,' :,'")
-  textarea#grapheme-map.script-element.half-width.right.under(type='text' spellcheck='false' onblur='loadGraphemeMap()' placeholder='GRAPHEME MAP\n\
-SPECIAL CHARACTERS\n\
-- MINISPACE  | HALFSPACE  + FULLSPACE\n\
-EXAMPLE\n\
-a,a---- b,b|-- c,c+ w,uu y,ii dzh,j ch,tsh')
+  textarea#phoneme-map.script-element.half-width.under(type='text' spellcheck='false' onblur='loadPhonemeMap()' placeholder='PHONEME MAP')
+  textarea#grapheme-map.script-element.half-width.right.under(type='text' spellcheck='false' onblur='loadGraphemeMap()' placeholder='GRAPHEME MAP')
   div#conscript-text-container
     img.script-element.play-element(src='img/play.png' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
     div#conscript-text.script-element.half-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
-  textarea#user-text.script-element.half-width.right.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder="TYPE IN YOUR CONSCRIPT\n\
-HIGHLIGHT TEXT TO PLAY AUDIO\n\
-EXAMPLE\n\
-run'dærir saran hwi saiar in hornilîn hwi darxarîr nasil simoriat.")
+  textarea#user-text.script-element.half-width.right.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
   textarea#console.script-element.under(type='text' spellcheck='false' readonly='')
-  // GLOSS
-  //
-    <textarea id="word-category" type="text" class="gloss-element half-width under norm-height" spellcheck="false" placeholder="WORD CATEGORY">
-    </textarea>
-    <textarea id="definition" type="text" class="gloss-element half-width right under norm-height" spellcheck="false" placeholder="DEFINITION">
-    </textarea>
   p#warning THIS WEB APP IS INTENDED FOR USE ON A COMPUTER
+script(src='version.js')
+script(src='common/js/replace.js')
 script(src='js/continua.js')

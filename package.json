@@ -1,9 +1,8 @@
 {
   "name": "continua",
   "description": "conlang creation utility",
-  "version": "1.0.0",
   "license": "Apache-2.0",
-  "author": "malkachi software",
+  "author": "malkachi",
   "engines": {
     "node": ">=8"
   },
@@ -56,5 +55,6 @@
   "homepage": "https://github.com/dwn",
   "directories": {
     "lib": "lib"
-  }
+  },
+  "version": "1.0.0"
 }

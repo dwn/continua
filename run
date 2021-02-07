@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+############################################
+# Dan Nielsen
+# Build and run the app
+# Use "run debug" for debug mode
+############################################
+ver="\"1.0.0\""
+echo $ver
+# Set version number in package.json
+node > tmp.json <<EOF
+var data = require('./package.json');
+data.version = $ver;
+console.log(JSON.stringify(data,null,2));
+EOF
+mv tmp.json package.json
+# Create public/version.js
+# Set DEBUG if "run debug" was called
+echo "const VERSION=$ver;" > public/version.js
+if [[ "$1" == "debug" ]]; then
+  echo "const DEBUG=1;" >> public/version.js
+fi
+# Start web server
+echo Running $1
+npm start

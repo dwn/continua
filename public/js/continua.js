@@ -1,9 +1,7 @@
 ////////////////////////////////////////////
 // Dan Nielsen
 ////////////////////////////////////////////
-console.log = function() {}; //Disable log
-meSpeak.loadConfig('json/mespeak_config.json');
-meSpeak.loadVoice('json/en.json');
+if (typeof DEBUG!=='undefined' && DEBUG==1) {function debug(s){console.log(s);}} else {function debug(s){}}
 ////////////////////////////////////////////
 $(document).ready(function() {
 ////////////////////////////////////////////
@@ -171,18 +169,11 @@ var bucketURI;
 //Okay to call this async since it cannot be used quickly
 //Ajax bucket-uri/ -> bucketURI
 $.ajax({type:'GET',dataType:'text',url:'/bucket-uri',
-  success:function(r){bucketURI=r;},error:function(res){}})
+  success:function(r){bucketURI=r;},error:function(res){}});
 var myUsername;
-var tmpTxt;
-var arrTxt;
-var txt = '';
 var fullTxt = '';
 var speakId;
 var kerning;
-var phoneme;
-var phonemeEsc;
-var grapheme;
-var graphemeEsc;
 var otfURI;
 var timeStr = '';
 var doNotToggleOptionList=false;
@@ -190,7 +181,6 @@ var alreadyProcessingLine=false;
 var conscriptTextReady=false;
 var alreadyPlaying=false;
 var openedChat = false;
-var json = {};
 json['font'] = {};
 json['direction'] = 'right-down';
 json['pen'] = 'medium';
@@ -597,7 +587,6 @@ function hideAll() {
   setVisibility('font',false);
   setVisibility('adjust',false);
   setVisibility('script',false);
-  // setVisibility('gloss',false);
 }
 ////////////////////////////////////////////
 function toggleFS() {
@@ -636,7 +625,7 @@ function setPen() {
         txtEl.selectionStart = txtEl.selectionEnd = sum;
         txtEl.focus();
         txtEl.click();
-        console.log(sum.toString());
+        debug(sum.toString());
         sum += arr[counter].length+1;
         counter++;
         penProgressEl.value = (100*counter) / arr.length;
@@ -840,7 +829,7 @@ function shiftUpFontCode() {
   el.focus();
   setTimeout(function() {
     el.click();
-  },200);
+  }, 200);
   return s;
 }
 ////////////////////////////////////////////
@@ -1074,8 +1063,7 @@ function agCurve(ctx,x0,y0,x1,y1,curveForm,flipBowlShape) {
 ////////////////////////////////////////////
 function loadKerningMap() {
   var kernSet = document.getElementById('kerning-map').value;
-  json['kerning-map'] = kernSet;
-  json['kerning-map'] = json['kerning-map'].replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  json['kerning-map'] = kernSet.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   if (invalidCharacterCombo()) return;
   kernSet = kernSet.split(' ');
   kerning = { };
@@ -1091,237 +1079,13 @@ function loadKerningMap() {
   }
 }
 ////////////////////////////////////////////
-function loadPhonemeMap() {
-  var phSet = document.getElementById('phoneme-map').value.replace(/\r\n|\r|\n/g,' ');
-  json['phoneme-map'] = phSet;
-  json['phoneme-map'] = json['phoneme-map'].replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  if (invalidCharacterCombo()) return;
-  phSet = phSet.split(/\r\n|\r|\n|\s/g);
-  phoneme = [ [" ","\'"], [",","\'"] ];
-  for(var i=0;i<phSet.length;i++) {
-    phSet[i]=phSet[i].trim();
-    if (phSet[i]==='') continue;
-    var v = phSet[i].split(',');
-    phoneme.push(v);
-  }
-}
-////////////////////////////////////////////
-function loadGraphemeMap() {
-  grapheme = document.getElementById('grapheme-map').value;
-  json['grapheme-map'] = grapheme;
-  json['grapheme-map'] = json['grapheme-map'].replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  if (invalidCharacterCombo()) return;
-  grapheme = grapheme.split(/\r\n|\r|\n/g);
-  for(var j in grapheme) {
-    grapheme[j] = grapheme[j].trim();
-    if (grapheme[j]==='') continue;
-    grapheme[j] = grapheme[j].split(' ');
-    for(var i in grapheme[j]) {
-      grapheme[j][i] = grapheme[j][i].trim();
-      if (grapheme[j][i]==='') continue;
-      grapheme[j][i] = grapheme[j][i].split(',');
-    }
-  }
-}
-////////////////////////////////////////////
-function addEscaping(s) {
-  var r = '';
-  for(var i=0; i<s.length; i++) {
-    r = r.concat('\\',s[i]);
-  }
-  return r;
-}
-////////////////////////////////////////////
-function removeEscaping(s) {
-  return s.replace(/\\/g,'');
-}
-////////////////////////////////////////////
-function phProcessHelper() {
-  var txt;
-  do {
-    if (arrTxt===null || !arrTxt.length) {
-      document.getElementsByClassName('play-element')[0].src = 'img/play.png';
-      alreadyPlaying=false;
-      return;
-    }
-    txt=arrTxt.shift();
-    if (txt===null) return;
-    txt=txt.trim();
-  } while(txt==='');
-  try {
-    txt = addEscaping(txt);
-    console.log(txt);
-    uipa = '\\_' + txt + '\\_'; //Underscores allow replacement at beginning and end of word
-    for(var i in phonemeEsc) {
-      uipa = uipa.split(phonemeEsc[i][0]).join(phonemeEsc[i][1]);
-    }
-    uipa = removeEscaping(uipa);
-    if (uipa == null || uipa.length == 0) return;
-    console.log(uipa);
-    var textarea = document.getElementById('console');
-    textarea.value += uipa + '\n';
-    textarea.scrollTop = textarea.scrollHeight;
-    var mappings = [
-     { 'src': /[0|!=]\//g, 'dest': 'qk' }, //Click - Exact sound not available
-     { 'src': /[0|!=]\/`/g, 'dest': 'qk' }, //Click - Exact sound not available
-     { 'src': /r\/`/g, 'dest': 'r' }, //Exact sound not available
-     { 'src': /k`/g, 'dest': 'k' }, //Exact sound not available
-     { 'src': /g`/g, 'dest': 'g' }, //Exact sound not available
-     { 'src': /n`/g, 'dest': 'N' }, //Exact sound not available
-     { 'src': /s`/g, 'dest': 'Sx' }, //Exact sound not available
-     { 'src': /z`/g, 'dest': 'Zx' }, //Exact sound not available
-     { 'src': /l`/g, 'dest': 'l' }, //Exact sound not available
-     { 'src': /u\//g, 'dest': 'U' }, //Exact sound not available
-     { 'src': /I\//g, 'dest': 'I' }, //Exact sound not available
-     { 'src': /U\//g, 'dest': 'U' }, //Exact sound not available
-     { 'src': /@\//g, 'dest': 'I' }, //Exact sound not available
-     { 'src': /3\//g, 'dest': '@' }, //Exact sound not available
-     { 'src': /&\//g, 'dest': '@' }, //Exact sound not available
-     { 'src': /J\//g, 'dest': 'gj' }, //Exact sound not available
-     { 'src': /G\//g, 'dest': 'qg' }, //Exact sound not available
-     { 'src': />\//g, 'dest': 'p' }, //Exact sound not available
-     { 'src': /B\//g, 'dest': 'blblb' }, //Exact sound not available
-     { 'src': /f\//g, 'dest': 'fh' }, //Exact sound not available
-     { 'src': /B\//g, 'dest': 'vhU' }, //Exact sound not available
-     { 'src': /j\//g, 'dest': 'j' }, //Exact sound not available
-     { 'src': /X\//g, 'dest': 'hX' }, //Exact sound not available
-     { 'src': /\?\//g, 'dest': 'hvw' }, //Exact sound not available
-     { 'src': /H\//g, 'dest': 'XX' }, //Exact sound not available
-     { 'src': /\<\//g, 'dest': 'Xhh' }, //Exact sound not available
-     { 'src': /h\//g, 'dest': 'hh' }, //Exact sound not available
-     { 'src': /K\//g, 'dest': 'zhl' }, //Exact sound not available
-     { 'src': /r\//g, 'dest': 'ѨѨѨѨѨ' }, //Placeholder for r
-     { 'src': /M\//g, 'dest': 'hr' }, //Exact sound not available
-     { 'src': /L\//g, 'dest': 'l' }, //Exact sound not available
-     { 'src': /\&/g, 'dest': 'Ea' }, //Exact sound not available
-     { 'src': /y/g, 'dest': 'UI' }, //Exact sound not available
-     { 'src': /1/g, 'dest': 'I' }, //Exact sound not available
-     { 'src': /M/g, 'dest': 'U' }, //Exact sound not available
-     { 'src': /Y/g, 'dest': 'U' }, //Exact sound not available
-     { 'src': /2/g, 'dest': 'U' }, //Exact sound not available
-     { 'src': /8/g, 'dest': 'U' }, //Exact sound not available
-     { 'src': /7/g, 'dest': 'U' }, //Exact sound not available
-     { 'src': /9/g, 'dest': 'oE' }, //Exact sound not available
-     { 'src': /O/g, 'dest': 'ao' }, //Exact sound not available
-     { 'src': /6/g, 'dest': 'ah' }, //Exact sound not available
-     { 'src': /A/g, 'dest': 'ah' }, //Exact sound not available
-     { 'src': /Q/g, 'dest': 'ao' }, //Exact sound not available
-     { 'src': /F/g, 'dest': 'm' }, //Exact sound not available
-     { 'src': /c/g, 'dest': 'kj' }, //Exact sound not available
-     { 'src': /\?/g, 'dest': '\'' },
-     { 'src': /J/g, 'dest': 'nj' },
-     { 'src': /r/g, 'dest': 'rlr' }, //Exact sound not available
-     { 'src': /R/g, 'dest': 'Xrlr' }, //Exact sound not available
-     { 'src': /4/g, 'dest': 'R' }, //Exact sound not available
-     { 'src': /C/g, 'dest': 'Sx' }, //Exact sound not available
-     { 'src': /G/g, 'dest': 'xR' }, //Exact sound not available
-     { 'src': /R/g, 'dest': 'XR' }, //Exact sound not available
-     { 'src': /K/g, 'dest': 'Sl' }, //Exact sound not available
-     { 'src': /P/g, 'dest': 'v' }, //Exact sound not available
-     { 'src': /L/g, 'dest': 'j' }, //Exact sound not available
-     { 'src': /ѨѨѨѨѨ/g, 'dest': '@r' }, //Evaluting r
-     { 'src': /@@/g, 'dest': '@' }, //Fixing any doubled schwas
-    ];
-    for (var i = 0; i < mappings.length; i++) {
-      uipa = uipa.replace(mappings[i].src, mappings[i].dest);
-    }
-    console.log(uipa);
-    speakId = meSpeak.speak('[['+uipa+']]', { 'rawdata': 'mime' });
-    if (speakId == null) alert('An error occurred - speaking failed');
-    meSpeak.play(speakId, 1, phProcessHelper);
-  }
-  catch(err) {
-    alert('An error occurred - speaking failed');
-  }
-}
-////////////////////////////////////////////
-function nthIndex(str, pat, k, n){
+function nthIndex(str, pat, k, n) {
   var L=str.length, i=k-1;
   while(n-- && ++i<L){
     i=str.indexOf(pat,i);
     if (i<0) break;
   }
   return i;
-}
-////////////////////////////////////////////
-function grProcess() {
-  tmpTxt = txt;
-  if (json['view'] === 'view single page' && getSelectedText() === '') {
-    var el = document.getElementById('user-text');
-    // el.focus();
-    var k = el.selectionEnd;
-    var lineIndex = txt.substring(0,k).split(/\r\n|\r|\n/).length;
-    var begin = txt.lastIndexOf('\n',k-1);
-    begin = begin<0? 0 : begin;
-    var end = nthIndex(txt,'\n',k,16); //16th txt.indexOf('\n',k);
-    end = end<0? txt.length : end;
-    txt = txt.substring(begin,end);
-  }
-  console.log('ORTHOGRAPHY');
-  graphemeEsc = [];
-  for(var j in grapheme) {
-    graphemeEsc.push([]);
-    for(var i in grapheme[j]) {
-      var grEsc = addEscaping(grapheme[j][i][0]);
-      graphemeEsc[j].push([grEsc,grapheme[j][i][1]]);
-      console.log(grEsc+','+grapheme[j][i][1]);
-    }
-  }
-  json['user-text'] = txt;
-  txt = txt.replace(/\n/g,'_⚠_'); //Weird newline character hopefully no one else will use
-  txt = txt.replace(/ /g,'_');
-  for(var j in graphemeEsc) {
-    txt = addEscaping(txt);
-    for(var i in graphemeEsc[j]) {
-      if (graphemeEsc[j][i][0]==='') continue;
-      txt = txt.split(graphemeEsc[j][i][0]).join(graphemeEsc[j][i][1]);
-    }
-    txt = removeEscaping(txt);
-  }
-  txt = txt.replace(/_⚠_/g,'\n');
-  txt = txt.replace(/_/g,' ');
-  console.log(txt);
-  if (conscriptTextReady) {
-    var conscriptTextEl = document.getElementById('conscript-text');
-    conscriptTextEl.innerText = txt;
-    conscriptTextEl.innerHTML = conscriptTextEl.innerText.replace(/⟨/g,"<span style='font-family:arial;font-size:.5em'>").replace(/⟩/g,'</span>');
-  }
-  json['conscript-text'] = txt;
-  //XML safeguarding
-  json['user-text']=json['user-text'].replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  json['conscript-text']=json['conscript-text'].replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-////////////////////////////////////////////
-function phProcess() {
-  if (alreadyPlaying) return;
-  alreadyPlaying=true;
-  document.getElementsByClassName('play-element')[0].src = 'img/stop.png';
-  console.log('PHONOLOGY');
-  phonemeEsc = [];
-  for(var i in phoneme) {
-    var phEsc = addEscaping(phoneme[i][0]);
-    phonemeEsc.push([phEsc,phoneme[i][1]]);
-    console.log(phEsc+','+phoneme[i][1]);
-  }
-  arrTxt = txt.split('{br}')[0].split(/\r\n|\r|\n/); //Text {br} stops speech
-  phProcessHelper();
-}
-////////////////////////////////////////////
-function getSelectedText() {
-  var userSelection='', ta;
-  if (window.getSelection && document.activeElement) {
-    if (document.activeElement.nodeName == 'TEXTAREA' ||
-        (document.activeElement.nodeName == 'INPUT' &&
-        document.activeElement.getAttribute('type').toLowerCase() == 'text')) {
-      ta = document.activeElement;
-      userSelection = ta.value.substring(ta.selectionStart, ta.selectionEnd);
-    } else {
-      userSelection = window.getSelection();
-    }
-  } else {
-    userSelection = document.getSelection();
-  }
-  return userSelection.toString();
 }
 ////////////////////////////////////////////
 function getSVG(ctx,canvas,lineIndex,xAdvance,xExtra,yExtra,numHoles,numLastPaths) {
@@ -1412,7 +1176,7 @@ function loadClientFile(evt) {
               loadConscriptFont('currentFont' + timeStr, otfURI);
             },
             error: function(result){
-              console.log(result);
+              debug(result);
             }
           });
         }
@@ -1590,7 +1354,7 @@ function downloadSVG() {
       loadConscriptFont('currentFont' + timeStr, otfURI);
     },
     error: function(result){
-      console.log(result);
+      debug(result);
     }
   });
 }
@@ -1607,12 +1371,23 @@ function downloadOTF() {
 function openChat() {
   setVisibility('chat-button',false);
   if (!openedChat) {
-    const url = 'chat?username='+myUsername+'&fontFilename='+json['name']+".otf";
-    console.log(url);
+    const url = 'chat/'+json['name']+'?username='+myUsername;
+    debug(url);
     document.getElementsByClassName('chat-element')[0].src = url;
     setVisibility('chat',true);
     openedChat = true;
   }
+}
+////////////////////////////////////////////
+function loadPhonemeMap() {
+  phoneme = loadMap('phoneme-map',document.getElementById('phoneme-map').value);
+  var last = phoneme.length-1;
+  if (last<0) { last=0; phoneme.push([]); }
+  phoneme[last] = phoneme[last].concat([[' ','\''], [',','\'']]);
+}
+////////////////////////////////////////////
+function loadGraphemeMap() {
+  grapheme = loadMap('grapheme-map',document.getElementById('grapheme-map').value);
 }
 ////////////////////////////////////////////
 // CALLED BY CUSTOM SELECT DROPDOWN
@@ -1631,7 +1406,7 @@ function setTextAreaDisplay(on, titleEl, title = null, dat = null) {
       //Okay to call this async since it cannot be used quickly
       //Ajax unique-username -> myUsername
       $.ajax({type:'GET',dataType:'text',url:'/unique-username?name='+(nameInInputBox? nameInInputBox : ''),
-        success:function(r){myUsername=r;},error:function(r){}})
+        success:function(r){myUsername=r;},error:function(r){}});
     }
     dat = dat.split('<desc>');
     dat = dat[1].split('</desc>')[0];
@@ -1704,13 +1479,13 @@ function selectFirstPage() {
 function loadTryForever(font) {
   return font.load().catch(function(err) { 
     setTimeout(function() {
-      console.log('FAILED TO LOAD FONT\nTrying again');
+      debug('FAILED TO LOAD FONT\nTrying again');
       return loadTryForever(font); 
     }, 500);
   });
 }
 function loadConscriptFont(family, addr) {
-  console.log('loadConscriptFont');
+  debug('loadConscriptFont');
   conscriptTextReady = false;
   var tmp = document.getElementById('conscript-text').value;
   document.getElementById('conscript-text').innerHTML = "<img src='img/progress.gif'></img>";
