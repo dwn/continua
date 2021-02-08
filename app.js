@@ -89,7 +89,7 @@ function connectChat(username,fontBasename,isMe=false) {
 }
 app.get('/chat/:fontBasename', (req, res) => {
   connectChat(req.query.username,req.params.fontBasename,true);
-  res.render('common/chat.pug');
+  res.render('https://dwn.github.io/common/views/chat.pug');
 });
 ////////////////////////////////////////////
 app.get('/bucket-uri', (req, res) => {
