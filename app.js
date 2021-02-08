@@ -10,8 +10,12 @@ const CLOUD_BUCKET = cfg['CLOUD_BUCKET'];
 const STATIC_CLOUD_BUCKET = cfg['STATIC_CLOUD_BUCKET'];
 const express = require('express');
 const app = express();
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
+const options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+const https = require('https').Server(options,app);
+const io = require('socket.io')(https);
 const ULID = require('ulid');
 ////////////////////////////////////////////
 // Setup
@@ -170,8 +174,8 @@ app.use((err, req, res) => { //Basic error handler
 });
 ////////////////////////////////////////////
 if (module === require.main) {
-  server.listen(process.env.PORT || PORT, () => {
-    const port = server.address().port;
+  https.listen(process.env.PORT || PORT, () => {
+    const port = https.address().port;
     console.log(`App listening on port ${port}`);
   });
 }

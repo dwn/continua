@@ -47,6 +47,19 @@ To view these credentials in the future, go to
 
 [console.cloud.google.com/iam-admin/serviceaccounts](https://console.cloud.google.com/iam-admin/serviceaccounts)
 
+## HTTPS authentication
+
+To generate an SSL authentication key and certificate
+
+```
+openssl genrsa -out key.pem
+openssl req -new -key key.pem -out csr.pem
+openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
+rm csr.pem
+```
+
+Place these files in a non-visible directory and set `AUTHENTICATION_DIR` in `cfg.json` to that location
+
 ## Set up Storage
 
 Create a new bucket - to do this from commandline
