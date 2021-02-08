@@ -616,7 +616,7 @@ function setPen() {
   var penProgressEl = document.getElementsByClassName('pen-progress-element')[0];
   penProgressEl.value = 0;
   var txt = txtEl.value;
-  var arr = txt.split(/\r\n|\r|\n/);
+  var arr = txt.split(/\r?\n/g);
   var sum = 0;
   setVisibility('pen-progress',true);
   function start(counter){
