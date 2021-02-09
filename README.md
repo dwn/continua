@@ -50,15 +50,16 @@ To view these credentials in the future, go to
 ## HTTPS authentication
 
 To generate an SSL authentication key and certificate
+(If prompts appear, you can accept all defaults if you wish)
 
 ```
-openssl genrsa -out key.pem
-openssl req -new -key key.pem -out csr.pem
-openssl x509 -req -days 9999 -in csr.pem -signkey key.pem -out cert.pem
+openssl genrsa -out malkachi-key.pem
+openssl req -new -key malkachi-key.pem -out csr.pem
+openssl x509 -req -days 9999 -in csr.pem -signkey malkachi-key.pem -out malkachi-cert.pem
 rm csr.pem
 ```
 
-Place these files in a non-visible directory and set `AUTHENTICATION_DIR` in `cfg.json` to that location
+Move the two generated files to a non-visible directory (such as `~/.ssh`) and set `AUTHENTICATION_DIR` in `cfg.json` to that location
 
 ## Set up Storage
 

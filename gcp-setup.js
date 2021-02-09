@@ -7,9 +7,9 @@ try {
     fs.writeFile('gcp.json', process.env.GCP_CRED, (err) => {});
   }
   if(fs.existsSync('gcp.json')) {
-    console.log('Credential file created successfully');
+    console.log('GCP credential file created successfully');
   } else {
-    console.log('ERROR: Credential file could not be created');
+    console.log('ERROR: GCP credential file could not be created');
   }
 } catch (err) {
   console.error(err);
