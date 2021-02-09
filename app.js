@@ -12,7 +12,7 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-const ULID = require('ulid');
+const ulid = require('ulid');
 ////////////////////////////////////////////
 // Setup
 ////////////////////////////////////////////
@@ -71,7 +71,7 @@ function uniqueUsername(name=null) {
     }
   }
   un += (n>1? '-' + romanNumeral(n) : '');
-  return 'x' + ULID.ulid() + '_' + un; //Starts with a letter because sometimes uid gets interpretted as a number otherwise
+  return 'x' + ulid.ulid() + '_' + un; //Starts with a letter because sometimes uid gets interpretted as a number otherwise
 }
 var myUniqueUsername;
 app.get('/unique-username', function(req, res) {

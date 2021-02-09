@@ -25,7 +25,7 @@
     }
   },
   "scripts": {
-    "heroku-postbuild": "node gcp-setup.js",
+    "heroku-postbuild": "node postbuild.js",
     "start": "node app.js"
   },
   "dependencies": {
