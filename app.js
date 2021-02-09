@@ -10,10 +10,10 @@ const CLOUD_BUCKET = cfg['CLOUD_BUCKET'];
 const STATIC_CLOUD_BUCKET = cfg['STATIC_CLOUD_BUCKET'];
 const express = require('express');
 const app = express();
-const options = {
-  key: fs.readFileSync(cfg['AUTHENTICATION_DIR']+'/malkachi-key.pem'),
-  cert: fs.readFileSync(cfg['AUTHENTICATION_DIR']+'/malkachi-cert.pem')
-};
+// const options = {
+//   key: fs.readFileSync(cfg['AUTHENTICATION_DIR']+'/malkachi-key.pem'),
+//   cert: fs.readFileSync(cfg['AUTHENTICATION_DIR']+'/malkachi-cert.pem')
+// };
 const https = require('https').Server(app);
 const io = require('socket.io')(https);
 const ULID = require('ulid');
