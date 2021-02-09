@@ -10,12 +10,8 @@ const CLOUD_BUCKET = cfg['CLOUD_BUCKET'];
 const STATIC_CLOUD_BUCKET = cfg['STATIC_CLOUD_BUCKET'];
 const express = require('express');
 const app = express();
-// const options = {
-//   key: fs.readFileSync(cfg['AUTHENTICATION_DIR']+'/malkachi-key.pem'),
-//   cert: fs.readFileSync(cfg['AUTHENTICATION_DIR']+'/malkachi-cert.pem')
-// };
-const https = require('https').Server(app);
-const io = require('socket.io')(https);
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 const ULID = require('ulid');
 ////////////////////////////////////////////
 // Setup
@@ -174,8 +170,8 @@ app.use((err, req, res) => { //Basic error handler
 });
 ////////////////////////////////////////////
 if (module === require.main) {
-  https.listen(process.env.PORT || PORT, () => {
-    const port = https.address().port;
+  server.listen(process.env.PORT || PORT, () => {
+    const port = server.address().port;
     console.log(`App listening on port ${port}`);
   });
 }
