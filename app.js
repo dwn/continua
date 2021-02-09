@@ -8,6 +8,9 @@ const cfg = JSON.parse(fs.readFileSync('cfg.json', 'utf8'));
 const PORT = cfg['PORT'];
 const CLOUD_BUCKET = cfg['CLOUD_BUCKET'];
 const STATIC_CLOUD_BUCKET = cfg['STATIC_CLOUD_BUCKET'];
+const storage = require('@google-cloud/storage')();
+const bucket = storage.bucket(CLOUD_BUCKET);
+const staticBucket = storage.bucket(STATIC_CLOUD_BUCKET);
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
@@ -87,9 +90,17 @@ function connectChat(username,fontBasename,isMe=false) {
   io.emit('chat message', '_connected:'+username+':'+fontBasename);
   dicFontBasename[username] = fontBasename;
 }
+async function langListFromStaticBucket() {
+  const [files] = await staticBucket.getFiles();
+  var set = new Set();
+  files.forEach(file => { set.add(path.basename(file.name,path.extname(file.name))); });
+  return Array.from(set);
+}
 app.get('/chat/:fontBasename', (req, res) => {
   connectChat(req.query.username,req.params.fontBasename,true);
-  res.render('https://dwn.github.io/common/views/chat.pug');
+  langListFromStaticBucket().then(function(setFonts) {
+    res.render('chat.pug', {fonts: setFonts});
+  });
 });
 ////////////////////////////////////////////
 app.get('/bucket-uri', (req, res) => {
@@ -115,8 +126,6 @@ function svgToOTF(filename, string) {
   });
 }
 ////////////////////////////////////////////
-const storage = require('@google-cloud/storage')();
-const bucket = storage.bucket(CLOUD_BUCKET);
 app.post('/upload-file-to-cloud', (req, res) => {
   if (req.method == 'POST') {
     var string = '';
@@ -142,7 +151,7 @@ app.post('/upload-file-to-cloud', (req, res) => {
   }
 });
 ////////////////////////////////////////////
-function langList() {
+function langListFromLocalFiles() {
   var filenameList = [];
   fs.readdirSync('./public/lang').forEach(filename => {
     if (filename.split('.').pop() === 'svg') filenameList.push(filename.split('.')[0]);
@@ -150,12 +159,8 @@ function langList() {
   return filenameList;
 }
 ////////////////////////////////////////////
-app.get('/lang-list', (req, res) => {
-  res.send(langList());
-});
-////////////////////////////////////////////
 app.get('/', (req, res) => { //Redirect root
-  res.render('continua.pug', { filenameList : langList() });
+  res.render('continua.pug', { filenameList : langListFromLocalFiles() });
 });
 ////////////////////////////////////////////
 // Server
