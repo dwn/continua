@@ -1383,7 +1383,7 @@ function loadPhonemeMap() {
   phoneme = loadMap('phoneme-map',document.getElementById('phoneme-map').value);
   var last = phoneme.length-1;
   if (last<0) { last=0; phoneme.push([]); }
-  phoneme[last] = phoneme[last].concat([[' ','\''], [',','\'']]);
+  phoneme[last] = phoneme[last].concat([[' ','\'']]);
 }
 ////////////////////////////////////////////
 function loadGraphemeMap() {
