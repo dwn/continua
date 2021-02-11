@@ -6,7 +6,7 @@
 * {-webkit-font-smoothing: antialiased;}
 body {
   font-family: standard;
-  background: black url(../img/continua.svg);
+  background: black url(/img/continua.svg);
   background-position: center center;
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -86,7 +86,7 @@ select {
   float: left;
   width: auto;
   height: calc(50vh + 180px);
-  background-image: url(../img/font-bkg.jpg);
+  background-image: url(/img/font-bkg.jpg);
   background-size: cover;
   background-color: lemonchiffon;
   transform: scaleY(-1);
