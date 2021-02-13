@@ -1481,7 +1481,7 @@ function loadTryForever(font) {
     setTimeout(function() {
       debug('FAILED TO LOAD FONT\nTrying again');
       return loadTryForever(font); 
-    }, 500);
+    }, 1000);
   });
 }
 function loadConscriptFont(family, addr) {
