@@ -872,7 +872,7 @@ function shiftLeftFontCode() {
   el.focus();
   setTimeout(function() {
     el.click();
-  },200);
+  }, 200);
   return s;
 }
 ////////////////////////////////////////////
