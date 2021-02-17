@@ -767,8 +767,8 @@ function setAdjustSetting() {
     el.style.backgroundRepeat = null;
     el.style.backgroundBlendMode = null;
     el.style.backgroundColor = '#e7e5e4';
-    el.style.color = '#ff8010';
-    el.style.textShadow = 'black 0px 0px 3px, black 0px 0px 3px, rgba(116, 113, 113, 0.937) -1px 2px 1px, rgba(118, 116, 116, 0.937) -2px 4px 1px, rgba(120, 119, 119, 0.875) -3px 6px 1px, rgba(123, 122, 122, 0.81) -4px 8px 1px, rgba(127, 125, 125, 0.75) -5px 10px 1px, rgba(130, 129, 129, 0.686) -6px 12px 1px, rgba(134, 133, 133, 0.624) -7px 14px 1px, rgba(139, 138, 137, 0.56) -8px 16px 1px, rgba(143, 142, 141, 0.498) -9px 18px 1px, rgba(148, 147, 146, 0.435) -10px 20px 1px, rgba(153, 152, 151, 0.373) -11px 22px 1px, rgba(158, 156, 156, 0.31) -12px 24px 1px, rgba(163, 161, 161, 0.247) -13px 26px 1px, rgba(168, 166, 166, 0.184) -14px 28px 1px, rgba(173, 171, 171, 0.12) -15px 30px 1px, rgba(178, 177, 176, 0.06) -16px 32px 1px';
+    el.style.color = 'ivory';
+    el.style.textShadow = 'black 0px 0px 1px,black 0px 0px 3px,rgba(0, 0, 0, 0.9) -1px 2px 1px,rgba(30, 30, 30, 0.8) -2px 4px 1px,rgba(60, 60, 60, 0.6) -3px 6px 1px,rgba(90, 90, 90, 0.4) -4px 8px 1px,rgba(120, 120, 120, 0.2) -5px 10px 1px,rgba(150, 150, 150, 0.1) -6px 12px 1px';
     el.style.outline = null;
     el.style.outlineOffset = null;
     } else { //Plain
