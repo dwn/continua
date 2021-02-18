@@ -177,20 +177,20 @@
  "conscript-text": "\n⟨ABCDEFGHI⟩\naclbkdefklhi\n⟨JKLMNOPR⟩\n}`-------{q-------xsyy---kslmnopr\n⟨STUVWYZ⟩\nstulvwy---z\n",
  "user-text": "\n⟨ABCDEFGHI⟩\nabcdefghi\n⟨JKLMNOPR⟩\n}`-------{q-------xsjklmnopr\n⟨STUVWYZ⟩\nstuvwyz\n",
  "font-code": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n&gt;&gt;&gt;&gt;&gt;@@b-/q-l/l|m/m||\n--------------*a/e/j/f/k/o/t/p/u/y\n-----------***a/e/t/p/af|/j|\n---^e/j/f\n-------***a/e/j|/f|/ac/h|\n------------**f|/j|t/pc/h|\n--------**a/ej|/f|\n--------g/g-/l-/k/a/e/o/m-/h-/i\n--------------a/ek/ou/yc/w\n----------------*a/u|/y|/e/b/q|/s|/i/h/m|\n\n--------g/g-/l-/k/a/e/o/m-/h-/i\n-----^@@a|/f|c|/h|e|/j|\n--------------*a/e/o/k/u/yf/jt/p\n-------****a/e/j|/f|/ab-/g+c-/h+\n---------------*a/e/y|/u|/f/i/s|/q|/l/m/m|\n---------------****a/e/y|/u|/af|/j|p/t\n&gt;&gt;&gt;&gt;&gt;@@@p-2r-b-/q-l/l|m/m||\n---------------@a/e/y|/u|/a\n--------------@c2w1c\n-------**a/e/j|/f|/a\n-------***a/e/jj|/f|f/aa+/d+\n--------f|/j|c/h|\n--------------@@@@c2w1ck/oc/w\n&gt;&gt;&gt;&gt;********a-/e-/y+/u+/a-1l-/c/m-/d/n-2e-u+1l+/w|/m+/x|/n+2y+\n--------g/g-/b-/a/k/o/y/w-/r-/s\n---------------*******a/e/y|/u|/af|/j|p/tc/w|\n@b-2g+1b-\n\n^@b|1c|2h-2h+1m/m|2r-2r+1w2v2p+1p-1l|/l2f+1f-1b|\n",
- "name": "2021-02-18_04_40_47_701_little-moon-fish",
+ "name": "2021-02-18_15_54_08_524_nishgwi",
  "direction": "down-right",
  "pen": "round",
  "weight": "light",
  "size": "large",
  "style": "stone",
  "space": ".5",
- "note": "cassander garduna",
+ "note": "gohusdi pukka (cassander garduna)",
  "view": "view single page"
 }</desc>
 <defs>
-<font id="little-moon-fish" vert-adv-y="0">
+<font id="nishgwi" vert-adv-y="0">
 <font-face 
-  font-family="little-moon-fish"
+  font-family="nishgwi"
   font-weight="400"
   font-style="normal"
   font-stretch="normal"
