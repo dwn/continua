@@ -768,7 +768,7 @@ function setAdjustSetting() {
     el.style.backgroundBlendMode = null;
     el.style.backgroundColor = '#e7e5e4';
     el.style.color = '#c40';
-    el.style.textShadow = 'ivory 0px 0px 1px,ivory 0px 0px 1px,ivory 0px 0px 2px, rgba(175, 175, 175, 0.5) -4px 8px 2px';
+    el.style.textShadow = 'ivory 0px 0px 1px,ivory 0px 0px 1px,ivory 0px 0px 2px,ivory 0px 0px 2px,rgba(175, 175, 175, 0.5) -4px 8px 2px';
     el.style.outline = null;
     el.style.outlineOffset = null;
     } else { //Plain
