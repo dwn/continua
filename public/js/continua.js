@@ -767,8 +767,8 @@ function setAdjustSetting() {
     el.style.backgroundRepeat = null;
     el.style.backgroundBlendMode = null;
     el.style.backgroundColor = '#e7e5e4';
-    el.style.color = 'ivory';
-    el.style.textShadow = 'black 0px 0px 1px,black 0px 0px 3px,rgba(0, 0, 0, 0.9) -1px 2px 1px,rgba(30, 30, 30, 0.8) -2px 4px 1px,rgba(60, 60, 60, 0.6) -3px 6px 1px,rgba(90, 90, 90, 0.4) -4px 8px 1px,rgba(120, 120, 120, 0.2) -5px 10px 1px,rgba(150, 150, 150, 0.1) -6px 12px 1px';
+    el.style.color = '#c40';
+    el.style.textShadow = 'ivory 0px 0px 1px,ivory 0px 0px 1px,ivory 0px 0px 2px, rgba(175, 175, 175, 0.5) -4px 8px 2px';
     el.style.outline = null;
     el.style.outlineOffset = null;
     } else { //Plain
