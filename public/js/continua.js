@@ -1466,7 +1466,7 @@ function selectFirstPage() {
     // el.scrollTo(0,el.scrollHeight);
     var end = fullTxt.indexOf('{br}',0);
     if (end<0 || end>20000) { //Show single page if no break or long preface
-      end = nthIndex(fullTxt,'\n',0,16);
+      end = nthIndex(fullTxt,'\n',0,22);
       end = end<0? fullTxt.length : end;
     }
     el.focus();
