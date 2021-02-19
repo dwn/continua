@@ -729,9 +729,9 @@ function setAdjustSetting() {
     el.style.backgroundImage = 'linear-gradient(to bottom right,#ccc,#667),url(img/bkg-stone.jpg)';
     el.style.backgroundSize = 'cover';
     el.style.backgroundRepeat = 'no-repeat';
-    el.style.backgroundBlendMode = null; el.style.backgroundBlendMode = 'hard-light'; //Firefox hack
+    el.style.backgroundBlendMode = null; el.style.backgroundBlendMode = 'soft-light'; //Firefox hack
     el.style.backgroundColor = '#8abce2';
-    el.style.color = 'rgb(103, 164, 189)';
+    el.style.color = 'steelblue';
     el.style.textShadow = 'ivory 1px 1px 1px, #505050 0px 0px 3px, ivory 0px 0px 5px';
     el.style.outline = null;
     el.style.outlineOffset = null;
