@@ -100,7 +100,7 @@ async function langListFromStaticBucket() {
 app.get('/chat/:fontBasename', (req, res) => {
   connectChat(req.query.username,req.params.fontBasename,true);
   langListFromStaticBucket().then(function(arrFonts) {
-    res.render('chat.pug', { fonts: arrFonts });
+    res.render('chat.pug', { fonts: arrFonts, username:req.query.username });
   });
 });
 ////////////////////////////////////////////

@@ -11,10 +11,13 @@ html(lang='en')
     script(src='https://dwn.github.io/common/js/mespeak.js')
     script(src='https://dwn.github.io/common/js/jquery-3.3.1.min.js')
   body(style='background:#ffc')
-    #{fonts}
+    ul SOME AVAILABLE SCRIPTS
+    each el in fonts
+      li
+        a(href=`https://wfo.conlang.org/chat/${el}?username=${username}`) #{el}
     ul(id='messages')
     form(action='')
       input(id='messages-input' autocomplete='off' autofocus)
       button &rarrhk;
-script(src='https://dwn.github.io/common/js/replace.js')
-script(src='https://dwn.github.io/common/js/chat.js')
+    script(src='https://dwn.github.io/common/js/replace.js')
+    script(src='https://dwn.github.io/common/js/chat.js')
