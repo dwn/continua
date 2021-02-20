@@ -188,6 +188,8 @@ select {
 }
 #conscript-text-container {
   position:relative;
+}
+#conscript-text {
   line-height:1.25em;
 }
 .file-upload input {
