@@ -20,20 +20,30 @@ body {
   color: gold;
 }
 @media only screen and (max-width:600px) {
-  #warning {
+  #warning-mobile {
     color:ivory;
     text-shadow:0 0 4px black;
     background-color:red;
   }
 }
 @media only screen and (min-width:600px) {
-  #warning {
+  #warning-mobile {
     display:none;
   }
 }
 @media only screen and (min-width: 768px) {
   body {
     background-position: 50% 100%;
+  }
+}
+#warning-vertical {
+  color:ivory;
+  text-shadow:0 0 4px black;
+  background-color:red;
+}
+@-moz-document url-prefix() {
+  #warning-vertical {
+    display:none;
   }
 }
 #page-container {
