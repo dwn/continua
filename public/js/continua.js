@@ -1133,7 +1133,7 @@ function getSVG(ctx,canvas,lineIndex,xAdvance,xExtra,yExtra,numHoles,numLastPath
 }
 ////////////////////////////////////////////
 function loadClientFile(evt) {
-  //Load client file
+  //Client opened SVG file from own computer, so load it and save it to the cloud
   var files = evt.target.files;
   for (var i = 0, f; f = files[i]; i++) {
     if (f.type!=='image/svg+xml') {
@@ -1169,7 +1169,7 @@ function loadClientFile(evt) {
               setVisibility('otf-button',true);
               setVisibility('chat-loading',false);
               setVisibility('chat-button',true);
-              setTextAreaDisplay(true, el, title = json['name'], res);
+              setAllData(true, el, title = json['name'], res);
               otfURI = bucketURI+json['name']+'.otf';
               loadConscriptFont('currentFont' + timeStr, otfURI);
             },
@@ -1185,17 +1185,6 @@ function loadClientFile(evt) {
   }
 }
 document.getElementById('files').addEventListener('change', loadClientFile, false);
-////////////////////////////////////////////
-function loadServerFile(filePath) {
-  var result = null;
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open('GET', filePath, false);
-  xmlhttp.send();
-  if (xmlhttp.status==200) {
-    result = xmlhttp.responseText;
-  }
-  return result;
-}
 ////////////////////////////////////////////
 function download(filename, blob) {
   if (window.navigator.msSaveOrOpenBlob) { //IE10+
@@ -1347,7 +1336,7 @@ function downloadSVG() {
       setVisibility('otf-button',true);
       setVisibility('chat-loading',false);
       setVisibility('chat-button',true);
-      setTextAreaDisplay(true, el, title = json['name'], cat);
+      setAllData(true, el, title = json['name'], cat);
       otfURI = bucketURI+json['name']+'.otf';
       loadConscriptFont('currentFont' + timeStr, otfURI);
     },
@@ -1378,74 +1367,6 @@ function openChat() {
 }
 ////////////////////////////////////////////
 // CALLED BY CUSTOM SELECT DROPDOWN
-////////////////////////////////////////////
-function setTextAreaDisplay(on, titleEl, title = null, dat = null) {
-  if (on) {
-    if (dat === null) { //Only called when font selected from title screen
-      openedChat=false;
-      fontSelectedFromTitleScreen=true;
-      setVisibility('select-selected',false);
-      setVisibility('conscript-loading',true);
-      dat = loadServerFile('lang/'+titleEl.innerHTML+'.svg');
-      setVisibility('conscript-loading',false);
-      setVisibility('select-selected',true);
-      const nameInInputBox = document.querySelector('.username-element').value;
-      //Okay to call this async since it cannot be used quickly
-      //Ajax unique-username -> myUsername
-      $.ajax({type:'GET',dataType:'text',url:'/unique-username?name='+(nameInInputBox? nameInInputBox : ''),
-        success:function(r){myUsername=r;},error:function(r){}});
-    }
-    dat = dat.split('<desc>');
-    dat = dat[1].split('</desc>')[0];
-    json = JSON.parse(dat);
-    document.getElementById('phoneme-map').value = json['phoneme-map'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
-    document.getElementById('grapheme-map').value = json['grapheme-map'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
-    document.getElementById('kerning-map').value = json['kerning-map'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
-    document.getElementById('user-text').value = json['user-text'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
-    //document.getElementById('conscript-text').innerText = json['conscript-text'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
-    document.getElementById('font-code').value = json['font-code'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
-    document.getElementById('direction').value = json['direction'];
-    document.getElementById('pen').value = json['pen'];
-    document.getElementById('weight').value = json['weight'];
-    document.getElementById('size').value = json['size'];
-    document.getElementById('style').value = json['style'];
-    document.getElementById('space').value = json['space'];
-    document.getElementById('note').value = json['note'];
-    document.getElementById('view').value = json['view'];
-    document.getElementById('font-name').value = json['name'].replace(/\d{4}[-]\d{2}[-]\d{2}[_]\d{2}[_]\d{2}[_]\d{2}[_]\d{3}[_]/g, '');
-    setAdjustSetting();
-    //Clear canvas
-    var canvas = document.getElementById('font-canvas'),
-    ctx = canvas.getContext('2d');
-    ctx.beginPath();
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //Load mappings
-    loadKerningMap();
-    loadPhonemeMap();
-    loadGraphemeMap();
-    document.body.style.backgroundImage = 'none';
-    document.body.style.backgroundColor = '#680068';
-    fullTxt = document.getElementById('user-text').value;
-    hideAll();
-    document.getElementById('page-container').style.backgroundColor = '#680068';
-    setVisibility('help',false);
-    setVisibility('username',false);
-    setVisibility('donate',false);
-    setVisibility('menu',true);
-    setVisibility('script',true);
-  } else {
-    document.body.style.backgroundImage = 'url(img/continua.svg)';
-    document.getElementById('page-container').style.backgroundColor = 'transparent';
-    hideAll();
-    setVisibility('menu',false);
-    setVisibility('donate',true);
-    setVisibility('username',true);
-    setVisibility('help',true);
-  }
-  if (titleEl !== null && title !== null) {
-    titleEl.innerHTML = title;
-  }
-}
 ////////////////////////////////////////////
 function selectFirstPage() {
   var el = document.getElementById('user-text');
@@ -1513,7 +1434,7 @@ for (i = 0; i < x.length; i++) {
     c.addEventListener('click', function(e) {
       if ($(this).hasClass('select-selected-element') || $(this).parent().hasClass('select-items')) {
         timeStr = ''; //*** ADDED ***
-        setTextAreaDisplay(true,this); //*** ADDED ***
+        setAllData(true,this); //*** ADDED ***
       }
       //When an item is clicked, update the original select box and the selected item
       var y, i, k, s, h;
@@ -1555,13 +1476,13 @@ function closeAllSelect(el, skipConfirm = false) {
       if (!skipConfirm) {
         if (confirm('Are you sure you want to leave this page? Unsaved data will be lost!')) {
           setVisibility('save-needed',false);
-          setTextAreaDisplay(false,el,'CHOOSE SCRIPT');
+          setAllData(false,el,'CHOOSE SCRIPT');
           openedChat = false;
         } else {
           doNotToggleOptionList=true;
         }
       } else {
-        setTextAreaDisplay(false,el,'CHOOSE SCRIPT');
+        setAllData(false,el,'CHOOSE SCRIPT');
       }
     }
   }
