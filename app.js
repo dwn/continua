@@ -15,6 +15,7 @@ const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const ulid = require('ulid');
+const request = require('request');
 ////////////////////////////////////////////
 // Setup
 ////////////////////////////////////////////
@@ -24,10 +25,10 @@ app.set('view engine', 'pug');
 app.set('trust proxy', true);
 app.use(express.static(path.join(__dirname, 'public')));
 ////////////////////////////////////////////
+var arrLang;
 request.get('https://dwn.github.io/common/lang/list', function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-    var arrLang = body.split('\n');
-    arrLang = arrLang.filter(function (el) { return el !== null && el !== ''; }); //Remove empty entries
+  if (!error && response.statusCode === 200) {
+    arrLang = body.split('\n').filter(function (el) { return el !== null && el !== ''; });
   }
 });
 ////////////////////////////////////////////
@@ -110,7 +111,6 @@ app.get('/bucket-url', (req, res) => {
 // Main
 ////////////////////////////////////////////
 const SVG_TO_OTF_SERVICE_URL = cfg['SVG_TO_OTF_SERVICE_URL'];
-const request = require('request');
 function svgToOTF(filename, string) {
   if (path.extname(filename) !== '.svg') {
     console.log(`Exiting: not .svg file`);
@@ -149,7 +149,7 @@ app.post('/upload-file-to-cloud', (req, res) => {
 });
 ////////////////////////////////////////////
 app.get('/', (req, res) => { //Redirect root
-  res.render('continua.pug', { filenameList : arrLang });
+  res.render('continua.pug', { arrLang : arrLang });
 });
 ////////////////////////////////////////////
 // Server
