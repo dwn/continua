@@ -24,18 +24,12 @@ app.set('view engine', 'pug');
 app.set('trust proxy', true);
 app.use(express.static(path.join(__dirname, 'public')));
 ////////////////////////////////////////////
-function langList() {
-  var result = null;
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open('GET', 'https://dwn.github.io/common/lang/list', false);
-  xmlhttp.send();
-  if (xmlhttp.status===200) {
-    result = xmlhttp.responseText;
+request.get('https://dwn.github.io/common/lang/list', function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+    var arrLang = body.split('\n');
+    arrLang = arrLang.filter(function (el) { return el !== null && el !== ''; }); //Remove empty entries
   }
-  return result;
-}
-var arrLang=langList().split('\n');
-arrLang = arrLang.filter(function (el) { return el !== null && el !== ''; }); //Remove empty entries
+});
 ////////////////////////////////////////////
 // Chat
 ////////////////////////////////////////////
