@@ -7,11 +7,9 @@ const path = require('path');
 const cfg = JSON.parse(fs.readFileSync('cfg.json', 'utf8'));
 const PORT = cfg['PORT'];
 const CLOUD_BUCKET = cfg['CLOUD_BUCKET'];
-const STATIC_CLOUD_BUCKET = cfg['STATIC_CLOUD_BUCKET'];
 const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
 const bucket = storage.bucket(CLOUD_BUCKET);
-const staticBucket = storage.bucket(STATIC_CLOUD_BUCKET);
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
@@ -25,6 +23,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.set('trust proxy', true);
 app.use(express.static(path.join(__dirname, 'public')));
+////////////////////////////////////////////
+function langList() {
+  var result = null;
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open('GET', 'https://dwn.github.io/common/lang/list', false);
+  xmlhttp.send();
+  if (xmlhttp.status===200) {
+    result = xmlhttp.responseText;
+  }
+  return result;
+}
+var arrLang=langList().split('\n');
+arrLang = arrLang.filter(function (el) { return el !== null && el !== ''; }); //Remove empty entries
 ////////////////////////////////////////////
 // Chat
 ////////////////////////////////////////////
@@ -91,24 +102,15 @@ function connectChat(username,fontBasename,isMe=false) {
   io.emit('chat message', '_connected:'+username+':'+fontBasename);
   dicFontBasename[username] = fontBasename;
 }
-async function langListFromStaticBucket() {
-  const [files] = await staticBucket.getFiles();
-  var set = new Set();
-  files.forEach(file => { set.add(path.basename(file.name,path.extname(file.name))); });
-  return Array.from(set);
-}
 app.get('/chat/:fontBasename', (req, res) => {
   connectChat(req.query.username,req.params.fontBasename,true);
-  langListFromStaticBucket().then(function(arrFonts) {
+  langListFromURL().then(function(arrFonts) {
     res.render('chat.pug', { fonts: arrFonts, username:req.query.username });
   });
 });
 ////////////////////////////////////////////
-app.get('/bucket-uri', (req, res) => {
+app.get('/bucket-url', (req, res) => {
   res.send(`https://storage.googleapis.com/${CLOUD_BUCKET}/`);
-});
-app.get('/static-bucket-uri', (req, res) => {
-  res.send(`https://storage.googleapis.com/${STATIC_CLOUD_BUCKET}/`);
 });
 ////////////////////////////////////////////
 // Main
@@ -152,16 +154,8 @@ app.post('/upload-file-to-cloud', (req, res) => {
   }
 });
 ////////////////////////////////////////////
-function langListFromLocalFiles() {
-  var filenameList = [];
-  fs.readdirSync('./public/lang').forEach(filename => {
-    if (filename.split('.').pop() === 'svg') filenameList.push(filename.split('.')[0]);
-  });
-  return filenameList;
-}
-////////////////////////////////////////////
 app.get('/', (req, res) => { //Redirect root
-  res.render('continua.pug', { filenameList : langListFromLocalFiles() });
+  res.render('continua.pug', { filenameList : arrLang });
 });
 ////////////////////////////////////////////
 // Server

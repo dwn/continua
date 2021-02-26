@@ -18,8 +18,8 @@ div#page-container
     input.conscript-loading-element(type='image' src='img/loading.gif' title='please wait')
     select#lang
       option CHOOSE SCRIPT
-      each filename in filenameList
-        option=filename
+      each lang in arrLang
+        option=lang
     form
       input.username-element(type='text' placeholder='USERNAME OPTIONAL' pattern='[A-Za-z0-9]+')
     //- .donate-element

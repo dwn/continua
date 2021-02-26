@@ -165,11 +165,11 @@ $(document).ready(function() {
   });
 });
 ////////////////////////////////////////////
-var bucketURI;
+var bucketURL;
 //Okay to call this async since it cannot be used quickly
-//Ajax bucket-uri/ -> bucketURI
-$.ajax({type:'GET',dataType:'text',url:'/bucket-uri',
-  success:function(r){bucketURI=r;},error:function(res){}});
+//Ajax bucket-url/ -> bucketURL
+$.ajax({type:'GET',dataType:'text',url:'/bucket-url',
+  success:function(r){bucketURL=r;},error:function(res){}});
 var myUsername;
 var fullTxt = '';
 var speakId;
@@ -1170,7 +1170,7 @@ function loadClientFile(evt) {
               setVisibility('chat-loading',false);
               setVisibility('chat-button',true);
               setAllData(true, el, title = json['name'], res);
-              otfURI = bucketURI+json['name']+'.otf';
+              otfURI = bucketURL+json['name']+'.otf';
               loadConscriptFont('currentFont' + timeStr, otfURI);
             },
             error: function(result){
@@ -1337,7 +1337,7 @@ function downloadSVG() {
       setVisibility('chat-loading',false);
       setVisibility('chat-button',true);
       setAllData(true, el, title = json['name'], cat);
-      otfURI = bucketURI+json['name']+'.otf';
+      otfURI = bucketURL+json['name']+'.otf';
       loadConscriptFont('currentFont' + timeStr, otfURI);
     },
     error: function(result){
