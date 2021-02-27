@@ -106,7 +106,7 @@ app.get('/bucket-url', (req, res) => {
   res.send(`https://storage.googleapis.com/${CLOUD_BUCKET}/`);
 });
 app.get('/common-url', (req, res) => {
-  res.send(`https://dwn.github.io/common/`);
+  res.send(`https://dwn.github.io/common/lang/`);
 });
 ////////////////////////////////////////////
 // Main
