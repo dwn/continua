@@ -1439,7 +1439,7 @@ for (i = 0; i < x.length; i++) {
       //When an item is clicked, update the original select box and the selected item
       var y, i, k, s, h;
       s = this.parentNode.parentNode.getElementsByTagName('select')[0];
-      loadConscriptFont('currentFont' + (new Date()).toISOString().replace(/[A-Za-z.:]/g,"_"), 'lang/' + this.innerHTML + '.otf'); //*** ADDED ***
+      loadConscriptFont('currentFont' + (new Date()).toISOString().replace(/[A-Za-z.:]/g,"_"), 'https://dwn.github.io/common/lang/' + this.innerHTML + '.otf'); //*** ADDED ***
       h = this.parentNode.previousSibling;
       for (i = 0; i < s.length; i++) {
         if (s.options[i].innerHTML == this.innerHTML) {
