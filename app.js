@@ -105,7 +105,7 @@ app.get('/chat/:fontBasename', (req, res) => {
 app.get('/bucket-url', (req, res) => {
   res.send(`https://storage.googleapis.com/${CLOUD_BUCKET}/`);
 });
-app.get('/common-url', (req, res) => {
+app.get('/common-lang-url', (req, res) => {
   res.send(`https://dwn.github.io/common/lang/`);
 });
 ////////////////////////////////////////////
