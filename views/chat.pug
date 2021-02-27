@@ -12,9 +12,9 @@ html(lang='en')
     script(src='https://dwn.github.io/common/js/jquery-3.3.1.min.js')
   body(style='background:#ffc')
     ul SOME AVAILABLE SCRIPTS
-    each el in fonts
+    each lang in arrLang
       li
-        a(href=`https://wfo.conlang.org/chat/${el}?username=${username}`) #{el}
+        a(href=`https://malkachi.com/chat/${lang}?username=${username}`) #{lang}
     ul(id='messages')
     form(action='')
       input(id='messages-input' autocomplete='off' autofocus)

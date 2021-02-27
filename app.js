@@ -99,13 +99,14 @@ function connectChat(username,fontBasename,isMe=false) {
 }
 app.get('/chat/:fontBasename', (req, res) => {
   connectChat(req.query.username,req.params.fontBasename,true);
-  langListFromURL().then(function(arrFonts) {
-    res.render('chat.pug', { fonts: arrFonts, username:req.query.username });
-  });
+  res.render('chat.pug', { arrLang: arrLang, username:req.query.username });
 });
 ////////////////////////////////////////////
 app.get('/bucket-url', (req, res) => {
   res.send(`https://storage.googleapis.com/${CLOUD_BUCKET}/`);
+});
+app.get('/common-url', (req, res) => {
+  res.send(`https://dwn.github.io/common/`);
 });
 ////////////////////////////////////////////
 // Main
