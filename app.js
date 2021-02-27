@@ -30,7 +30,6 @@ request.get('https://dwn.github.io/common/lang/list', function (error, response,
   if (!error && response.statusCode === 200) {
     arrLang = body.split('\n').filter(function (el) { return el !== null && el !== ''; });
   }
-console.log(arrLang);
 });
 ////////////////////////////////////////////
 // Chat
