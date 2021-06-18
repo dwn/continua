@@ -169,7 +169,7 @@ var bucketURL;
 //Okay to call this async since it cannot be used quickly
 //Ajax bucket-url/ -> bucketURL
 $.ajax({type:'GET',dataType:'text',url:'/bucket-url',
-  success:function(r){bucketURL=r;},error:function(res){}});
+  success:function(r){bucketURL=r;},error:function(r){}});
 var myUsername;
 var fullTxt = '';
 var speakId;
@@ -670,7 +670,7 @@ function setAdjustSetting() {
     el.style.backgroundBlendMode = null;
     el.style.backgroundColor = '#224';
     el.style.color = '#8ef2e8';
-    el.style.textShadow = null;
+    el.style.textShadow = '0 0 1px slategray';
     el.style.outline = null;
     el.style.outlineOffset = null;
   } else if (json['style'] === 'illuminated') {
@@ -1300,7 +1300,7 @@ function downloadSVG() {
   cat += `
 <glyph glyph-name="space" unicode="&#x20;" horiz-adv-x="[[XSPACE]]" vert-adv-y="[[YSPACE]]" />
 <glyph glyph-name="plus" unicode="&#x2b;" horiz-adv-x="1872" vert-adv-y="2808" />
-<glyph glyph-name="minus" unicode="&#x2d;" horiz-adv-x="187.2" vert-adv-y="280.2" />
+<glyph glyph-name="hyphenminus" unicode="&#x2d;" horiz-adv-x="187.2" vert-adv-y="280.2" />
 <glyph glyph-name="vbar" unicode="&#x7c;" horiz-adv-x="936" vert-adv-y="1404" />
 <glyph glyph-name="nbsp" unicode="&#xa0;" horiz-adv-x="[[XSPACE]]" vert-adv-y="[[YSPACE]]" />
 </font></defs></svg>`.replace(/\[\[XSPACE\]\]/g,1872 * valSpace).replace(/\[\[YSPACE\]\]/g, 1872 * valSpace);

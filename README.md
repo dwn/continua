@@ -120,7 +120,7 @@ export GOOGLE_APPLICATION_CREDENTIALS="<path-to-credential-file>"
 export GOOGLE_CLOUD_PROJECT="<project-id>"
 ```
 
-Set the following entries in `config.js`
+Set the following entries in `cfg.json`
 
 ```
 CLOUD_BUCKET: '<bucket-name>',
