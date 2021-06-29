@@ -133,9 +133,9 @@ EXAMPLE\n\
     img.script-element.play-element(src='img/play.png' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
     div#conscript-text.script-element.half-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
   textarea#user-text.script-element.half-width.right.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
-  textarea#console.script-element.under(type='text' spellcheck='false' readonly='')
-  p#warning-mobile INTENDED FOR USE ON A LARGE SCREEN ONLY
-  p#warning-vertical VERTICAL FONTS FULLY SUPPORTED IN FIREFOX ONLY
+  textarea#console.script-element.under(type='text' spellcheck='false' readonly='' placeholder='WARNING! AUDIO PLAYBACK SOMETIMES CRASHES THE WEB APP -->')
+  p#warning-mobile INTENDED FOR USE ON<br>A LARGE SCREEN ONLY
+  p#warning-vertical VERTICAL FONTS FULLY<br>SUPPORTED IN FIREFOX ONLY
 script(src='version.js')
 script(src='https://dwn.github.io/common/js/replace.js')
 script(src='js/continua.js')
