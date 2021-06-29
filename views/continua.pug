@@ -133,7 +133,7 @@ EXAMPLE\n\
     img.script-element.play-element(src='img/play.png' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
     div#conscript-text.script-element.half-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
   textarea#user-text.script-element.half-width.right.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
-  textarea#console.script-element.under(type='text' spellcheck='false' readonly='' placeholder='WARNING! AUDIO PLAYBACK SOMETIMES CRASHES THE WEB APP -->')
+  textarea#console.script-element.under(type='text' spellcheck='false' readonly='' placeholder='WARNING! AUDIO PLAYBACK MAY CRASH THE WEB APP - PLEASE SAVE YOUR WORK BEFORE USING THIS FEATURE')
   p#warning-mobile INTENDED FOR USE ON<br>A LARGE SCREEN ONLY
   p#warning-vertical VERTICAL FONTS FULLY<br>SUPPORTED IN FIREFOX ONLY
 script(src='version.js')
