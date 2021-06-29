@@ -65,6 +65,11 @@ textarea {
   background-color: #402240;
   color: darkgray;
 }
+::placeholder, ::ms-input-placeholder {
+  color:red;
+  opacity:1;
+  text-shadow:0 0 white;
+}
 div {
   white-space:pre;
 }
