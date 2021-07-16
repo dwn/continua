@@ -551,18 +551,6 @@ document.querySelector('.username-element').addEventListener('blur', e => {
   }
 });
 ////////////////////////////////////////////
-function nastyHack(key) { //Dollar sign followed by tick would crash the program
-  const s = json[key];
-  if (s.includes('$`') || s.includes('$\\`')) {
-    alert('NOT SAVED! PLEASE CHANGE: dollar sign cannot be followed by tick ($`)');
-    return true;
-  }
-  return false;
-}
-function invalidCharacterCombo() {
-  return nastyHack('font-code') || nastyHack('kerning-map') || nastyHack('phoneme-map') || nastyHack('grapheme-map') || nastyHack('user-text') || nastyHack('conscript-text');
-}
-////////////////////////////////////////////
 function setVisibility(name, on) {
   var arrEl = document.getElementsByClassName(name+'-element');
   for(var i=0;i<arrEl.length;i++) {
