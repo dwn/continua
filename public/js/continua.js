@@ -1059,24 +1059,6 @@ function agCurve(ctx,x0,y0,x1,y1,curveForm,flipBowlShape) {
   }
 }
 ////////////////////////////////////////////
-function loadKerningMap() {
-  var kernSet = document.getElementById('kerning-map').value;
-  json['kerning-map'] = kernSet.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  if (invalidCharacterCombo()) return;
-  kernSet = kernSet.split(' ');
-  kerning = { };
-  for(var i=0;i<kernSet.length;i++) {
-    var numShiftLeft = (kernSet[i].split('<').length - 1) - (kernSet[i].split('>').length - 1);
-    var dat = kernSet[i].split(/[<>]/).filter(function(el) {return el.length != 0});
-    if (dat.length<2) continue;
-    lhs0 = dat[0].split('-')[0];
-    rhs0 = dat[0].split('-')[1];
-    lhs1 = dat[1].split('-')[0];
-    rhs1 = dat[1].split('-')[1];
-    kerning[i] = { 'lhs0':lhs0, 'rhs0':rhs0, 'lhs1':lhs1, 'rhs1':rhs1, 'numShiftLeft':numShiftLeft };
-  }
-}
-////////////////////////////////////////////
 function nthIndex(str, pat, k, n) {
   var L=str.length, i=k-1;
   while(n-- && ++i<L){
