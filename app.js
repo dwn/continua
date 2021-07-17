@@ -98,8 +98,13 @@ function connectChat(username,fontBasename,isMe=false) {
   dicFontBasename[username] = fontBasename;
 }
 app.get('/chat/:fontBasename', (req, res) => {
-  connectChat(req.query.username,req.params.fontBasename,true);
-  res.render('chat.pug', { arrLang: arrLang, username:req.query.username });
+  var username=req.query.username;
+  if (!username.includes('_')) {
+    username=uniqueUsername(username);
+    res.redirect('/chat/'+req.params.fontBasename+'?username='+username);
+  }
+  connectChat(username,req.params.fontBasename,true);
+  res.render('chat.pug', { arrLang:arrLang, username:username });
 });
 ////////////////////////////////////////////
 app.get('/bucket-url', (req, res) => {
