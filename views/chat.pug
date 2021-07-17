@@ -13,8 +13,10 @@ html(lang='en')
   body
     .container
       each lang in arrLang
-        div.tag
-          a(href=`/chat/${lang}?username=${username}`) #{lang}
+        a(href=`/chat/${lang}?username=${username}`)
+          div.tag-container
+            div.tag
+              p #{lang}
     ul(id='messages')
     form(action='')
       input(id='messages-input' autocomplete='off' autofocus)

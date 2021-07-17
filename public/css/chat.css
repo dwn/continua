@@ -10,9 +10,13 @@ form button { color: darkgray; width: 10%; background: dimgray; border: 0px; pad
 #messages li { font-size: 3em; padding: 5px 10px; }
 #messages li:nth-child(odd) { background: #fea; }
 .container {
-  display:flex;  
+  display:flex;
+  flex-wrap:wrap;  
 }
 .tag {
+  font-weight:bold;
+  color:ivory;
+  text-decoration:none;
   font-family: Palatino;
   margin:.25rem;
   padding:.25rem;
@@ -21,9 +25,4 @@ form button { color: darkgray; width: 10%; background: dimgray; border: 0px; pad
   background:dimgray;
   border-radius:.5rem;
   text-shadow:0 0 3px black;
-  box-shadow:5px 5px 5px;
-}
-a {
-  color:ivory;
-  text-decoration: none;
 }
