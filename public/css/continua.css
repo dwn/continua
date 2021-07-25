@@ -2,7 +2,7 @@
 // Dan Nielsen
 //////////////////////////////////////////*/
 @font-face{font-family:standard;src:url(continua.ttf)}
-.menu-element{display:none;} .select-selected-element{display:inline-block;} .conscript-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .username-element{display:inline-block;} .pen-progress-element{display:none;} .play-element{display:none;} .script-element{display:none;}
+.menu-element{display:none;} .select-selected-element{display:inline-block;} .conscript-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .chat-in-new-page-element{display:inline-element;} .username-element{display:inline-block;} .pen-progress-element{display:none;} .play-element{display:none;} .script-element{display:none;}
 * {-webkit-font-smoothing: antialiased;}
 body {
   font-family: standard;
@@ -243,6 +243,13 @@ input[type=text].username-element {
   position:absolute;
   top:20px;
   left:5px;
+  height:1.33em;
+  width:auto;
+}
+.chat-in-new-page-element {
+  position:absolute;
+  top:20px;
+  left:60px;
   height:1.33em;
   width:auto;
 }

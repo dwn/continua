@@ -97,6 +97,9 @@ function connectChat(username,fontBasename,isMe=false) {
   io.emit('chat message', '_connected:'+username+':'+fontBasename);
   dicFontBasename[username] = fontBasename;
 }
+app.get('/chat', (req, res) => {
+  res.render('chat-login.pug');
+});
 app.get('/chat/:fontBasename', (req, res) => {
   var username=req.query.username;
   if (!username.includes('_')) {

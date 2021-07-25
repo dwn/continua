@@ -26,3 +26,8 @@ form button { color: darkgray; width: 10%; background: dimgray; border: 0px; pad
   border-radius:.5rem;
   text-shadow:0 0 3px black;
 }
+.login {
+  font-size:1.62rem;
+  color:black;
+  background:ivory;
+}

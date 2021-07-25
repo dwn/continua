@@ -1,0 +1,14 @@
+////////////////////////////////////////////
+// Dan Nielsen
+////////////////////////////////////////////
+doctype html
+html(lang='en')
+  head
+    title chat
+    meta(charset='utf-8')
+    link(rel='stylesheet', type='text/css', href='../css/chat.css')
+  body
+    form.login(action='/chat/NEW')
+      p.login username:
+      input.login#username(name='username' autocomplete='off' autofocus)
+      button(style='height:6rem') &rarrhk;
