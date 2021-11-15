@@ -179,6 +179,7 @@ var timeStr = '';
 var doNotToggleOptionList=false;
 var alreadyProcessingLine=false;
 var openedChat = false;
+json = {};
 json['font'] = {};
 json['direction'] = 'right-down';
 json['pen'] = 'medium';
