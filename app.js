@@ -102,7 +102,7 @@ app.get('/chat', (req, res) => {
 });
 app.get('/chat/:fontBasename', (req, res) => {
   var username=req.query.username;
-  if (!username.includes('_')) {
+  if (!(username&&username.includes('_'))) {
     username=uniqueUsername(username);
     res.redirect('/chat/'+req.params.fontBasename+'?username='+username);
   }
