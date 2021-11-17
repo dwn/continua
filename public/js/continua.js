@@ -556,7 +556,8 @@ function setVisibility(name, on) {
   for(var i=0;i<arrEl.length;i++) {
     var el = arrEl[i];
     if (on) {
-      el.style.display = 'inline-block';
+      if (name === 'chat') el.style.display = 'block'; //Chatbox flows down under main page
+      else el.style.display = 'inline-block';
       if (name === 'font') {
         document.getElementById('font-code').focus(); //Refresh glyph preview if font screen
       }
