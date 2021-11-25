@@ -15,10 +15,10 @@ head
 div#page-container
   .custom-select
     a(href='https://www.youtube.com/watch?v=JCspg3Nxjxg&list=PL0RyYrt3lUnWLK_sNwurzMSkce2uTtaTO' target='_blank')
-      img.help-element(src='img/help.png' title='help')
+      img.help-element(src='img/icon/help.png' title='help')
     a(href='/chat' target='_blank')
-      img.chat-in-new-page-element(src='img/chat.png' title='chat')
-    input.conscript-loading-element(type='image' src='img/loading.gif' title='please wait')
+      img.chat-in-new-page-element(src='img/icon/chat.png' title='chat')
+    input.conscript-loading-element(type='image' src='img/icon/loading.gif' title='please wait')
     select#lang
       option CHOOSE SCRIPT
       each lang in arrLang
@@ -37,18 +37,18 @@ div#page-container
     .menu-element(onclick="hideAll(); setVisibility('script',true)") script
     // <div class="menu-element gloss-button" onclick="hideAll(); setVisibility('gloss',true)">gloss</div>
     div#menu-button-container
-      input#download-button.menu-element(type='image' src='img/download.png' title='save continua svg file' onclick='setVisibility("save-needed",false); downloadSVG();')
-      img.save-needed-element(src='img/save-needed.png' style='height:1.33em;width:auto;margin-left:0' title='save to see font changes')
+      input#download-button.menu-element(type='image' src='img/icon/download.png' title='save continua svg file' onclick='setVisibility("save-needed",false); downloadSVG();')
+      img.save-needed-element(src='img/icon/save-needed.png' style='height:1.33em;width:auto;margin-left:0' title='save to see font changes')
       .menu-element.file-upload(style='cursor:auto')
         label(for='files' style='cursor:pointer')
-          img(src='img/open.png' title='open continua svg file' style="height:1.15em; display:inline-block;")
+          img(src='img/icon/open.png' title='open continua svg file' style="height:1.15em; display:inline-block;")
         input#files(type='file' name='files[]' multiple='')
-      input#fullscreen-button.menu-element(type='image' src='img/fullscreen.png' title='fullscreen' style='margin-left:0' onclick='toggleFS();')
+      input#fullscreen-button.menu-element(type='image' src='img/icon/fullscreen.png' title='fullscreen' style='margin-left:0' onclick='toggleFS();')
       div.menu-element(style='cursor:auto')
-        input.otf-loading-element(type='image' src='img/loading-small.gif' title='please wait' style='cursor:pointer')
-        input.otf-button-element(type='image' src='img/otf.png' title='download otf' style='cursor:pointer' onclick='downloadOTF();')
-        input.chat-loading-element(type='image' src='img/loading-small.gif' title='please wait' style='cursor:pointer')
-        input.chat-button-element(type='image' src='img/chat.png' title='chat' style='cursor:pointer' onclick='openChat();')
+        input.otf-loading-element(type='image' src='img/icon/loading-small.gif' title='please wait' style='cursor:pointer')
+        input.otf-button-element(type='image' src='img/icon/otf.png' title='download otf' style='cursor:pointer' onclick='downloadOTF();')
+        input.chat-loading-element(type='image' src='img/icon/loading-small.gif' title='please wait' style='cursor:pointer')
+        input.chat-button-element(type='image' src='img/icon/chat.png' title='chat' style='cursor:pointer' onclick='openChat();')
   br
   /////////////////////////////
   // FONT
@@ -125,14 +125,14 @@ div#page-container
 > MINISPACE RIGHT\n\
 EXAMPLE\n\
 69<<<20-ff 20-ff<<<69')
-  img#utf-table.adjust-element(src='img/iso-8859-1.jpg')
+  img#utf-table.adjust-element(src='img/continua/iso-8859-1.jpg')
   /////////////////////////////
   // SCRIPT
   /////////////////////////////
   textarea#phoneme-map.script-element.half-width.under(type='text' spellcheck='false' onblur='loadPhonemeMap()' placeholder='PHONEME MAP')
   textarea#grapheme-map.script-element.half-width.right.under(type='text' spellcheck='false' onblur='loadGraphemeMap()' placeholder='GRAPHEME MAP')
   div#conscript-text-container
-    img.script-element.play-element(src='img/play.png' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
+    img.script-element.play-element(src='img/icon/play.png' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
     div#conscript-text.script-element.half-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
   textarea#user-text.script-element.half-width.right.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
   textarea#console.script-element.under(type='text' spellcheck='false' readonly='')

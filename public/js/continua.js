@@ -665,7 +665,7 @@ function setAdjustSetting() {
   } else if (json['style'] === 'illuminated') {
     el.style.overflowWrap = 'break-word';
     el.style.float = 'left';
-    el.style.backgroundImage = 'url(img/bkg-illuminated.png), linear-gradient(to bottom right,tan,sienna)';
+    el.style.backgroundImage = 'url(img/bkg/illuminated.png), linear-gradient(to bottom right,tan,sienna)';
     el.style.backgroundSize = 'cover';
     el.style.backgroundRepeat = 'no-repeat';
     el.style.backgroundBlendMode = null;
@@ -677,7 +677,7 @@ function setAdjustSetting() {
   } else if (json['style'] === 'terminal') {
     el.style.overflowWrap = 'break-word';
     el.style.float = 'left';
-    el.style.backgroundImage = 'linear-gradient(rgba(235, 233, 249, 0.8) 0%, rgba(216, 208, 239, 0.54) 27%, rgba(196, 189, 226, 0.53) 28%, rgba(193, 191, 234, 0.18) 100%), radial-gradient(rgba(0, 85, 150, 0.75), #000032 120%),url(img/bkg-terminal.jpg)';
+    el.style.backgroundImage = 'linear-gradient(rgba(235, 233, 249, 0.8) 0%, rgba(216, 208, 239, 0.54) 27%, rgba(196, 189, 226, 0.53) 28%, rgba(193, 191, 234, 0.18) 100%), radial-gradient(rgba(0, 85, 150, 0.75), #000032 120%),url(img/bkg/terminal.jpg)';
     el.style.backgroundSize = 'cover';
     el.style.backgroundRepeat = 'no-repeat';
     el.style.backgroundBlendMode = null; el.style.backgroundBlendMode = 'luminosity color'; //Firefox hack
@@ -689,7 +689,7 @@ function setAdjustSetting() {
   } else if (json['style'] === 'papyrus') {
     el.style.overflowWrap = 'break-word';
     el.style.float = 'left';
-    el.style.backgroundImage = 'linear-gradient(rgba(165, 163, 170, 0.8) 0%, rgba(115, 113, 116, 0.18) 100%), url("img/bkg-papyrus.jpg")';
+    el.style.backgroundImage = 'linear-gradient(rgba(165, 163, 170, 0.8) 0%, rgba(115, 113, 116, 0.18) 100%), url("img/bkg/papyrus.jpg")';
     el.style.backgroundSize = 'cover';
     el.style.backgroundRepeat = 'no-repeat';
     el.style.backgroundBlendMode = null; el.style.backgroundBlendMode = 'hard-light'; //Firefox hack
@@ -701,7 +701,7 @@ function setAdjustSetting() {
   } else if (json['style'] === 'fire') {
     el.style.overflowWrap = 'break-word';
     el.style.float = 'left';
-    el.style.backgroundImage = 'url(img/bkg-fire.gif)';
+    el.style.backgroundImage = 'url(img/bkg/fire.gif)';
     el.style.backgroundSize = 'cover';
     el.style.backgroundRepeat = 'repeat-y';
     el.style.backgroundBlendMode = null;
@@ -713,7 +713,7 @@ function setAdjustSetting() {
   } else if (json['style'] === 'stone') {
     el.style.overflowWrap = 'break-word';
     el.style.float = 'left';
-    el.style.backgroundImage = 'linear-gradient(to bottom right,#ccc,#667),url(img/bkg-stone.jpg)';
+    el.style.backgroundImage = 'linear-gradient(to bottom right,#ccc,#667),url(img/bkg/stone.jpg)';
     el.style.backgroundSize = 'cover';
     el.style.backgroundRepeat = 'no-repeat';
     el.style.backgroundBlendMode = null; el.style.backgroundBlendMode = 'soft-light'; //Firefox hack
@@ -725,7 +725,7 @@ function setAdjustSetting() {
   } else if (json['style'] === 'stitch') {
     el.style.overflowWrap = 'break-word';
     el.style.float = 'left';
-    el.style.backgroundImage = 'url(img/bkg-stitch.png)';
+    el.style.backgroundImage = 'url(img/bkg/stitch.png)';
     el.style.backgroundSize = null;
     el.style.backgroundRepeat = null;
     el.style.backgroundBlendMode = null;
@@ -737,7 +737,7 @@ function setAdjustSetting() {
   } else if (json['style'] === 'splotch') {
     el.style.overflowWrap = 'break-word';
     el.style.float = 'left';
-    el.style.backgroundImage = 'url(img/bkg-splotch.jpg)';
+    el.style.backgroundImage = 'url(img/bkg/splotch.jpg)';
     el.style.backgroundSize = null;
     el.style.backgroundRepeat = null;
     el.style.backgroundBlendMode = null;
@@ -749,7 +749,7 @@ function setAdjustSetting() {
   } else if (json['style'] === 'shadow') {
     el.style.overflowWrap = 'break-word';
     el.style.float = 'left';
-    el.style.backgroundImage = 'url(img/bkg-shadow.jpg)';
+    el.style.backgroundImage = 'url(img/bkg/shadow.jpg)';
     el.style.backgroundSize = null;
     el.style.backgroundRepeat = null;
     el.style.backgroundBlendMode = null;
