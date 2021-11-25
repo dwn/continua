@@ -1367,7 +1367,7 @@ function loadConscriptFont(family, addr) {
   debug('loadConscriptFont');
   conscriptTextReady = false;
   var tmp = document.getElementById('conscript-text').value;
-  document.getElementById('conscript-text').innerHTML = "<img src='img/progress.gif'></img>";
+  document.getElementById('conscript-text').innerHTML = "<img src='img/icon/progress.gif'></img>";
   setVisibility('play',false);
   var newFont = new FontFace(family, 'url(' + addr + ')');
   loadTryForever(newFont).then(function(loadedFace) {

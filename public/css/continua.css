@@ -100,7 +100,7 @@ select {
   float: left;
   width: auto;
   height: calc(50vh + 180px);
-  background-image: url(/img/font-bkg.jpg);
+  background-image: url(/img/grid.jpg);
   background-size: cover;
   background-color: lemonchiffon;
   transform: scaleY(-1);
