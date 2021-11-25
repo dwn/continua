@@ -6,7 +6,7 @@
 * {-webkit-font-smoothing: antialiased;}
 body {
   font-family: standard;
-  background: black url(/img/continua.svg);
+  background: black url(/img/continua/continua.svg);
   background-position: center center;
   background-attachment: fixed;
   background-repeat: no-repeat;
