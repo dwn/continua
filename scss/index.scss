@@ -6,7 +6,7 @@
 @import '_forms';
 @font-face{font-family:standard;src:url(continua.ttf)}
 @font-face{font-family:title;src:url(title.otf)}
-.menu-element{display:none;} .select-selected-element{display:inline-block;} .conscript-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .chat-in-new-page-element{display:inline-element;} .username-element{display:inline-block;} .pen-progress-element{display:none;} .play-element{display:none;} .script-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;}
+.menu-element{display:none;} .select-selected-element{display:inline-block;} .conscript-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .chat-in-new-page-element{display:inline-element;} .username-element{display:inline-block;} .pen-progress-element{display:none;} .play-element{display:none;} .script-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;} .signin-container-element{display:inline-block;}
 * {-webkit-font-smoothing: antialiased;}
 html,
 body {
@@ -72,21 +72,33 @@ body {
   overflow:hidden;
   position:relative;
 }
-#signin-container {
+.signin-container-element {
+  white-space:pre-wrap;
+  width:660px;
   font-family:standard;
   position:absolute;
-  padding:25px;
-  background-color:rgba(255,255,255,.5);
-  left:calc(50vw - 100px);
-  top:calc(45vh - 62px);
+  padding:50px;
+  background-color:rgba(255,255,255,.8);
+  left:calc(50vw - 380px);
+  top:15px;
   box-shadow:0 0 20px black;
-  border-radius:.5rem;  
+  border-radius:1rem;
+  color:#111;
+  text-shadow:0 0 1px gray;
+}
+li {
+  line-height:2rem;
+  text-align:left;
+}
+#doc-agreement-checkbox {
+  font-size:1.1rem;
 }
 #signin {
   opacity:.8;
 }
 #signin > div {
   margin:0 auto;
+  text-align:left;
 }
 #title {
   font-family:title;

@@ -1,6 +1,6 @@
 function onSuccess(googleUser) {
   console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-  document.getElementById('signin-container').style.display = 'none';
+  document.getElementByClassName('signin-container-element')[0].style.display = 'none';
   document.getElementsByClassName('custom-select-element')[0].style.display = 'inline-block';
 }
 function onFailure(error) {
@@ -9,10 +9,10 @@ function onFailure(error) {
 function renderButton() {
   gapi.signin2.render('signin', {
     'scope': 'profile email',
-    'width': 150,
+    'width': 180,
     'height': 75,
     'longtitle': false,
-    'theme': 'dark',
+    'theme': 'light',
     'onsuccess': onSuccess,
     'onfailure': onFailure
   });

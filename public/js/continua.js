@@ -1447,18 +1447,18 @@ for (i = 0; i < x.length; i++) {
 ////////////////////////////////////////////
 function closeAllSelect(el, skipConfirm = false) {
   if ($(el).hasClass('select-selected-element') && !$(el).hasClass('select-arrow-active')) {
-    if (el.innerHTML !== 'START') {
+    if (el.innerHTML.substr(0,7) !== 'Welcome') {
       if (!skipConfirm) {
         if (confirm('Are you sure you want to leave this page? Unsaved data will be lost!')) {
           setVisibility('save-needed',false);
-          setAllData(false,el,'START');
+          setAllData(false,el,'Welcome, ');
           setVisibility('title',true);
           openedChat = false;
         } else {
           doNotToggleOptionList=true;
         }
       } else {
-        setAllData(false,el,'START');
+        setAllData(false,el,'Welcome, ');
         setVisibility('title',true);
       }
     }
