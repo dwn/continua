@@ -37,6 +37,9 @@ body {
     text-shadow:0 0 4px black;
     background-color:red;
   }
+  body {
+    background-position: 10% 0%;
+  }
 }
 @media only screen and (min-width:600px) {
   #warning-mobile {
@@ -44,9 +47,6 @@ body {
   }
 }
 @media only screen and (min-width: 768px) {
-  body {
-    background-position: 50% top;
-  }
 }
 #warning-vertical {
   color:ivory;
