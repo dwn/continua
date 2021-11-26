@@ -1,7 +1,7 @@
 function onSuccess(googleUser) {
   console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
   document.getElementById('signin-container').style.display = 'none';
-  document.getElementById('custom-select-element').style.display = 'inline-block';
+  document.getElementsByClassName('custom-select-element')[0].style.display = 'inline-block';
 }
 function onFailure(error) {
   console.log(error);
