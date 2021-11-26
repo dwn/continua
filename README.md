@@ -4,6 +4,9 @@ NOTE: some files are loaded from https://github.com/dwn/dwn.github.io/tree/maste
 
 Those are common-data files that might also be used by other projects at the same time
 
+NOTE: The project uses SASS, so only edit `.scss` files, and run the SASS watch server like
+`sass --watch scss/index.scss:public/css/continua.css`
+
 ### conlang creation utility
 
 ## Initial

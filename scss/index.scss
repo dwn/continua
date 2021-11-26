@@ -1,0 +1,362 @@
+/*//////////////////////////////////////////
+// Dan Nielsen
+//////////////////////////////////////////*/
+@import '_colors';
+@import '_layout';
+@import '_forms';
+@font-face{font-family:standard;src:url(continua.ttf)}
+@font-face{font-family:title;src:url(title.otf)}
+.menu-element{display:none;} .select-selected-element{display:inline-block;} .conscript-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .chat-in-new-page-element{display:inline-element;} .username-element{display:inline-block;} .pen-progress-element{display:none;} .play-element{display:none;} .script-element{display:none;} .title-element{display:block;}
+* {-webkit-font-smoothing: antialiased;}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  font-family: standard;
+  border: 0;
+  margin: 0;
+  font-size: 1.2rem;
+  color: gold;
+  background: white url(/img/continua/continua-girl.jpg);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: top center;
+  // background: black url(/img/continua/continua.svg);
+  // background-position: center center;
+}
+@media only screen and (max-width:600px) {
+  #warning-mobile {
+    color:ivory;
+    text-shadow:0 0 4px black;
+    background-color:red;
+  }
+}
+@media only screen and (min-width:600px) {
+  #warning-mobile {
+    display:none;
+  }
+}
+@media only screen and (min-width: 768px) {
+  body {
+    background-position: 50% top;
+  }
+}
+#warning-vertical {
+  color:ivory;
+  text-shadow:0 0 4px black;
+  background-color:red;
+}
+@-moz-document url-prefix() {
+  #warning-vertical {
+    display:none;
+  }
+}
+.no-transition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+#page-container {
+  text-align:center;
+  // background-color:transparent;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  position: relative;
+}
+#title {
+  font-family:title;
+  font-size:10rem;
+  position:fixed;
+  color:white;
+  text-shadow:0 0 1rem black;
+  width:100%;
+  bottom:2.5rem;
+}
+#motto {
+  font-family:standard;
+  font-size:1.75rem;
+  color:ivory;
+  text-shadow:0 0 1px black,0 0 2px #444;
+}
+textarea {
+  float:left;
+  width:100%;
+  font-size:calc(.5vw + 16px);
+  resize:none;
+  border:1px;
+  margin:0;
+  padding:0;
+  letter-spacing:0;
+  height:10vh;
+  background-color: #402240;
+  color:darkgray;
+}
+#console::placeholder {
+  color:white;
+  opacity:1;
+}
+div {
+  white-space:pre;
+}
+select {
+  width:133px;
+}
+.half-width {
+  width: calc(50% - 3px);
+}
+.right {
+  border-left:0;
+}
+.under {
+  border-top:0;
+}
+.norm-height {
+  height:58vh;
+}
+.narrow-height {
+  height:10vh;
+}
+#utf-table {
+  float:left;
+  width:400px;
+  height:400px;  
+}
+#font-canvas {
+  display: inline-block;
+  float: left;
+  width: auto;
+  height: calc(50vh + 180px);
+  background-image: url(/img/bkg/grid.jpg);
+  background-size: cover;
+  background-color: lemonchiffon;
+  transform: scaleY(-1);
+}
+#font-code {
+  float: left;
+  width: calc(50% - 3px);
+  height: 50vh;
+}
+#font-code, #kerning-map, .active-textarea {
+  color: lemonchiffon;
+  background-color: #500050;
+}
+#console, #font-svg-container-container {
+  background-image: linear-gradient(to bottom,#a040a0,#680068);
+  float: left;
+  background-color: transparent;
+  color: darkgray;
+}
+#console {
+  height: 10vh;
+}
+#font-svg-container-container {
+  width: calc(50% - 3px);
+  height: 180px;
+  font-size: 40px;
+}
+#svg-preview {
+  transform:scaleY(-1);
+  z-index:10;
+}
+#kerning-map {
+  float:left;
+  width:400px;
+  height:400px;
+}
+@media only screen and (max-width: 150vh) {
+  #font-canvas {
+    float: none;
+    width: auto;
+  }
+  #font-code {
+    width: calc(100% - 200px);
+    height: 180px;
+  }
+  #font-svg-container-container {
+    width: 195px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  #kerning-map {
+    height:200px;
+  }
+}
+.custom-select {
+  width:100%;
+  background-color:rgba(100,0,100,.25);
+  // background-color:#680068;
+}
+.custom-select select { display:none; }
+.select-hide { display: none; }
+.select-items div,.select-selected-element {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  color: ivory;
+  font-weight: bold;
+  text-shadow: 0 0 1px black,0 0 1px black,0 0 3px gray,0 0 3px gray;
+  padding: calc(16px + 0.5vw) 0;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+}
+.select-selected-element {
+  display:inline-block;
+  /*background-color:#680068;*/
+  font-weight:bold;
+}
+.select-items div {
+  float:left;
+  width:calc(50% - 3px);
+  background-color: rgba(0, 0, 0, .5);
+}
+.menu-element, .save-needed-element {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  float: left;
+  color: ivory;
+  padding: calc(16px + 0.5vw) 0;
+  border: 0px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  width:12%;
+  background-color:#680068;
+  outline:none;
+}
+.save-needed-element {
+  cursor: auto;  
+}
+#menu-button-container {
+}
+#download-button, #fullscreen-button, .otf-button-element, .otf-loading-element, .chat-button-element, .chat-loading-element {
+  border:0;
+  margin:0 0 0 3.5em;
+  height:1.33em;
+  width:auto;
+}
+#conscript-text-container {
+  position:relative;
+}
+#conscript-text {
+  line-height:1.25em;
+}
+.file-upload input {
+  display:none;
+}
+input[type=text] {
+  width:400px;
+  padding:5px;
+  margin:0;
+  box-sizing:border-box;
+}
+progress[value] {
+  width:400px;
+}
+.donate-element {
+  position:absolute;
+  top:20px;
+  left:5px;
+}
+input[type=text].username-element {
+  position:absolute;
+  top:20px;
+  right:5px;
+  width:166px;
+  color:ivory;
+  background-color:#424;
+  border:0;
+}
+.play-element {
+  position:absolute;
+  top:70vh;
+  left:88vw;
+  -webkit-filter:drop-shadow(3px 3px 3px #222);
+  filter:drop-shadow(3px 3px 3px #222);
+}
+.help-element {
+  filter: brightness(2);
+  position:absolute;
+  top:20px;
+  left:5px;
+  height:1.33em;
+  width:auto;
+}
+.chat-in-new-page-element {
+  filter: brightness(2);
+  position:absolute;
+  top:20px;
+  left:60px;
+  height:1.33em;
+  width:auto;
+}
+/* Animated lights *********/
+.circle-container {
+  $particleNum: 200;
+  $particleColor: hsl(180, 100%, 80%);
+  position: absolute;
+  transform: translateY(-10vh);
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  .circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    background-image: radial-gradient(
+      hsl(180, 100%, 80%),
+      hsl(180, 100%, 80%) 10%,
+      hsla(180, 100%, 80%, 0) 56%
+    );
+    animation: fadein-frames 200ms infinite, scale-frames 2s infinite;
+    @keyframes fadein-frames {
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
+    }
+    @keyframes scale-frames {
+      0% { transform: scale3d(0.4, 0.4, 1); }
+      50% { transform: scale3d(2.2, 2.2, 1); }
+      100% { transform: scale3d(0.4, 0.4, 1); }
+    }
+  }
+  $particleBaseSize: 8;
+  @for $i from 1 through $particleNum {
+    &:nth-child(#{$i}) {
+      $circleSize: random($particleBaseSize);
+      width: $circleSize + px;
+      height: $circleSize + px;
+      $startPositionY: random(10) + 100;
+      $framesName: "move-frames-" + $i;
+      $moveDuration: 28000 + random(9000) + ms;
+      animation-name: #{$framesName};
+      animation-duration: $moveDuration;
+      animation-delay: random(37000) + ms;
+      @keyframes #{$framesName} {
+        from {
+          transform: translate3d(
+            #{random(100) + vw},
+            #{$startPositionY + vh},
+            0
+          );
+        }
+        to {
+          transform: translate3d(
+            #{random(100) + vw},
+            #{- $startPositionY - random(30) + vh},
+            0
+          );
+        }
+      }
+      .circle {
+        animation-delay: random(4000) + ms;
+      }
+    }
+  }
+}

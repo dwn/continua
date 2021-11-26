@@ -8,15 +8,19 @@ head
   link(rel='stylesheet', type='text/css', href='css/continua.css')
   meta(name='mobile-web-app-capable', content='yes')
   meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  meta(name='google-signin-client_id' content='YOUR_CLIENT_ID.apps.googleusercontent.com')
   script(src='/socket.io/socket.io.js')
   script(src='/js/imagetracer.js')
   script(src='/js/mespeak.js')
   script(src='https://dwn.github.io/common/js/jquery-3.3.1.min.js')
-div#page-container
-  - for(i = 1; i <= 100; i++)
-    .circle-container
-      .circle
-  div.title-element(style='font-family:title; font-size:10rem; position:fixed; color:white; text-shadow:0 0 1rem black; width:100%; bottom:2.5rem') comntiua
+#page-container
+  #my-signin2
+  .title-element
+    - for(i = 1; i <= 100; i++)
+      .circle-container
+        .circle
+    #title comntiua
+      #motto a web app for constructed languages
   .custom-select
     a(href='https://www.youtube.com/watch?v=JCspg3Nxjxg&list=PL0RyYrt3lUnWLK_sNwurzMSkce2uTtaTO' target='_blank')
       img.help-element(src='img/icon/help.png' title='help')
@@ -40,7 +44,7 @@ div#page-container
     .menu-element(onclick="hideAll(); setVisibility('adjust',true)") adjust
     .menu-element(onclick="hideAll(); setVisibility('script',true)") script
     // <div class="menu-element gloss-button" onclick="hideAll(); setVisibility('gloss',true)">gloss</div>
-    div#menu-button-container
+    #menu-button-container
       input#download-button.menu-element(type='image' src='img/icon/download.png' title='save continua svg file' onclick='setVisibility("save-needed",false); downloadSVG();')
       img.save-needed-element(src='img/icon/save-needed.png' style='height:1.33em;width:auto;margin-left:0' title='save to see font changes')
       .menu-element.file-upload(style='cursor:auto')
@@ -48,7 +52,7 @@ div#page-container
           img(src='img/icon/open.png' title='open continua svg file' style="height:1.15em; display:inline-block;")
         input#files(type='file' name='files[]' multiple='')
       input#fullscreen-button.menu-element(type='image' src='img/icon/fullscreen.png' title='fullscreen' style='margin-left:0' onclick='toggleFS();')
-      div.menu-element(style='cursor:auto')
+      .menu-element(style='cursor:auto')
         input.otf-loading-element(type='image' src='img/icon/loading-small.gif' title='please wait' style='cursor:pointer')
         input.otf-button-element(type='image' src='img/icon/otf.png' title='download otf' style='cursor:pointer' onclick='downloadOTF();')
         input.chat-loading-element(type='image' src='img/icon/loading-small.gif' title='please wait' style='cursor:pointer')
@@ -65,7 +69,7 @@ div#page-container
   /////////////////////////////
   // ADJUST
   /////////////////////////////
-  div.adjust-element(style='width:100%; text-align:left')
+  .adjust-element(style='width:100%; text-align:left')
     input#font-name(type='text' onblur='setAdjustSetting()' placeholder='font name')
     br
     input#note(type='text' onblur='setAdjustSetting()' placeholder='notes about font (author name, etc.)')
@@ -135,9 +139,9 @@ EXAMPLE\n\
   /////////////////////////////
   textarea#phoneme-map.script-element.half-width.under(type='text' spellcheck='false' onblur='loadPhonemeMap()' placeholder='PHONEME MAP')
   textarea#grapheme-map.script-element.half-width.right.under(type='text' spellcheck='false' onblur='loadGraphemeMap()' placeholder='GRAPHEME MAP')
-  div#conscript-text-container
+  #conscript-text-container
     img.script-element.play-element(src='img/icon/play.png' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
-    div#conscript-text.script-element.half-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
+    #conscript-text.script-element.half-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
   textarea#user-text.script-element.half-width.right.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
   textarea#console.script-element.under(type='text' spellcheck='false' readonly='')
   p#warning-mobile INTENDED FOR USE ON<br>A LARGE SCREEN ONLY
@@ -146,3 +150,24 @@ EXAMPLE\n\
 script(src='/version.js')
 script(src='https://dwn.github.io/common/js/chat.js')
 script(src='/js/continua.js')
+
+script
+  function onSuccess(googleUser) {
+    console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+  }
+  function onFailure(error) {
+    console.log(error);
+  }
+  function renderButton() {
+    gapi.signin2.render('my-signin2', {
+      'scope': 'profile email',
+      'width': 240,
+      'height': 50,
+      'longtitle': true,
+      'theme': 'dark',
+      'onsuccess': onSuccess,
+      'onfailure': onFailure
+    });
+  }
+
+script(src="https://apis.google.com/js/platform.js?onload=renderButton" async defer)

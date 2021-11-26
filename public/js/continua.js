@@ -557,7 +557,9 @@ function setVisibility(name, on) {
     var el = arrEl[i];
     if (on) {
       if (name === 'chat') el.style.display = 'block'; //Chatbox flows down under main page
-      if (name === 'title') el.style.display = 'block'; //Title has centering rule
+      if (name === 'title') {
+        el.style.display = 'block'; //Title has centering rule
+      }
       else el.style.display = 'inline-block';
       if (name === 'font') {
         document.getElementById('font-code').focus(); //Refresh glyph preview if font screen
