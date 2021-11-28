@@ -539,17 +539,17 @@ var replacement = {
   "&#x2039;": {'glyph-name': "guilsinglleft", 'horiz-adv-x': "632", 'vert-adv-y': "1872", 'd': "M138 518V541L387 930L445 902Q459 895 466 884T473 860Q473 843 463 827L304 566Q290 542 276 529Q291 515 304 493L463 232Q468 224 470 215T473 198Q473 170 445 157L387 129L138 518Z"},
   "&#x203a;": {'glyph-name': "guilsinglright", 'horiz-adv-x': "632", 'vert-adv-y': "1872", 'd': "M485 541V518L236 129L178 157Q150 170 150 198Q150 215 160 232L319 493Q332 517 346 529Q334 540 319 566L160 827Q150 844 150 861Q150 889 178 902L236 930L485 541Z"}};
 ////////////////////////////////////////////
-//Disable enter key for form submission of username
-document.querySelector('.username-element').addEventListener('keydown', e => {
-  if (event.keyCode == 13) { event.preventDefault(); return false; }
-});
-//Set username on blur
-document.querySelector('.username-element').addEventListener('blur', e => {
-  if (!e.target.checkValidity()) {
-    alert('Invalid username - simple English letters and numbers only');
-    document.querySelector('.username-element').value = '';
-  }
-});
+// //Disable enter key for form submission of username
+// document.querySelector('.username-element').addEventListener('keydown', e => {
+//   if (event.keyCode == 13) { event.preventDefault(); return false; }
+// });
+// //Set username on blur
+// document.querySelector('.username-element').addEventListener('blur', e => {
+//   if (!e.target.checkValidity()) {
+//     alert('Invalid username - simple English letters and numbers only');
+//     document.querySelector('.username-element').value = '';
+//   }
+// });
 ////////////////////////////////////////////
 function setVisibility(name, on) {
   var arrEl = document.getElementsByClassName(name+'-element');
@@ -578,6 +578,8 @@ function hideAll() {
   setVisibility('adjust',false);
   setVisibility('script',false);
   setVisibility('title',false);
+  setVisibility('settings',false);
+  setVisibility('logout',false);
 }
 ////////////////////////////////////////////
 function toggleFS() {
@@ -1447,18 +1449,23 @@ for (i = 0; i < x.length; i++) {
 ////////////////////////////////////////////
 function closeAllSelect(el, skipConfirm = false) {
   if ($(el).hasClass('select-selected-element') && !$(el).hasClass('select-arrow-active')) {
-    if (el.innerHTML.substr(0,7) !== 'Welcome') {
+    debug(el.innerHTML.substr(0,5));
+    if (el.innerHTML !== 'start') {
       if (!skipConfirm) {
         if (confirm('Are you sure you want to leave this page? Unsaved data will be lost!')) {
           setVisibility('save-needed',false);
-          setAllData(false,el,'Welcome, ');
+          setAllData(false,el,'start');
+          setVisibility('settings',true);
+          setVisibility('logout',true);
           setVisibility('title',true);
           openedChat = false;
         } else {
           doNotToggleOptionList=true;
         }
       } else {
-        setAllData(false,el,'Welcome, ');
+        setAllData(false,el,'start');
+        setVisibility('settings',true);
+        setVisibility('logout',true);
         setVisibility('title',true);
       }
     }

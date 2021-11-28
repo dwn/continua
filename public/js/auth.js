@@ -1,13 +1,26 @@
+$(':checkbox').prop('checked', false); //Makes sure all checkboxes are unchecked on a page reload
 function onSuccess(googleUser) {
-  console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-  document.getElementByClassName('signin-container-element')[0].style.display = 'none';
-  document.getElementsByClassName('custom-select-element')[0].style.display = 'inline-block';
+  var profile = googleUser.getBasicProfile();
+  var name = profile.getName();
+  var email = profile.getEmail();
+  var username = (email.split('@')[0] || name.split(' ')[0]);
+  console.log('name: ' + name);
+  console.log('email: ' + email);
+  console.log('username: ' + username);
+  // console.log('id: ' + profile.getId());
+  // console.log('image url: ' + profile.getImageUrl());
+  document.getElementsByClassName('login-container-element')[0].style.display = 'none';
+  document.getElementsByClassName('custom-select-element')[0].style.display = 'inline-block';  
+
+  // document.getElementsByClassName('intro-element')[0].style.display = 'none';
+  // document.getElementsByClassName('username-element')[0].style.display = 'block';
+  // document.getElementById('username-input').focus();
 }
 function onFailure(error) {
   console.log(error);
 }
 function renderButton() {
-  gapi.signin2.render('signin', {
+  gapi.signin2.render('login', {
     'scope': 'profile email',
     'width': 180,
     'height': 75,
@@ -16,4 +29,16 @@ function renderButton() {
     'onsuccess': onSuccess,
     'onfailure': onFailure
   });
+}
+function logout() {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    console.log('User logged out');
+    document.location.reload();
+  });
+}
+function showLoginOnlyWhenPolicyChecked() {
+  var checkboxEl = document.getElementById('policy-checkbox');
+  var signinEl = document.getElementById('login');
+  signinEl.style.display = (checkboxEl.checked? 'block' : 'none');
 }

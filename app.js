@@ -6,16 +6,29 @@ const fs = require('fs');
 const path = require('path');
 const cfg = JSON.parse(fs.readFileSync('cfg.json', 'utf8'));
 const PORT = cfg['PORT'];
+//
 const CLOUD_BUCKET = cfg['CLOUD_BUCKET'];
 const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
 const bucket = storage.bucket(CLOUD_BUCKET);
+//
+// const firebase = require("firebase");
+// require("firebase/firestore");
+// firebase.initializeApp({
+//   apiKey: '### FIREBASE API KEY ###',
+//   authDomain: '### FIREBASE AUTH DOMAIN ###',
+//   projectId: cfg['PROJECT_ID']
+// });
+// var db = firebase.firestore();
+//
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
-const io = require('socket.io')(server);
-const ulid = require('ulid');
 const request = require('request');
+//
+const io = require('socket.io')(server);
+//
+const ulid = require('ulid');
 ////////////////////////////////////////////
 // Setup
 ////////////////////////////////////////////
@@ -117,6 +130,14 @@ app.get('/common-lang-url', (req, res) => {
   res.send(`https://dwn.github.io/common/lang/`);
 });
 ////////////////////////////////////////////
+// CRUD
+////////////////////////////////////////////
+// app.post('/username', (req, res)) {
+//   req.on('username', function(username) {
+//     db.collection('users').doc(username).set({'test':'testing'});
+//   });
+// }
+////////////////////////////////////////////
 // Main
 ////////////////////////////////////////////
 const SVG_TO_OTF_SERVICE_URL = cfg['SVG_TO_OTF_SERVICE_URL'];
@@ -133,28 +154,26 @@ function svgToOTF(filename, string) {
 }
 ////////////////////////////////////////////
 app.post('/upload-file-to-cloud', (req, res) => {
-  if (req.method == 'POST') {
-    var string = '';
-    req.on('data', function(data) {
-      string += data;
+  var string = '';
+  req.on('data', function(data) {
+    string += data;
+  });
+  req.on('end', function() {
+    //Upload to Google Cloud file storage
+    var dat = string.split("<desc>");
+    dat = dat[1].split("</desc>")[0];
+    var json = JSON.parse(dat);
+    var filename = json["name"]+".svg";
+    const file = bucket.file(filename);
+    console.log('Uploading file to cloud');
+    file.save(string).then(function() {
+      console.log('Done uploading');
+      svgToOTF(filename, string);
+      setTimeout(function() {
+        res.end('{"success" : "Updated successfully", "status" : 200}');
+      }, 9000);
     });
-    req.on('end', function() {
-      //Upload to Google Cloud file storage
-      var dat = string.split("<desc>");
-      dat = dat[1].split("</desc>")[0];
-      var json = JSON.parse(dat);
-      var filename = json["name"]+".svg";
-      const file = bucket.file(filename);
-      console.log('Uploading file to cloud');
-      file.save(string).then(function() {
-        console.log('Done uploading');
-        svgToOTF(filename, string);
-        setTimeout(function() {
-          res.end('{"success" : "Updated successfully", "status" : 200}');
-        }, 9000);
-      });
-    });
-  }
+  });
 });
 ////////////////////////////////////////////
 app.get('/', (req, res) => { //Redirect root

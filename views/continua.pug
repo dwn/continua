@@ -20,28 +20,31 @@ head
         .circle
     #title comntiua-
       #motto a web app for language construction
-  .signin-container-element
-    p(style='font-size:1.5rem') Welcome to the Continua web app for language construction!
-    p This app currently supports:
-      li Font creation (based on Gary Shannon's FontMaker format)
-      li Automatic export to OTF font file and data stored in a database
-      li Kerning and other stylistic adjustments (vertical text, nib roundness, etc.)
-      li Speech synthesis based on phoneme definitions
-      li Ability to create extremely complex combination rules for ligatures, etc.
-      li Ability to store glossaries, phrasebooks, writings, etc.
-      li Real-time chatting in various scripts
-      li Live word and phrase look-ups for translation assistance
-    p(style='font-size:1.1rem') This app is intended for a device with a keyboard. Right now the best instructional videos are <a href='https://www.youtube.com/watch?v=JCspg3Nxjxg&list=PL0RyYrt3lUnWLK_sNwurzMSkce2uTtaTO' target='_blank'>here</a>, but hopefully a proper guide will appear sometime the future, and a simplified phone app may also be developed at some point.
-    p(style='font-size:1.1rem') I developed this app free and open-source (although it was not free for me) so that it might be of use to the language creation community. There are no ads or sales within, and I can assure you there is no malintent. The following documents are required in order to be listed as a verified website.
-    #doc-agreement-checkbox
-    br
-    #doc-agreement-submit-button
-      #signin
-    script(type='text/javascript' src='//www.termsfeed.com/public/i-agree-checkbox/releases/1.0.0/i-agree-checkbox.js')
-    script(type='text/javascript').
-      document.addEventListener('DOMContentLoaded', function () {
-      i_agree_checkbox.run({'palette':'light','terms_and_conditions_url':'https://continua.malkachi.com/doc/terms-of-service.html','privacy_policy_url':'https://continua.malkachi.com/doc/privacy.html','privacy_policy_text_container_id':'#user_i_agree_checkbox_privacy_policy_text_container','terms_and_conditions_text_container_id':'#user_i_agree_checkbox_terms_and_conditions_text_container','warning_dialog_text':'Policies were not accepted','consent_to_agreements':['privacy_policy','terms_and_conditions'],'agreements_display_type':'link','checkbox_text_area_id':'#doc-agreement-checkbox','checkbox_text':'By signing in you agree to our %PrivacyPolicy% and %TermsAndConditions%.','submit_button_id':'#doc-agreement-submit-button','agree_button_text':'OK','close_button_text':'Cancel'});
-      });
+  .login-container-element
+    .intro-element
+      p(style='font-size:1.3rem') Welcome to the Continua language-construction web app!
+      ul(style='border:1px;outline:1px') Currently supported:
+        li Font creation (based on Gary Shannon's FontMaker format)
+        li Automatic export to OTF font file and database
+        li Kerning and stylistic adjustments (vertical text, nib roundness, etc.)
+        li Speech synthesis based on phoneme definitions
+        li Ability to create extremely complex ligature and combination rules
+        li Ability to store glossaries, phrasebooks, writings, etc.
+        li Real-time chatting in various scripts
+        li Live word and phrase look-up for translation assistance
+      p This app is intended for a device with a keyboard. Right now the best instructional videos are <a href='https://www.youtube.com/watch?v=JCspg3Nxjxg&list=PL0RyYrt3lUnWLK_sNwurzMSkce2uTtaTO' target='_blank'>here</a>, but hopefully a proper guide will appear sometime the future, and possibly also a phone app.
+      p It is free and open-source (although it was not free to develop) so that it might be of use to the language creation community. There are no ads or sales within, and I can assure you there is no malintent. The following documents are required in order to qualify as a verified website.
+      input#policy-checkbox(type='checkbox' onclick='showLoginOnlyWhenPolicyChecked()')
+      label I agree to the <a href='https://continua.malkachi.com/doc/privacy.html' target='_blank'>Privacy Policy</a> and <a href='https://continua.malkachi.com/doc/terms-of-service.html' target='_blank'>Terms of Service</a>
+      #login.login-element
+      br
+      p#warning-mobile INTENDED FOR USE ON<br>A KEYBOARD DEVICE,<br>NOT A PHONE
+    form(action='/username/new').username-element
+      label(for='username') username
+      br
+      input#username-input(type='text' name='username')
+      br
+      input#username-submit(type='submit' value='↩')
     //- iframe.help(width='560' height='315' src='https://www.youtube.com/embed/JCspg3Nxjxg' title='Continua help' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen)
 
   .custom-select-element
@@ -52,10 +55,12 @@ head
       img.chat-in-new-page-element(src='img/icon/chat.png' title='chat')
     input.conscript-loading-element(type='image' src='img/icon/loading.gif' title='please wait')
     select#lang
-      option Welcome!
+      option start
       each lang in arrLang
         option=lang
-    form
+    a.settings-element(href="#" onclick="settings();") settings
+    a.logout-element(href="#" onclick="logout();") logout
+    //- form
       input.username-element(type='text' placeholder='USERNAME OPTIONAL' pattern='[A-Za-z0-9]+')
     //- .donate-element
       form(action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top")
@@ -95,7 +100,6 @@ head
   /////////////////////////////
   .adjust-element(style='width:100%; text-align:left')
     input#font-name(type='text' onblur='setAdjustSetting()' placeholder='font name')
-    br
     input#note(type='text' onblur='setAdjustSetting()' placeholder='notes about font (author name, etc.)')
     br
     select#weight(onchange='setAdjustSetting()')
@@ -168,8 +172,6 @@ EXAMPLE\n\
     #conscript-text.script-element.half-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
   textarea#user-text.script-element.half-width.right.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
   textarea#console.script-element.under(type='text' spellcheck='false' readonly='')
-  p#warning-mobile INTENDED FOR USE ON<br>A LARGE SCREEN ONLY
-  p#warning-vertical VERTICAL FONTS FULLY<br>SUPPORTED IN FIREFOX ONLY
   iframe.chat-element.script-element(src='' width='100%' height='500' frameborder='0')
 script(src='/version.js')
 script(src='https://dwn.github.io/common/js/chat.js')

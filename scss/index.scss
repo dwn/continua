@@ -1,41 +1,58 @@
-/*//////////////////////////////////////////
+//////////////////////////////////////////
 // Dan Nielsen
-//////////////////////////////////////////*/
+//////////////////////////////////////////
 @import '_colors';
 @import '_layout';
 @import '_forms';
-@font-face{font-family:standard;src:url(continua.ttf)}
+@import url('https://fonts.googleapis.com/css2?family=Klee+One:wght@600&display=swap');
+// @font-face{font-family:standard;src:url(continua.ttf)}
 @font-face{font-family:title;src:url(title.otf)}
-.menu-element{display:none;} .select-selected-element{display:inline-block;} .conscript-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .chat-in-new-page-element{display:inline-element;} .username-element{display:inline-block;} .pen-progress-element{display:none;} .play-element{display:none;} .script-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;} .signin-container-element{display:inline-block;}
+.menu-element{display:none;} .select-selected-element{display:inline-block;} .conscript-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .chat-in-new-page-element{display:inline-element;} .pen-progress-element{display:none;} .play-element{display:none;} .script-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;} .login-container-element{display:inline-block;} .login-element{display:none;} .username-element{display:none;} .intro-element{display:block;}
 * {-webkit-font-smoothing: antialiased;}
 html,
 body {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  // overflow: hidden;
+  font-size: 1.1rem;
 }
 body {
-  font-family: standard;
+  font-family: 'Klee One', cursive;
   border: 0;
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: gold;
-  background: white url(/img/continua/continua-girl.jpg);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+  background: white url(/img/continua/continua-girl.jpg) no-repeat fixed top center;
+  // background: black url(/img/continua/continua.svg) no-repeat fixed center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  background-position: top center;
-  // background: black url(/img/continua/continua.svg);
-  // background-position: center center;
+}
+input[type='text'] {
+  font-family: 'Klee One', cursive;
+  padding:5px;
+  box-sizing:border-box;
+  margin:1rem .1rem;
+  border:0;
+  width:calc(400px - .2rem);
+  height:auto;
+  font-size:2rem;
+  color:black;
+  background-color:white;
+  // box-shadow:0 0 20px gray,0 0 30px gray;
+  border-radius:1rem;
+  text-align:center;
+}
+input[type='checkbox'] {
+  width:1.5rem;
+  height:1.5rem;
 }
 @media only screen and (max-width:600px) {
   #warning-mobile {
     color:ivory;
     text-shadow:0 0 4px black;
-    background-color:red;
+    background-color:rgba(255,0,0,.5);
   }
   body {
     background-position: 10% 0%;
@@ -43,18 +60,6 @@ body {
 }
 @media only screen and (min-width:600px) {
   #warning-mobile {
-    display:none;
-  }
-}
-@media only screen and (min-width: 768px) {
-}
-#warning-vertical {
-  color:ivory;
-  text-shadow:0 0 4px black;
-  background-color:red;
-}
-@-moz-document url-prefix() {
-  #warning-vertical {
     display:none;
   }
 }
@@ -72,31 +77,36 @@ body {
   overflow:hidden;
   position:relative;
 }
-.signin-container-element {
+.login-container-element {
   white-space:pre-wrap;
   width:660px;
-  font-family:standard;
   position:absolute;
-  padding:50px;
-  background-color:rgba(255,255,255,.8);
+  padding:1rem 2rem;
+  background:linear-gradient(to bottom,#225,gray,white), url(/img/bkg/wallpaper-2.jpg) no-repeat scroll center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-blend-mode: screen;
+  // opacity:.9;
   left:calc(50vw - 380px);
-  top:15px;
+  bottom:25px;
   box-shadow:0 0 20px black;
   border-radius:1rem;
   color:#111;
-  text-shadow:0 0 1px gray;
+  // text-shadow:0 0 1px black;
 }
-li {
-  line-height:2rem;
+.intro-element {
+  white-space:pre-wrap;
+}
+ul,ol,li {
+  line-height:1.8rem;
   text-align:left;
 }
-#doc-agreement-checkbox {
-  font-size:1.1rem;
+#login {
+  opacity:1;
 }
-#signin {
-  opacity:.8;
-}
-#signin > div {
+#login > div {
   margin:0 auto;
   text-align:left;
 }
@@ -110,10 +120,10 @@ li {
   bottom:2.5rem;
 }
 #motto {
-  font-family:standard;
-  font-size:1.75rem;
-  color:ivory;
-  text-shadow:0 0 1px black,0 0 2px #444;
+  font-family: 'Klee One', cursive;
+  font-size:1.3rem;
+  color:darkcyan;
+  text-shadow:0 0 1px black,0 0 50px darkcyan;
 }
 textarea {
   float:left;
@@ -224,8 +234,45 @@ select {
   // background-color:#680068;
 }
 .custom-select-element select { display:none; }
-.select-hide { display: none; }
-.select-items div,.select-selected-element {
+.select-hide { display:none; }
+.settings-element, .logout-element, .select-selected-element {
+  position:absolute;
+  top:0;
+  padding:1rem;
+  font-size:1.6rem;
+  text-shadow:0 0 1px black,0 0 1px black,0 0 3px gray,0 0 3px gray,0 0 1rem black,0 0 1px black,0 0 1px black,0 0 3px gray,0 0 3px gray,0 0 1rem black;
+  text-decoration:none;
+  color:#fed;
+  cursor:pointer;
+  &::after{
+    content: '';
+    background: white;
+    mix-blend-mode: exclusion;
+    width: calc(100% + 20px);
+    height: 0;
+    position: absolute;
+    bottom: 8rem;
+    left: -10px;
+    opacity:0;
+    transition: all .3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  }
+  &:hover::after{
+    height: calc(100% + 8px);
+    transform: translateY(8rem);
+    opacity:1;
+  }
+}
+.settings-element {
+  left:5%;
+}
+.logout-element {
+  right:5%;
+}
+.select-selected-element {
+  position:relative;
+  text-align:center;
+}
+.select-items div {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   color: ivory;
   font-weight: bold;
@@ -235,6 +282,11 @@ select {
   border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
   cursor: pointer;
   user-select: none;
+  transition: all .3s ease-out;
+  &:hover {
+    background-color: rgba(150,150,150,.5);
+    text-shadow:0 0 1rem white,0 0 2rem white,0 0 3rem white,0 0 4rem white,0 0 5rem white;
+  }
 }
 .select-selected-element {
   display:inline-block;
@@ -278,12 +330,6 @@ select {
 .file-upload input {
   display:none;
 }
-input[type=text] {
-  width:400px;
-  padding:5px;
-  margin:0;
-  box-sizing:border-box;
-}
 progress[value] {
   width:400px;
 }
@@ -292,14 +338,14 @@ progress[value] {
   top:20px;
   left:5px;
 }
-input[type=text].username-element {
-  position:absolute;
-  top:20px;
-  right:5px;
-  width:166px;
-  color:ivory;
-  background-color:#424;
+#username-submit {
+  margin:1rem 0;
   border:0;
+  height:100;
+  background-color:white;
+  box-shadow:0 0 20px gray,0 0 30px gray;
+  font-size:2rem;
+  border-radius:25px;  
 }
 .play-element {
   position:absolute;
