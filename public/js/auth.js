@@ -3,14 +3,14 @@ function onSuccess(googleUser) {
   var profile = googleUser.getBasicProfile();
   var name = profile.getName();
   var email = profile.getEmail();
-  var username = (email.split('@')[0] || name.split(' ')[0]);
   console.log('name: ' + name);
   console.log('email: ' + email);
-  console.log('username: ' + username);
   // console.log('id: ' + profile.getId());
   // console.log('image url: ' + profile.getImageUrl());
   document.getElementsByClassName('login-container-element')[0].style.display = 'none';
-  document.getElementsByClassName('custom-select-element')[0].style.display = 'inline-block';  
+  document.getElementsByClassName('custom-select-element')[0].style.display = 'inline-block';
+console.log(name.toLowerCase().replace(' ','-'));
+  document.getElementsByClassName('username-element')[0].value = name.toLowerCase().replace(' ','-');
 
   // document.getElementsByClassName('intro-element')[0].style.display = 'none';
   // document.getElementsByClassName('username-element')[0].style.display = 'block';

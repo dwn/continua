@@ -4,6 +4,7 @@
 if (typeof DEBUG!=='undefined' && DEBUG==1) {function debug(s){console.log(s);}} else {function debug(s){}}
 ////////////////////////////////////////////
 $(document).ready(function() {
+  document.getElementById('page-container').style.background='transparent'; //In case background state was cached
 ////////////////////////////////////////////
   $('#phoneme-map').bind('keyup click focus paste', function() {
     document.getElementById('phoneme-map').classList.add('active-textarea');
@@ -580,6 +581,7 @@ function hideAll() {
   setVisibility('title',false);
   setVisibility('settings',false);
   setVisibility('logout',false);
+  document.getElementById('page-container').style.background='url(/img/bkg/upholstry.png)';
 }
 ////////////////////////////////////////////
 function toggleFS() {
@@ -709,6 +711,7 @@ function setAdjustSetting() {
     el.style.float = 'left';
     el.style.backgroundImage = 'url(img/bkg/fire.gif)';
     el.style.backgroundSize = 'cover';
+    el.style.backgroundPosition = 'bottom';
     el.style.backgroundRepeat = 'repeat-y';
     el.style.backgroundBlendMode = null;
     el.style.backgroundColor = 'black';
@@ -1398,7 +1401,7 @@ for (i = 0; i < x.length; i++) {
   //For each element, create a new DIV that will act as the selected item
   a = document.createElement('DIV');
   a.setAttribute('class', 'select-selected-element');
-  a.setAttribute('title', 'choose script'); //*** ADDED ***
+  a.setAttribute('title', 'language selection'); //*** ADDED ***
   a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
   x[i].appendChild(a);
   //For each element, create a new DIV that will contain the option list
@@ -1458,6 +1461,7 @@ function closeAllSelect(el, skipConfirm = false) {
           setVisibility('settings',true);
           setVisibility('logout',true);
           setVisibility('title',true);
+          document.getElementById('page-container').style.background='transparent';
           openedChat = false;
         } else {
           doNotToggleOptionList=true;

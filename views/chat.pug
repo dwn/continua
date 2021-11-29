@@ -11,12 +11,12 @@ html(lang='en')
     script(src='https://dwn.github.io/common/js/jquery-3.3.1.min.js')
     script(src='/js/mespeak.js')
   body
-    .container
-      each lang in arrLang
-        a(href=`/chat/${lang}?username=${username}`)
-          div.tag-container
-            div.tag
-              p #{lang}
+    //- .container
+    //-   each lang in arrLang
+    //-     a(href=`/chat/${lang}?username=${username}`)
+    //-       div.tag-container
+    //-         div.tag
+    //-           p #{lang}
     ul(id='messages')
     form(action='')
       input#message-input(autocomplete='off' autofocus)

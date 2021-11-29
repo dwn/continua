@@ -1,13 +1,17 @@
 //////////////////////////////////////////
 // Dan Nielsen
 //////////////////////////////////////////
-$title-bkg-url:'/img/continua/continua-girl.jpg';
-$login-bkg-url:'/img/bkg/wallpaper-2.jpg';
+$title-bkg-position:20%;
+$title-bkg-url:'/img/continua/continua-bird.jpg';
+$bkg-upholstry-url:'/img/bkg/upholstry.png';
+$login-bkg-url:'/img/bkg/wallpaper-blue.jpg';
 $font:'EB Garamond';
 $font-url:'https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&display=swap';
 $text-highlight:0 0 .6rem rgba(255,255,255,.4),0 0 .6rem rgba(255,255,255,.4),0 0 .6rem rgba(255,255,255,.4);
 $text-shadow:.225rem .225rem .5rem rgba(0,0,0,.4),.225rem .225rem .5rem rgba(0,0,0,.4),.225rem .225rem .5rem rgba(0,0,0,.4);
-$box-shadow:$text-shadow;
+$box-shadow:.5rem .5rem 1rem rgba(0,0,0,.5);
+$box-shadow-down:0 .5rem 1rem rgba(0,0,0,.5);
+$box-shadow-up:0 -.5rem 1rem rgba(0,0,0,.5);
 //Text size
 $base-font-size:1.275rem;
 $login-font-size:1.05rem;
@@ -20,12 +24,12 @@ $login-text-color:#111;
 $textarea-text-color:darkgray;
 $console-text-color:darkgray;
 $select-item-color:ivory;
-$motto-color:darkcyan;
+$motto-color:#ccc;
+$placeholder-text-color:#bbb;
 //Background color
 $textarea-active-color:#500050;
 $textarea-inactive-color:#402240;
-$title-menu-bkg-color:#68006840; //RGB must match $bkg-color
-$menu-bkg-color:#680068;
+$title-menu-bkg-color:#68006870; //RGB must match $bkg-color
 $title-bkg-color:white;
 $select-item-bkg-color:rgba(0,0,0,.5);
 $select-item-hover-bkg-color:rgba(150,150,150,.5);
@@ -36,7 +40,7 @@ $bkg-color:#680068;
 @import '_forms';
 @import url($font-url);
 @font-face{font-family:title;src:url(title.otf)}
-.menu-element{display:none;} .select-selected-element{display:inline-block;} .conscript-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .chat-in-new-page-element{display:inline-element;} .pen-progress-element{display:none;} .play-element{display:none;} .script-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;} .login-container-element{display:inline-block;} .login-element{display:none;} .username-element{display:none;} .intro-element{display:block;}
+.menu-element{display:none;} .select-selected-element{display:inline-block;} .conscript-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .chat-in-new-page-element{display:inline-element;} .pen-progress-element{display:none;} .play-element{display:none;} .script-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;} .login-container-element{display:inline-block;} .login-element{display:none;} .username-element{display:inline-block;} .intro-element{display:block;}
 * {-webkit-font-smoothing: antialiased;}
 html,
 body {
@@ -54,6 +58,7 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background-position: $title-bkg-position;
 }
 input[type='text'] {
   font-family: $font;
@@ -66,7 +71,6 @@ input[type='text'] {
   font-size:2rem;
   color:black;
   background-color:$title-bkg-color;
-  box-shadow:$box-shadow;
   border-radius:1rem;
   text-align:center;
 }
@@ -97,18 +101,11 @@ input[type='checkbox'] {
 }
 #page-container {
   text-align:center;
-  // background-color:transparent;
+  // background:url($bkg-upholstry-url);
   width:100%;
   height:100%;
-  overflow:hidden;
+  overflow-y:hidden;
   position:relative;
-}
-.title-element {
-  z-index:-10;
-}
-.content-container {
-  // position:absolute;
-  // left:calc(50vw - 400px);
 }
 .login-container-element {
   font-size:$login-font-size;
@@ -121,8 +118,7 @@ input[type='checkbox'] {
   opacity:1;
   border-radius:20px;
   color:$login-text-color;
-  box-shadow:$box-shadow;
-  background:linear-gradient(to bottom,#225,gray,white), url($login-bkg-url) no-repeat scroll center center;
+  background:linear-gradient(to bottom,#aaa,#aaa,#bbb,#fff), url($login-bkg-url) no-repeat scroll center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -171,14 +167,14 @@ textarea {
   color:$textarea-text-color;
 }
 #console::placeholder {
-  color:white;
+  color:$placeholder-text-color;
   opacity:1;
 }
 div {
   white-space:pre;
 }
 select {
-  width:133px;
+  width:114px;
   height:2.5rem;
   font-size:.9rem;
 }
@@ -197,6 +193,13 @@ select {
 .narrow-height {
   height:10vh;
 }
+#kerning-map, #font-svg-container-container, .custom-select-element, #console {
+  box-shadow:$box-shadow-down;
+}
+input[type=text], #utf-table, .login-container-element {
+  box-shadow:$box-shadow;
+}
+#font-canvas { box-shadow:$box-shadow-up; }
 #utf-table {
   float:left;
   width:400px;
@@ -214,7 +217,7 @@ select {
 }
 #font-code {
   float:left;
-  width:calc(50% - 3px);
+  width:800px;
   height:50vh;
 }
 #font-code, #kerning-map, .active-textarea {
@@ -231,7 +234,8 @@ select {
   height:10vh;
 }
 #font-svg-container-container {
-  width:calc(50% - 3px);
+  // width:calc(50% - 3px);
+  width:800px;
   height:180px;
   font-size:40px;
 }
@@ -244,13 +248,27 @@ select {
   width:400px;
   height:400px;
 }
-@media only screen and (max-width: 150vh) {
+.content-container.adjust {
+  left:calc(50% - 400px);
+  width:800px;
+  position:relative;
+}
+.content-container.font {
+  left:calc(50% - 730px);
+  width:calc(50vh + 180px + 800px);
+  position:relative;
+}
+@media only screen and (max-width: 152.5vh) {
+  .content-container.font {
+    left:auto;
+    width:98vw;
+  }
   #font-canvas {
-    float:none;
+    float:left;
     width:auto;
   }
   #font-code {
-    width:calc(100% - 200px);
+    width:calc(97vw - 200px);
     height:180px;
   }
   #font-svg-container-container {
@@ -258,6 +276,11 @@ select {
   }
 }
 @media only screen and (max-width: 800px) {
+  .content-container.adjust {
+    display:inline-block;
+    left:auto;
+    width:98vw;
+  }
   #kerning-map {
     height:200px;
   }
@@ -267,11 +290,11 @@ select {
   background-color:$title-menu-bkg-color;
 }
 .custom-select-element.content-container {
-    margin: 0 auto;
+    margin:0 auto;
 }
 .custom-select-element select { display:none; }
 .select-hide { display:none; }
-.settings-element, .logout-element, .select-selected-element {
+.username-element, .logout-element, .select-selected-element {
   position:absolute;
   top:0;
   padding:1rem;
@@ -279,14 +302,16 @@ select {
   text-shadow:$text-shadow;
   text-decoration:none;
   color:$menu-item-color;
+}
+.logout-element, .select-selected-element {
   cursor:pointer;
   transition: all .2s ease-out;
   &:hover {
     background-color:$select-item-hover-bkg-color;
     text-shadow:$text-highlight;
-  }
+  }  
 }
-.settings-element {
+.username-element {
   left:5%;
 }
 .logout-element {
@@ -298,7 +323,7 @@ select {
 }
 .select-items div {
   color: $select-item-color;
-  font-weight: bold;
+  // font-weight: bold;
   text-shadow:$text-shadow;
   padding: calc(16px + 0.5vw) 0;
   border: 1px solid transparent;
@@ -313,7 +338,6 @@ select {
 }
 .select-selected-element {
   display:inline-block;
-  font-weight:bold;
 }
 .select-items div {
   float:left;
@@ -329,7 +353,7 @@ select {
   cursor:pointer;
   user-select: none;
   width:12%;
-  background-color:$menu-bkg-color;
+  background-color:transparent;
   outline:none;
 }
 .menu-element:not(.menu-icon,.loading-element) {
@@ -363,7 +387,7 @@ select {
   display:none;
 }
 .pen-progress-element {
-  width:663px;
+  width:800px;
 }
 .donate-element {
   position:absolute;
@@ -372,7 +396,7 @@ select {
 }
 .play-element {
   position:absolute;
-  top:70vh;
+  top:calc(70vh - 10px);
   left:88vw;
   -webkit-filter:drop-shadow(3px 3px 3px #222);
   filter:drop-shadow(3px 3px 3px #222);
@@ -429,23 +453,26 @@ select {
       $circleSize: random($particleBaseSize);
       width: $circleSize + px;
       height: $circleSize + px;
-      $startPositionY: random(10) + 100;
+$startPositionY: random(10) + 100;
       $framesName: "move-frames-" + $i;
       $moveDuration: 28000 + random(9000) + ms;
       animation-name: #{$framesName};
       animation-duration: $moveDuration;
       animation-delay: random(37000) + ms;
       @keyframes #{$framesName} {
-        from {
+ //Sparkle effect
+$sparkle-effect-left:5; //Implicitly in vw
+$sparkle-effect-width:90; //Implicitly in vw
+       from {
           transform: translate3d(
-            #{(33.5+random(33)) + vw},
+            #{($sparkle-effect-left + random($sparkle-effect-width)) + vw},
             #{$startPositionY + vh},
             0
           );
         }
         to {
           transform: translate3d(
-            #{(33+random(33)) + vw},
+            #{($sparkle-effect-left + random($sparkle-effect-width)) + vw},
             #{- $startPositionY - random(30) + vh},
             0
           );
