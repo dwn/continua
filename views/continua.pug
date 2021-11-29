@@ -23,7 +23,7 @@ head
   .login-container-element
     .intro-element
       p(style='font-size:1.3rem') Welcome to the Continua language-construction web app!
-      ul(style='border:1px;outline:1px') Currently supported:
+      ul(style='border:1px;outline:1px') Currently supported &#x223c;
         li Font creation (based on Gary Shannon's FontMaker format)
         li Automatic export to OTF font file and database
         li Kerning and stylistic adjustments (vertical text, nib roundness, etc.)
@@ -32,25 +32,21 @@ head
         li Ability to store glossaries, phrasebooks, writings, etc.
         li Real-time chatting in various scripts
         li Live word and phrase look-up for translation assistance
-      p This app is intended for a device with a keyboard. Right now the best instructional videos are <a href='https://www.youtube.com/watch?v=JCspg3Nxjxg&list=PL0RyYrt3lUnWLK_sNwurzMSkce2uTtaTO' target='_blank'>here</a>, but hopefully a proper guide will appear sometime the future, and possibly also a phone app.
-      p It is free and open-source (although it was not free to develop) so that it might be of use to the language creation community. There are no ads or sales within, and I can assure you there is no malintent. The following documents are required in order to qualify as a verified website.
+      p This app is intended for a device with a keyboard. Right now the best instructional videos are <a href='https://www.youtube.com/watch?v=JCspg3Nxjxg&list=PL0RyYrt3lUnWLK_sNwurzMSkce2uTtaTO' target='_blank'>here</a>, but hopefully a proper guide will appear sometime the future, and possibly also a phone app and markdown extension.
+      p All is free and open-source (although it was not free to develop) so that it might be of use to the language creation community. There are no ads or sales within, and I can assure you there is no malicious intent. The following documents are required in order to qualify as a verified website.
       input#policy-checkbox(type='checkbox' onclick='showLoginOnlyWhenPolicyChecked()')
       label I agree to the <a href='https://continua.malkachi.com/doc/privacy.html' target='_blank'>Privacy Policy</a> and <a href='https://continua.malkachi.com/doc/terms-of-service.html' target='_blank'>Terms of Service</a>
+      br
+      br
       #login.login-element
-      br
       p#warning-mobile INTENDED FOR USE ON<br>A KEYBOARD DEVICE,<br>NOT A PHONE
-    form(action='/username/new').username-element
-      label(for='username') username
-      br
-      input#username-input(type='text' name='username')
-      br
-      input#username-submit(type='submit' value='↩')
-    //- iframe.help(width='560' height='315' src='https://www.youtube.com/embed/JCspg3Nxjxg' title='Continua help' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen)
-
+    //- form(action='/username/new').username-element
+    //-   label(for='username') username
+    //-   br
+    //-   input#username-input(type='text' name='username')
+    //-   br
+    //-   input#username-submit(type='submit' value='↩')
   .custom-select-element
-    //- a(href='https://www.youtube.com/watch?v=JCspg3Nxjxg&list=PL0RyYrt3lUnWLK_sNwurzMSkce2uTtaTO' target='_blank')
-    //-   img.help-element(src='img/icon/help.png' title='help')
-    //- .help-video-element
     //- a(href='/chat' target='_blank')
       img.chat-in-new-page-element(src='img/icon/chat.png' title='chat')
     input.conscript-loading-element(type='image' src='img/icon/loading.gif' title='please wait')
@@ -74,105 +70,107 @@ head
     .menu-element(onclick="hideAll(); setVisibility('script',true)") script
     // <div class="menu-element gloss-button" onclick="hideAll(); setVisibility('gloss',true)">gloss</div>
     #menu-button-container
-      input#download-button.menu-element(type='image' src='img/icon/download.png' title='save continua svg file' onclick='setVisibility("save-needed",false); downloadSVG();')
+      input#download-button.menu-element.menu-icon(type='image' src='img/icon/download.png' title='save continua svg file' onclick='setVisibility("save-needed",false); downloadSVG();')
       img.save-needed-element(src='img/icon/save-needed.png' style='height:1.33em;width:auto;margin-left:0' title='save to see font changes')
-      .menu-element.file-upload(style='cursor:auto')
+      .menu-element.file-upload.menu-icon(style='cursor:auto')
         label(for='files' style='cursor:pointer')
-          img(src='img/icon/open.png' title='open continua svg file' style="height:1.15em; display:inline-block;")
+          img(src='img/icon/open.png' title='open continua svg file' style="height:1em; display:inline-block;")
         input#files(type='file' name='files[]' multiple='')
-      input#fullscreen-button.menu-element(type='image' src='img/icon/fullscreen.png' title='fullscreen' style='margin-left:0' onclick='toggleFS();')
-      .menu-element(style='cursor:auto')
+      input#fullscreen-button.menu-element.menu-icon(type='image' src='img/icon/fullscreen.png' title='fullscreen' style='margin-left:0' onclick='toggleFS();')
+      .menu-element.loading-element(style='cursor:auto')
         input.otf-loading-element(type='image' src='img/icon/loading-small.gif' title='please wait' style='cursor:pointer')
-        input.otf-button-element(type='image' src='img/icon/otf.png' title='download otf' style='cursor:pointer' onclick='downloadOTF();')
+        input.otf-button-element.menu-icon(type='image' src='img/icon/otf.png' title='download otf' style='cursor:pointer' onclick='downloadOTF();')
         input.chat-loading-element(type='image' src='img/icon/loading-small.gif' title='please wait' style='cursor:pointer')
-        input.chat-button-element(type='image' src='img/icon/chat.png' title='chat' style='cursor:pointer' onclick='openChat();')
+        input.chat-button-element.menu-icon(type='image' src='img/icon/chat.png' title='chat' style='cursor:pointer' onclick='openChat();')
   br
   /////////////////////////////
   // FONT
   /////////////////////////////
-  canvas#font-canvas.font-element(width='500' height='500' style="display:none")
-  textarea#font-code.font-element(type='text' spellcheck='false' placeholder='FONT CODE')
-  #font-svg-container-container.font-element
-    #font-svg-container.font-element
-      p(style='font-size:.5em') Don&apos;t see the font you loaded? Scroll the textbox
+  .content-container
+    canvas#font-canvas.font-element(width='500' height='500' style="display:none")
+    textarea#font-code.font-element(type='text' spellcheck='false' placeholder='FONT CODE')
+    #font-svg-container-container.font-element
+      #font-svg-container.font-element
+        p(style='font-size:.5em') Don&apos;t see the font you loaded? Scroll the textbox
   /////////////////////////////
   // ADJUST
   /////////////////////////////
-  .adjust-element(style='width:100%; text-align:left')
-    input#font-name(type='text' onblur='setAdjustSetting()' placeholder='font name')
-    input#note(type='text' onblur='setAdjustSetting()' placeholder='notes about font (author name, etc.)')
-    br
-    select#weight(onchange='setAdjustSetting()')
-      option(value='light' selected='selected') light
-      option(value='bold') bold
-    select#size(onchange='setAdjustSetting()')
-      option(value='small' selected='selected') small
-      option(value='large') large
-    select#style(onchange='setAdjustSetting()')
-      option(value='plain' selected='selected') plain
-      option(value='dark') dark
-      option(value='illuminated') illuminated
-      option(value='terminal') terminal
-      option(value='papyrus') papyrus
-      option(value='fire') fire
-      option(value='stone') stone
-      option(value='stitch') stitch
-      option(value='splotch') splotch
-      option(value='shadow') shadow
-    br
-    select#direction(onchange='setAdjustSetting(); setVisibility("save-needed",true)')
-      option(value='right-down' selected='selected') right-down
-      option(value='down-right') down-right
-      option(value='down-left') down-left
-    select#space(onchange='setAdjustSetting(); setVisibility("save-needed",true)')
-      option(value='0') no space
-      option(value='.1') .1
-      option(value='.2') .2
-      option(value='.3') .3
-      option(value='.4') .4
-      option(value='.5'  selected='selected') normal space
-      option(value='.6') .6
-      option(value='.7') .7
-      option(value='.8') .8
-      option(value='.9') .9
-      option(value='1') 1
-      option(value='1.1') 1.1
-      option(value='1.2') 1.2
-      option(value='1.3') 1.3
-      option(value='1.4') 1.4
-      option(value='1.5') 1.5
-      option(value='1.6') 1.6
-      option(value='1.7') 1.7
-      option(value='1.8') 1.8
-      option(value='1.9') 1.9
-      option(value='2') 2
-    select#pen(onchange='setAdjustSetting(); setPen(); setVisibility("save-needed",true)')
-      option(value='round') round
-      option(value='medium' selected='selected') medium
-      option(value='sharp') sharp
-    progress.pen-progress-element(value='0' max='100' title='please wait')
-    br
-    select#view(onchange='setAdjustSetting()')
-      option(value='view single page' selected='selected') view single page
-      option(value='view full text') view full text
-    br
-  textarea#kerning-map.adjust-element(type='text' spellcheck='false' onblur='loadKerningMap(); setVisibility("save-needed",true)' placeholder='KERNING MAP\n\
-< MINISPACE LEFT\n\
-> MINISPACE RIGHT\n\
-EXAMPLE\n\
-69<<<20-ff 20-ff<<<69')
-  img#utf-table.adjust-element(src='img/continua/iso-8859-1.jpg')
+  .content-container
+    .adjust-element(style='width:100%; text-align:left')
+      input#font-name(type='text' onblur='setAdjustSetting()' placeholder='font name')
+      input#note(type='text' onblur='setAdjustSetting()' placeholder='notes about font (author name, etc.)')
+      br
+      select#size(onchange='setAdjustSetting()')
+        option(value='small' selected='selected') small
+        option(value='large') large
+      select#weight(onchange='setAdjustSetting()')
+        option(value='light' selected='selected') light
+        option(value='bold') bold
+      select#space(onchange='setAdjustSetting(); setVisibility("save-needed",true)')
+        option(value='0') no space
+        option(value='.1') .1
+        option(value='.2') .2
+        option(value='.3') .3
+        option(value='.4') .4
+        option(value='.5'  selected='selected') normal space
+        option(value='.6') .6
+        option(value='.7') .7
+        option(value='.8') .8
+        option(value='.9') .9
+        option(value='1') 1
+        option(value='1.1') 1.1
+        option(value='1.2') 1.2
+        option(value='1.3') 1.3
+        option(value='1.4') 1.4
+        option(value='1.5') 1.5
+        option(value='1.6') 1.6
+        option(value='1.7') 1.7
+        option(value='1.8') 1.8
+        option(value='1.9') 1.9
+        option(value='2') 2
+      select#direction(onchange='setAdjustSetting(); setVisibility("save-needed",true)')
+        option(value='right-down' selected='selected') right-down
+        option(value='down-right') down-right
+        option(value='down-left') down-left
+      select#style(onchange='setAdjustSetting()')
+        option(value='plain' selected='selected') plain
+        option(value='dark') dark
+        option(value='illuminated') illuminated
+        option(value='terminal') terminal
+        option(value='papyrus') papyrus
+        option(value='fire') fire
+        option(value='stone') stone
+        option(value='stitch') stitch
+        option(value='splotch') splotch
+        option(value='shadow') shadow
+      select#view(onchange='setAdjustSetting()')
+        option(value='view single page' selected='selected') view single page
+        option(value='view full text') view full text
+      br
+      select#pen(onchange='setAdjustSetting(); setPen(); setVisibility("save-needed",true)')
+        option(value='round') round
+        option(value='medium' selected='selected') medium
+        option(value='sharp') sharp
+      progress.pen-progress-element(value='0' max='100' title='please wait')
+      br
+    textarea#kerning-map.adjust-element(type='text' spellcheck='false' onblur='loadKerningMap(); setVisibility("save-needed",true)' placeholder='KERNING MAP\n\
+  < MINISPACE LEFT\n\
+  > MINISPACE RIGHT\n\
+  EXAMPLE\n\
+  69<<<20-ff 20-ff<<<69')
+    img#utf-table.adjust-element(src='img/continua/iso-8859-1.jpg')
   /////////////////////////////
   // SCRIPT
   /////////////////////////////
-  textarea#phoneme-map.script-element.half-width.under(type='text' spellcheck='false' onblur='loadPhonemeMap()' placeholder='PHONEME MAP')
-  textarea#grapheme-map.script-element.half-width.right.under(type='text' spellcheck='false' onblur='loadGraphemeMap()' placeholder='GRAPHEME MAP')
-  #conscript-text-container
-    img.script-element.play-element(src='img/icon/play.png' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
-    #conscript-text.script-element.half-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
-  textarea#user-text.script-element.half-width.right.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
-  textarea#console.script-element.under(type='text' spellcheck='false' readonly='')
-  iframe.chat-element.script-element(src='' width='100%' height='500' frameborder='0')
+  .content-container
+    textarea#phoneme-map.script-element.half-width.under(type='text' spellcheck='false' onblur='loadPhonemeMap()' placeholder='PHONEME MAP')
+    textarea#grapheme-map.script-element.half-width.right.under(type='text' spellcheck='false' onblur='loadGraphemeMap()' placeholder='GRAPHEME MAP')
+    #conscript-text-container
+      img.script-element.play-element(src='img/icon/play.png' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
+      #conscript-text.script-element.half-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
+    textarea#user-text.script-element.half-width.right.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
+    textarea#console.script-element.under(type='text' spellcheck='false' readonly='')
+    iframe.chat-element.script-element(src='' width='100%' height='500' frameborder='0')
 script(src='/version.js')
 script(src='https://dwn.github.io/common/js/chat.js')
 script(src='/js/continua.js')

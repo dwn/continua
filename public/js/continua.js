@@ -655,7 +655,7 @@ function setAdjustSetting() {
   json['name'] = timeStr+document.getElementById('font-name').value;
   document.getElementsByClassName("select-selected-element")[0].innerText = json['name'];
   el.style.fontWeight = (json['weight'] === 'bold'? 600 : 200);
-  el.style.fontSize = (json['size'] === 'small'? '2em' : '3.5em');
+  el.style.fontSize = (json['size'] === 'small'? '1.54rem' : '3.08rem');
   if (json['style'] === 'dark') {
     el.style.overflowWrap = 'break-word';
     el.style.float = 'left';
@@ -689,7 +689,7 @@ function setAdjustSetting() {
     el.style.backgroundBlendMode = null; el.style.backgroundBlendMode = 'luminosity color'; //Firefox hack
     el.style.backgroundColor = 'black';
     el.style.color = 'white';
-    el.style.textShadow = '0 0 5px #c8c8c8';
+    el.style.textShadow = '0 0 .5rem #c8c8c8';
     el.style.outline = null;
     el.style.outlineOffset = null;
   } else if (json['style'] === 'papyrus') {
@@ -713,7 +713,7 @@ function setAdjustSetting() {
     el.style.backgroundBlendMode = null;
     el.style.backgroundColor = 'black';
     el.style.color = 'white';
-    el.style.textShadow = '0 0 20px #fefcc9, 10px -10px 30px #feec85, -20px -20px 40px #ffae34, 20px -40px 50px #ec760c, -20px -60px 60px #cd4606, 0 -80px 70px #973716, 10px -90px 80px #451b0e';
+    el.style.textShadow = 'rgb(254 252 201) 0px 0px .25rem, rgb(254 236 133) 10px -10px .5rem, rgb(255 174 52) -20px -20px .75rem, rgb(236 118 12) 20px -40px 1rem, rgb(205 70 6) -20px -60px 1.25rem, rgb(151 55 22) 0px -80px 1.5rem, rgb(69 27 14) 10px -90px 1.75rem';
     el.style.outline = null;
     el.style.outlineOffset = null;
   } else if (json['style'] === 'stone') {

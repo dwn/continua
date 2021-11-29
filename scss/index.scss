@@ -1,11 +1,40 @@
 //////////////////////////////////////////
 // Dan Nielsen
 //////////////////////////////////////////
+$title-bkg-url:'/img/continua/continua-girl.jpg';
+$login-bkg-url:'/img/bkg/wallpaper-2.jpg';
+$font:'EB Garamond';
+$font-url:'https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&display=swap';
+$text-highlight:0 0 .6rem rgba(255,255,255,.4),0 0 .6rem rgba(255,255,255,.4),0 0 .6rem rgba(255,255,255,.4);
+$text-shadow:.225rem .225rem .5rem rgba(0,0,0,.4),.225rem .225rem .5rem rgba(0,0,0,.4),.225rem .225rem .5rem rgba(0,0,0,.4);
+$box-shadow:$text-shadow;
+//Text size
+$base-font-size:1.275rem;
+$login-font-size:1.05rem;
+$title-size:10rem;
+$motto-size:1.5rem;
+$menu-item-size:1.5rem;
+//Text color
+$menu-item-color:#fed;
+$login-text-color:#111;
+$textarea-text-color:darkgray;
+$console-text-color:darkgray;
+$select-item-color:ivory;
+$motto-color:darkcyan;
+//Background color
+$textarea-active-color:#500050;
+$textarea-inactive-color:#402240;
+$title-menu-bkg-color:#68006840; //RGB must match $bkg-color
+$menu-bkg-color:#680068;
+$title-bkg-color:white;
+$select-item-bkg-color:rgba(0,0,0,.5);
+$select-item-hover-bkg-color:rgba(150,150,150,.5);
+$warning-bkg-color:rgba(255,0,0,.5);
+$bkg-color:#680068;
 @import '_colors';
 @import '_layout';
 @import '_forms';
-@import url('https://fonts.googleapis.com/css2?family=Klee+One:wght@600&display=swap');
-// @font-face{font-family:standard;src:url(continua.ttf)}
+@import url($font-url);
 @font-face{font-family:title;src:url(title.otf)}
 .menu-element{display:none;} .select-selected-element{display:inline-block;} .conscript-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .chat-in-new-page-element{display:inline-element;} .pen-progress-element{display:none;} .play-element{display:none;} .script-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;} .login-container-element{display:inline-block;} .login-element{display:none;} .username-element{display:none;} .intro-element{display:block;}
 * {-webkit-font-smoothing: antialiased;}
@@ -13,24 +42,21 @@ html,
 body {
   width: 100%;
   height: 100%;
-  // overflow: hidden;
-  font-size: 1.1rem;
+  font-size: $base-font-size;
 }
 body {
-  font-family: 'Klee One', cursive;
+  font-family: $font;
   border: 0;
   margin: 0;
-  font-size: 1rem;
   color: gold;
-  background: white url(/img/continua/continua-girl.jpg) no-repeat fixed top center;
-  // background: black url(/img/continua/continua.svg) no-repeat fixed center center;
+  background: $title-bkg-color url($title-bkg-url) no-repeat fixed top center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
 input[type='text'] {
-  font-family: 'Klee One', cursive;
+  font-family: $font;
   padding:5px;
   box-sizing:border-box;
   margin:1rem .1rem;
@@ -39,8 +65,8 @@ input[type='text'] {
   height:auto;
   font-size:2rem;
   color:black;
-  background-color:white;
-  // box-shadow:0 0 20px gray,0 0 30px gray;
+  background-color:$title-bkg-color;
+  box-shadow:$box-shadow;
   border-radius:1rem;
   text-align:center;
 }
@@ -51,11 +77,11 @@ input[type='checkbox'] {
 @media only screen and (max-width:600px) {
   #warning-mobile {
     color:ivory;
-    text-shadow:0 0 4px black;
-    background-color:rgba(255,0,0,.5);
+    text-shadow:$text-shadow;
+    background-color:$warning-bkg-color;
   }
   body {
-    background-position: 10% 0%;
+    background-position:10% 0%;
   }
 }
 @media only screen and (min-width:600px) {
@@ -77,24 +103,31 @@ input[type='checkbox'] {
   overflow:hidden;
   position:relative;
 }
+.title-element {
+  z-index:-10;
+}
+.content-container {
+  // position:absolute;
+  // left:calc(50vw - 400px);
+}
 .login-container-element {
+  font-size:$login-font-size;
   white-space:pre-wrap;
-  width:660px;
   position:absolute;
+  width:660px;
   padding:1rem 2rem;
-  background:linear-gradient(to bottom,#225,gray,white), url(/img/bkg/wallpaper-2.jpg) no-repeat scroll center center;
+  left:calc(50% - 330px - 2rem);
+  bottom:25px;
+  opacity:1;
+  border-radius:20px;
+  color:$login-text-color;
+  box-shadow:$box-shadow;
+  background:linear-gradient(to bottom,#225,gray,white), url($login-bkg-url) no-repeat scroll center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   background-blend-mode: screen;
-  // opacity:.9;
-  left:calc(50vw - 380px);
-  bottom:25px;
-  box-shadow:0 0 20px black;
-  border-radius:1rem;
-  color:#111;
-  // text-shadow:0 0 1px black;
 }
 .intro-element {
   white-space:pre-wrap;
@@ -102,28 +135,27 @@ input[type='checkbox'] {
 ul,ol,li {
   line-height:1.8rem;
   text-align:left;
+  list-style-type:none;
 }
-#login {
-  opacity:1;
-}
+li:before { content: '\1f65e'; margin-left: -20px; margin-right: 10px; }
 #login > div {
   margin:0 auto;
   text-align:left;
 }
 #title {
   font-family:title;
-  font-size:10rem;
+  font-size:$title-size;
   position:fixed;
   color:white;
-  text-shadow:0 0 1rem black;
+  text-shadow:$text-shadow;
   width:100%;
   bottom:2.5rem;
 }
 #motto {
-  font-family: 'Klee One', cursive;
-  font-size:1.3rem;
-  color:darkcyan;
-  text-shadow:0 0 1px black,0 0 50px darkcyan;
+  font-family:$font;
+  font-size:$motto-size;
+  color:$motto-color;
+  text-shadow:$text-shadow;
 }
 textarea {
   float:left;
@@ -135,8 +167,8 @@ textarea {
   padding:0;
   letter-spacing:0;
   height:10vh;
-  background-color: #402240;
-  color:darkgray;
+  background-color:$textarea-inactive-color;
+  color:$textarea-text-color;
 }
 #console::placeholder {
   color:white;
@@ -147,6 +179,8 @@ div {
 }
 select {
   width:133px;
+  height:2.5rem;
+  font-size:.9rem;
 }
 .half-width {
   width: calc(50% - 3px);
@@ -169,37 +203,37 @@ select {
   height:400px;  
 }
 #font-canvas {
-  display: inline-block;
-  float: left;
-  width: auto;
-  height: calc(50vh + 180px);
-  background-image: url(/img/bkg/grid.jpg);
-  background-size: cover;
-  background-color: lemonchiffon;
-  transform: scaleY(-1);
+  display:inline-block;
+  float:left;
+  width:auto;
+  height:calc(50vh + 180px);
+  background-image:url(/img/bkg/grid.jpg);
+  background-size:cover;
+  background-color:lemonchiffon;
+  transform:scaleY(-1);
 }
 #font-code {
-  float: left;
-  width: calc(50% - 3px);
-  height: 50vh;
+  float:left;
+  width:calc(50% - 3px);
+  height:50vh;
 }
 #font-code, #kerning-map, .active-textarea {
-  color: lemonchiffon;
-  background-color: #500050;
+  color:lemonchiffon;
+  background-color:$textarea-active-color;
 }
 #console, #font-svg-container-container {
-  background-image: linear-gradient(to bottom,#a040a0,#680068);
-  float: left;
-  background-color: transparent;
-  color: darkgray;
+  background-image: linear-gradient(to bottom,#a040a0,$bkg-color);
+  float:left;
+  background-color:transparent;
+  color:$console-text-color;
 }
 #console {
-  height: 10vh;
+  height:10vh;
 }
 #font-svg-container-container {
-  width: calc(50% - 3px);
-  height: 180px;
-  font-size: 40px;
+  width:calc(50% - 3px);
+  height:180px;
+  font-size:40px;
 }
 #svg-preview {
   transform:scaleY(-1);
@@ -212,15 +246,15 @@ select {
 }
 @media only screen and (max-width: 150vh) {
   #font-canvas {
-    float: none;
-    width: auto;
+    float:none;
+    width:auto;
   }
   #font-code {
-    width: calc(100% - 200px);
-    height: 180px;
+    width:calc(100% - 200px);
+    height:180px;
   }
   #font-svg-container-container {
-    width: 195px;
+    width:195px;
   }
 }
 @media only screen and (max-width: 800px) {
@@ -228,10 +262,12 @@ select {
     height:200px;
   }
 }
-.custom-select-element {
+.custom-select-element { //Title menubar
   width:100%;
-  background-color:rgba(100,0,100,.25);
-  // background-color:#680068;
+  background-color:$title-menu-bkg-color;
+}
+.custom-select-element.content-container {
+    margin: 0 auto;
 }
 .custom-select-element select { display:none; }
 .select-hide { display:none; }
@@ -239,27 +275,15 @@ select {
   position:absolute;
   top:0;
   padding:1rem;
-  font-size:1.6rem;
-  text-shadow:0 0 1px black,0 0 1px black,0 0 3px gray,0 0 3px gray,0 0 1rem black,0 0 1px black,0 0 1px black,0 0 3px gray,0 0 3px gray,0 0 1rem black;
+  font-size:$menu-item-size;
+  text-shadow:$text-shadow;
   text-decoration:none;
-  color:#fed;
+  color:$menu-item-color;
   cursor:pointer;
-  &::after{
-    content: '';
-    background: white;
-    mix-blend-mode: exclusion;
-    width: calc(100% + 20px);
-    height: 0;
-    position: absolute;
-    bottom: 8rem;
-    left: -10px;
-    opacity:0;
-    transition: all .3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-  }
-  &:hover::after{
-    height: calc(100% + 8px);
-    transform: translateY(8rem);
-    opacity:1;
+  transition: all .2s ease-out;
+  &:hover {
+    background-color:$select-item-hover-bkg-color;
+    text-shadow:$text-highlight;
   }
 }
 .settings-element {
@@ -273,10 +297,9 @@ select {
   text-align:center;
 }
 .select-items div {
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-  color: ivory;
+  color: $select-item-color;
   font-weight: bold;
-  text-shadow: 0 0 1px black,0 0 1px black,0 0 3px gray,0 0 3px gray;
+  text-shadow:$text-shadow;
   padding: calc(16px + 0.5vw) 0;
   border: 1px solid transparent;
   border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
@@ -284,41 +307,50 @@ select {
   user-select: none;
   transition: all .3s ease-out;
   &:hover {
-    background-color: rgba(150,150,150,.5);
-    text-shadow:0 0 1rem white,0 0 2rem white,0 0 3rem white,0 0 4rem white,0 0 5rem white;
+    background-color:$select-item-hover-bkg-color;
+    text-shadow:$text-highlight;
   }
 }
 .select-selected-element {
   display:inline-block;
-  // background-color:#680068;
   font-weight:bold;
 }
 .select-items div {
   float:left;
   width:calc(50% - 3px);
-  background-color: rgba(0, 0, 0, .5);
+  background-color: $select-item-bkg-color;
 }
 .menu-element, .save-needed-element {
-  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-  float: left;
-  color: ivory;
-  padding: calc(16px + 0.5vw) 0;
-  border: 0px solid transparent;
-  cursor: pointer;
+  float:left;
+  color:$menu-item-color;
+  text-shadow:$text-shadow;
+  padding:calc(16px + 0.5vw) 0;
+  border:0px solid transparent;
+  cursor:pointer;
   user-select: none;
   width:12%;
-  background-color:#680068;
+  background-color:$menu-bkg-color;
   outline:none;
+}
+.menu-element:not(.menu-icon,.loading-element) {
+  transition:all .2s ease-out;
+  &:hover {
+    background-color:$select-item-hover-bkg-color;
+    text-shadow:$text-highlight;
+  }
+}
+.menu-icon {
+  &:hover {
+    background:radial-gradient(circle,rgba(230,230,230,.4) 0, $bkg-color 1rem);
+  }
 }
 .save-needed-element {
   cursor: auto;  
 }
-#menu-button-container {
-}
 #download-button, #fullscreen-button, .otf-button-element, .otf-loading-element, .chat-button-element, .chat-loading-element {
   border:0;
-  margin:0 0 0 3.5em;
-  height:1.33em;
+  margin:0 0 0 2rem;
+  height:1.25rem;
   width:auto;
 }
 #conscript-text-container {
@@ -330,22 +362,13 @@ select {
 .file-upload input {
   display:none;
 }
-progress[value] {
-  width:400px;
+.pen-progress-element {
+  width:663px;
 }
 .donate-element {
   position:absolute;
   top:20px;
   left:5px;
-}
-#username-submit {
-  margin:1rem 0;
-  border:0;
-  height:100;
-  background-color:white;
-  box-shadow:0 0 20px gray,0 0 30px gray;
-  font-size:2rem;
-  border-radius:25px;  
 }
 .play-element {
   position:absolute;
@@ -370,7 +393,7 @@ progress[value] {
   height:1.33em;
   width:auto;
 }
-/* Animated lights *********/
+// Animated lights ///////////////////////////
 .circle-container {
   $particleNum: 200;
   $particleColor: hsl(180, 100%, 80%);
@@ -415,14 +438,14 @@ progress[value] {
       @keyframes #{$framesName} {
         from {
           transform: translate3d(
-            #{random(100) + vw},
+            #{(33.5+random(33)) + vw},
             #{$startPositionY + vh},
             0
           );
         }
         to {
           transform: translate3d(
-            #{random(100) + vw},
+            #{(33+random(33)) + vw},
             #{- $startPositionY - random(30) + vh},
             0
           );
