@@ -74,6 +74,10 @@ input[type='text'] {
   border-radius:1rem;
   text-align:center;
 }
+input[type=text].username-element {
+  color:$menu-item-color;
+  background-color:#765;  
+}
 input[type='checkbox'] {
   width:1.5rem;
   height:1.5rem;
@@ -312,7 +316,8 @@ input[type=text], #utf-table, .login-container-element {
   }  
 }
 .username-element {
-  left:5%;
+  left: .5vw;
+  top: -1vh;
 }
 .logout-element {
   right:5%;
