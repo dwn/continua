@@ -1,3 +1,4 @@
+var oldUsername;
 $(':checkbox').prop('checked', false); //Makes sure all checkboxes are unchecked on a page reload
 function onSuccess(googleUser) {
   var profile = googleUser.getBasicProfile();
@@ -10,7 +11,8 @@ function onSuccess(googleUser) {
   document.getElementsByClassName('login-container-element')[0].style.display = 'none';
   document.getElementsByClassName('custom-select-element')[0].style.display = 'inline-block';
   var usernameEl = document.getElementsByClassName('username-element')[0];
-  usernameEl.value = name.toLowerCase().replace(' ','-');
+  oldUsername = name.toLowerCase().replace(' ','-');
+  usernameEl.value = oldUsername;
   usernameEl.style.display = 'inline-block';
   // document.getElementsByClassName('intro-element')[0].style.display = 'none';
   // document.getElementsByClassName('username-element')[0].style.display = 'block';

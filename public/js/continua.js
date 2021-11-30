@@ -546,8 +546,9 @@ document.querySelector('.username-element').addEventListener('keydown', e => {
 });
 //Set username on blur
 document.querySelector('.username-element').addEventListener('blur', e => {
-  if (!/^[a-zA-Z0-9.]+$/.test(!e.target)) {
-    alert('Sorry, only English letters, numbers, and periods currently allowed in username');
+  if (!/^[a-zA-Z0-9.-]+$/.test(e.target.value)) {
+    e.target.value = oldUsername;
+    alert('Sorry, only these are allowed in username:\nEnglish letters\nnumbers\nperiod\nhyphen');
   }
 });
 ////////////////////////////////////////////
