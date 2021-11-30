@@ -1343,6 +1343,10 @@ function openChat() {
     document.getElementsByClassName('chat-element')[0].src = url;
     setVisibility('chat',true);
     openedChat = true;
+    setTimeout(function() {
+      alert('now');
+      document.body.scrollTo({top:0,left:5000,behavior:'smooth'});
+    },5000);
   }
 }
 ////////////////////////////////////////////

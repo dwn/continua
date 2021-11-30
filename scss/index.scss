@@ -14,6 +14,7 @@ $box-shadow-down:0 .5rem 1rem rgba(0,0,0,.5);
 $box-shadow-up:0 -.5rem 1rem rgba(0,0,0,.5);
 //Text size
 $base-font-size:1.275rem;
+$input-font-size:1.5rem;
 $login-font-size:1.05rem;
 $title-size:10rem;
 $motto-size:1.5rem;
@@ -61,6 +62,7 @@ body {
   background-position: $title-bkg-position;
 }
 input[type='text'] {
+  font-size:$input-font-size;
   font-family: $font;
   padding:5px;
   box-sizing:border-box;
@@ -73,10 +75,6 @@ input[type='text'] {
   background-color:$title-bkg-color;
   border-radius:1rem;
   text-align:center;
-}
-input[type=text].username-element {
-  color:$menu-item-color;
-  background-color:#765;  
 }
 input[type='checkbox'] {
   width:1.5rem;
@@ -315,9 +313,14 @@ input[type=text], #utf-table, .login-container-element {
     text-shadow:$text-highlight;
   }  
 }
+input[type=text].username-element {
+  color:$menu-item-color;
+  background-color:#765;
+  font-size:$input-font-size;
+}
 .username-element {
   left: .5vw;
-  top: -1vh;
+  top: -.5vh;
 }
 .logout-element {
   right:5%;

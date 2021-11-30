@@ -4,10 +4,10 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background:#ffc; }
 form { background: #000; padding: 3px; position: relative; width: 100%; }
-form input { background-color: white; border: 0; padding: 1em; width: 90%; height: 3em; }
-form button { color: darkgray; width: 10%; background: dimgray; border: 0px; padding: 10px; height: 3em; }
+form input { background-color: white; border: 0; padding: 1rem; width: 90%; height: 3rem; }
+form button { color: darkgray; width: 10%; background: dimgray; border: 0px; padding: 10px; height: 3rem; }
 #messages { list-style-type: none; margin: 0; padding: 0; white-space: pre-wrap; }
-#messages li { font-size: 3em; padding: 5px 10px; }
+#messages li { font-size: 3rem; padding: 5px 10px; }
 #messages li:nth-child(odd) { background: #fea; }
 .container {
   display:flex;
