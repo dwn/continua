@@ -541,16 +541,15 @@ var replacement = {
   "&#x203a;": {'glyph-name': "guilsinglright", 'horiz-adv-x': "632", 'vert-adv-y': "1872", 'd': "M485 541V518L236 129L178 157Q150 170 150 198Q150 215 160 232L319 493Q332 517 346 529Q334 540 319 566L160 827Q150 844 150 861Q150 889 178 902L236 930L485 541Z"}};
 ////////////////////////////////////////////
 // //Disable enter key for form submission of username
-// document.querySelector('.username-element').addEventListener('keydown', e => {
-//   if (event.keyCode == 13) { event.preventDefault(); return false; }
-// });
-// //Set username on blur
-// document.querySelector('.username-element').addEventListener('blur', e => {
-//   if (!e.target.checkValidity()) {
-//     alert('Invalid username - simple English letters and numbers only');
-//     document.querySelector('.username-element').value = '';
-//   }
-// });
+document.querySelector('.username-element').addEventListener('keydown', e => {
+  if (event.keyCode == 13) { event.preventDefault(); return false; }
+});
+//Set username on blur
+document.querySelector('.username-element').addEventListener('blur', e => {
+  if (!/^[a-zA-Z0-9.]+$/.test(!e.target)) {
+    alert('Sorry, only English letters, numbers, and periods currently allowed in username');
+  }
+});
 ////////////////////////////////////////////
 function setVisibility(name, on) {
   var arrEl = document.getElementsByClassName(name+'-element');
