@@ -6,6 +6,24 @@ if (typeof DEBUG!=='undefined' && DEBUG==1) {function debug(s){console.log(s);}}
 $(document).ready(function() {
   document.getElementById('page-container').style.background='transparent'; //In case background state was cached
 ////////////////////////////////////////////
+  $(window).bind('keydown', function(event) { //For ctrl-s save hotkey
+      if (event.ctrlKey || event.metaKey) {
+          switch(String.fromCharCode(event.which).toLowerCase()) {
+          case 's':
+              event.preventDefault();
+              setVisibility("save-needed",false);
+              downloadSVG();
+              break;
+          case 'f':
+              // event.preventDefault();
+              // alert('ctrl-f');
+              break;
+          case 'g':
+              // event.preventDefault();
+              // alert('ctrl-g');
+          }
+      }
+  });
   $('#phoneme-map').bind('keyup click focus paste', function() {
     document.getElementById('phoneme-map').classList.add('active-textarea');
     document.getElementById('grapheme-map').classList.remove('active-textarea');
@@ -1181,6 +1199,9 @@ function download(filename, blob) {
 }
 ////////////////////////////////////////////
 function downloadSVG() {
+  consoleEl = document.getElementById('console');
+  consoleEl.value += 'Saving ∼ please wait ten seconds\n';
+  consoleEl.scrollTop = consoleEl.scrollHeight;
   openedChat=false;
   //Construct SVG data
   const scale = 12;
