@@ -168,7 +168,7 @@ head
     img.script-element.play-element(src='img/icon/play.png' title='start/stop reading text' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
     #conscript-text.script-element.half-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
   textarea#user-text.script-element.half-width.right.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
-  textarea#console.script-element.under(type='text' spellcheck='false' readonly='' placeholder="Welcome! Please don't use your browser's back button\nSimply click the language name at the top-right to return to the main menu\nPress ctrl-s to save (or click the save icon)")
+  textarea#console.script-element.under(type='text' spellcheck='false' readonly='' placeholder="Welcome! Please don't use your browser's back button\nTo return to the general menu, press CTRL-G (or click the language name at the top-right)\nTo save your work, press CTRL-S (or click the save icon)")
   br
   iframe.chat-element.script-element(src='' width='100%' height='800' frameborder='0')
 script(src='/version.js')

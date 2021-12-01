@@ -7,22 +7,22 @@ $(document).ready(function() {
   document.getElementById('page-container').style.background='transparent'; //In case background state was cached
 ////////////////////////////////////////////
   $(window).bind('keydown', function(event) { //For ctrl-s save hotkey
-      if (event.ctrlKey || event.metaKey) {
-          switch(String.fromCharCode(event.which).toLowerCase()) {
-          case 's':
-              event.preventDefault();
-              setVisibility("save-needed",false);
-              downloadSVG();
-              break;
-          case 'f':
-              // event.preventDefault();
-              // alert('ctrl-f');
-              break;
-          case 'g':
-              // event.preventDefault();
-              // alert('ctrl-g');
-          }
+    if (event.ctrlKey || event.metaKey) {
+      switch(String.fromCharCode(event.which).toLowerCase()) {
+      case 's':
+        event.preventDefault();
+        setVisibility("save-needed",false);
+        downloadSVG();
+        break;
+      // case 'f':
+        // event.preventDefault();
+        // alert('ctrl-f');
+        // break;
+      case 'g':
+        event.preventDefault();
+        downloadSVG(true);
       }
+    }
   });
   $('#phoneme-map').bind('keyup click focus paste', function() {
     document.getElementById('phoneme-map').classList.add('active-textarea');
@@ -673,7 +673,7 @@ function setAdjustSetting() {
   json['note'] = document.getElementById('note').value;
   json['view'] = document.getElementById('view').value;
   json['name'] = timeStr+document.getElementById('font-name').value;
-  document.getElementsByClassName("select-selected-element")[0].innerText = json['name'];
+  document.getElementsByClassName('select-selected-element')[0].innerText = json['name'];
   el.style.fontWeight = (json['weight'] === 'bold'? 600 : 200);
   el.style.fontSize = (json['size'] === 'small'? '1.54rem' : '3.08rem');
   if (json['style'] === 'dark') {
@@ -1198,7 +1198,7 @@ function download(filename, blob) {
   }
 }
 ////////////////////////////////////////////
-function downloadSVG() {
+function downloadSVG(closeAfterward=false) {
   consoleEl = document.getElementById('console');
   consoleEl.value += 'Saving ∼ please wait ten seconds\n';
   consoleEl.scrollTop = consoleEl.scrollHeight;
@@ -1337,9 +1337,11 @@ function downloadSVG() {
       setVisibility('otf-button',true);
       setVisibility('chat-loading',false);
       setVisibility('chat-button',true);
+      document.getElementById('console').value = '';
       setAllData(true, el, title = json['name'], cat);
       otfURI = bucketURL+json['name']+'.otf';
       loadConscriptFont('currentFont' + timeStr, otfURI);
+      if (closeAfterward) closeAllSelect(el);
     },
     error: function(result){
       debug(result);
@@ -1365,9 +1367,9 @@ function openChat() {
     setVisibility('chat',true);
     openedChat = true;
     setTimeout(function() {
-      alert('now');
-      document.body.scrollTo({top:0,left:5000,behavior:'smooth'});
-    },5000);
+      // document.body.scrollTo({left:1000,behavior:'smooth'});
+      // TODO ...
+    },2000);
   }
 }
 ////////////////////////////////////////////
@@ -1480,17 +1482,17 @@ function closeAllSelect(el, skipConfirm = false) {
     debug(el.innerHTML.substr(0,5));
     if (el.innerHTML !== 'start') {
       if (!skipConfirm) {
-        if (confirm('Are you sure you want to leave this page? Unsaved data will be lost!')) {
-          setVisibility('save-needed',false);
-          setAllData(false,el,'start');
-          setVisibility('settings',true);
-          setVisibility('logout',true);
-          setVisibility('title',true);
-          document.getElementById('page-container').style.background='transparent';
-          openedChat = false;
-        } else {
-          doNotToggleOptionList=true;
-        }
+        // if (confirm('Are you sure you want to leave this page? Unsaved data will be lost!')) {
+        setVisibility('save-needed',false);
+        setAllData(false,el,'start');
+        setVisibility('settings',true);
+        setVisibility('logout',true);
+        setVisibility('title',true);
+        document.getElementById('page-container').style.background='transparent';
+        openedChat = false;
+        // } else {
+        //   doNotToggleOptionList=true;
+        // }
       } else {
         setAllData(false,el,'start');
         setVisibility('settings',true);
