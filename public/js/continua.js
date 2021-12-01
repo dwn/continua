@@ -12,7 +12,7 @@ $(document).ready(function() {
       case 's':
         event.preventDefault();
         setVisibility("save-needed",false);
-        closeAllSelect(document.querySelector('.select-selected-element'));
+        downloadSVG();
         break;
       // case 'f':
         // event.preventDefault();
@@ -1468,15 +1468,7 @@ for (i = 0; i < x.length; i++) {
   a.addEventListener('click', function(e) {
     //When the select box is clicked, close any other select boxes, and open/close the current select box
     e.stopPropagation();
-    debug(document.getElementsByClassName('select-selected-element')[0].innerHTML);
-    let playElDisplay = window.getComputedStyle(document.querySelector('.play-element'))['display'];
-    // debug(playElDisplay);
-    // debug(doNotToggleOptionList);
-    // if (playElDisplay==='none') {
     closeAllSelect(this);
-    // } else {
-    //   downloadSVG(true);
-    // }
     if (!doNotToggleOptionList) {
       this.nextSibling.classList.toggle('select-hide');
       this.classList.toggle('select-arrow-active');
@@ -1485,13 +1477,12 @@ for (i = 0; i < x.length; i++) {
   });
 }
 ////////////////////////////////////////////
-var alreadyDownloading=false;
 function closeAllSelect(el, skipConfirm = false) {
   if ($(el).hasClass('select-selected-element') && !$(el).hasClass('select-arrow-active')) {
+    debug(el.innerHTML.substr(0,5));
     if (el.innerHTML !== 'start') {
       if (!skipConfirm) {
         // if (confirm('Are you sure you want to leave this page? Unsaved data will be lost!')) {
-if (!alreadyDownloading) { downloadSVG(true); alreadyDownloading=true; }
         setVisibility('save-needed',false);
         setAllData(false,el,'start');
         setVisibility('settings',true);
@@ -1500,7 +1491,7 @@ if (!alreadyDownloading) { downloadSVG(true); alreadyDownloading=true; }
         document.getElementById('page-container').style.background='transparent';
         openedChat = false;
         const playEl = document.getElementsByClassName('play-element')[0];
-        if (playEl) playEl.style = 'display:none;';
+        if (playEl) playEl.style = 'display:none';
         // } else {
         //   doNotToggleOptionList=true;
         // }
