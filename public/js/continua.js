@@ -1491,7 +1491,7 @@ function closeAllSelect(el, skipConfirm = false) {
         document.getElementById('page-container').style.background='transparent';
         openedChat = false;
         const playEl = document.getElementsByClassName('play-element')[0];
-        if (playEl) playEl.src = 'img/icon/play.png';
+        if (playEl) playEl.style = 'display:none;';
         // } else {
         //   doNotToggleOptionList=true;
         // }
