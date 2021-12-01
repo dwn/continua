@@ -1490,6 +1490,8 @@ function closeAllSelect(el, skipConfirm = false) {
         setVisibility('title',true);
         document.getElementById('page-container').style.background='transparent';
         openedChat = false;
+        const playEl = document.getElementsByClassName('play-element')[0];
+        if (playEl) playEl.src = 'img/icon/play.png';
         // } else {
         //   doNotToggleOptionList=true;
         // }
