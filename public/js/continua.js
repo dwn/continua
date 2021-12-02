@@ -1414,7 +1414,9 @@ function loadConscriptFont(family, addr) {
     document.getElementById('conscript-text').innerText = tmp;
     conscriptTextReady = true;
     selectFirstPage();
-    setVisibility('play',true);
+    if (document.querySelector('.select-selected-element').innerHTML!=='start') {
+      setVisibility('play',true);
+    }
   });
 }
 ////////////////////////////////////////////
