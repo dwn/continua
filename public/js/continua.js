@@ -197,7 +197,6 @@ var otfURI;
 var timeStr = '';
 var doNotToggleOptionList=false;
 var alreadyProcessingLine=false;
-var openedChat = false;
 json['font'] = {};
 json['direction'] = 'right-down';
 json['pen'] = 'medium';
@@ -575,9 +574,9 @@ function setVisibility(name, on) {
   for(var i=0;i<arrEl.length;i++) {
     var el = arrEl[i];
     if (on) {
-      if (name === 'chat') el.style.display = 'block'; //Chatbox flows down under main page
       if (name === 'title') {
         el.style.display = 'block'; //Title has centering rule
+        document.querySelector('.select-selected-element').classList.remove('small-title');
       }
       else el.style.display = 'inline-block';
       if (name === 'font') {
@@ -585,10 +584,10 @@ function setVisibility(name, on) {
       }
     } else {
       el.style.display = 'none';
+      if (name === 'title') {
+        document.querySelector('.select-selected-element').classList.add('small-title');
+      }
     }
-  }
-  if (name==='notebook') {
-    if (!openedChat) setVisibility('chat',false); //Only show chat if open
   }
 }
 ////////////////////////////////////////////
@@ -1143,6 +1142,9 @@ function loadClientFile(evt) {
       alert('File failed to load - filename missing timestamp');
       return true;
     }
+    setVisibility('menu',false);
+    setVisibility('select-selected',false);
+    setVisibility('conlang-loading',true);
     var reader = new FileReader();
     reader.onload = (function(theFile) {
       return function(e) {
@@ -1160,6 +1162,7 @@ function loadClientFile(evt) {
               setAllData(true, el, title = json['name'], res);
               otfURI = bucketURL+json['name']+'.otf';
               loadConlangFont('currentFont' + timeStr, otfURI);
+              setVisibility('conlang-loading',false);
             },
             error: function(result){
               debug(result);
@@ -1188,11 +1191,10 @@ function download(filename, blob) {
   }
 }
 ////////////////////////////////////////////
-function downloadSVG(closeAfterward=false) {
+function downloadSVG(closeAfterward=false) { //Also calls DownloadOTF
   consoleEl = document.getElementById('console');
   consoleEl.value += 'Saving ∼ please wait ten seconds\n';
   consoleEl.scrollTop = consoleEl.scrollHeight;
-  openedChat=false;
   //Construct SVG data
   const scale = 12;
   timeStr = (new Date()).toISOString().replace(/[A-Za-z.:]/g,"_");
@@ -1311,6 +1313,9 @@ function downloadSVG(closeAfterward=false) {
   //Reload font data - will be saved to cloud and converted to OTF
   var el = document.getElementsByClassName('select-selected-element')[0];
   json['font'] = {};
+  setVisibility('menu',false);
+  setVisibility('select-selected',false);
+  setVisibility('conlang-loading',true);
   $.ajax({
     type: 'POST',
     url: '/upload-file-to-cloud',
@@ -1322,6 +1327,8 @@ function downloadSVG(closeAfterward=false) {
       setAllData(true, el, title = json['name'], cat);
       otfURI = bucketURL+json['name']+'.otf';
       loadConlangFont('currentFont' + timeStr, otfURI);
+      setVisibility('conlang-loading',false);
+      downloadOTF();
       if (closeAfterward) closeAllSelect(el);
     },
     error: function(result){
@@ -1336,16 +1343,6 @@ function downloadOTF() {
   .then(blob => {
     download(json['name']+'.otf', blob);
   });
-}
-////////////////////////////////////////////
-function openChat() {
-  if (!openedChat) {
-    const url = 'chat/'+json['name']+'?username='+myUsername;
-    debug(url);
-    document.getElementById('chat-iframe').src = url;
-    setVisibility('chat',true);
-    openedChat = true;
-  }
 }
 ////////////////////////////////////////////
 // CALLED BY CUSTOM SELECT DROPDOWN
@@ -1363,7 +1360,10 @@ function selectFirstPage() {
     el.setSelectionRange(0,end);
     txt = fullTxt.substring(0,end);
     el.scrollTop = 0;
-    openChat();
+    const url = 'chat/'+json['name']+'?username='+myUsername;
+    debug(url);
+    document.getElementById('chat-iframe').src = url;
+    setVisibility('chat',true);
   }
 }
 ////////////////////////////////////////////
@@ -1468,7 +1468,6 @@ function closeAllSelect(el, skipConfirm = false) {
         setVisibility('logout',true);
         setVisibility('title',true);
         document.getElementById('page-container').style.background='transparent';
-        openedChat = false;
         const playEl = document.getElementsByClassName('play-element')[0];
         if (playEl) playEl.style = 'display:none';
         // } else {

@@ -38,7 +38,7 @@ $warning-bkg-color:rgba(255,0,0,.5);
 $bkg-color:#680068;
 @import url($font-url);
 @font-face{font-family:title;src:url(title.otf)}
-.menu-element{display:none;} .select-selected-element{display:inline-block;} .conlang-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .chat-in-new-page-element{display:inline-element;} .pen-progress-element{display:none;} .play-element{display:none;} .notebook-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;} .login-container-element{display:inline-block;} .login-element{display:none;} .username-element{display:none;} .intro-element{display:block;}
+.menu-element{display:none;} .select-selected-element{display:inline-block;} .conlang-loading-element{display:none;} .save-needed-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .pen-progress-element{display:none;} .play-element{display:none;} .notebook-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;} .login-container-element{display:inline-block;} .login-element{display:none;} .username-element{display:none;} .intro-element{display:block;}
 * {-webkit-font-smoothing: antialiased;}
 html,
 body {
@@ -204,6 +204,9 @@ select {
   float:left;
   height:58vh;
 }
+.conlang-loading-element {
+  height:3.25rem;
+}
 #kerning-map, #font-svg-container-container, .custom-select-element, #console {
   box-shadow:$box-shadow-down;
 }
@@ -321,6 +324,9 @@ input[type=text], #utf-table, .login-container-element {
     text-shadow:$text-highlight;
   }
 }
+.small-title { //Must be after .select-selected-element
+  font-size:$base-font-size;
+}
 input[type=text].username-element {
   color:$menu-item-color;
   background-color:#765;
@@ -371,7 +377,7 @@ input[type=text].username-element {
   background-color:transparent;
   outline:none;
 }
-.menu-element:not(.menu-icon,.loading-element) {
+.menu-element:not(.menu-icon) {
   transition:all .2s ease-out;
   &:hover {
     background-color:$select-item-hover-bkg-color;
@@ -380,13 +386,13 @@ input[type=text].username-element {
 }
 .menu-icon {
   &:hover {
-    background:radial-gradient(circle,rgba(230,230,230,.4) 0, $bkg-color 1rem);
+    background:radial-gradient(circle,rgba(230,230,230,.4) 0, transparent 1.5rem);
   }
 }
 .save-needed-element {
   cursor: auto;  
 }
-#download-button, #fullscreen-button, .otf-button-element, .otf-loading-element, .chat-button-element, .chat-loading-element {
+#download-button {
   border:0;
   margin:0 0 0 2rem;
   height:1.25rem;

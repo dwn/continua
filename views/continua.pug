@@ -66,7 +66,6 @@ head
     .menu-element(onclick="hideAll(); setVisibility('font',true)") font
     .menu-element(onclick="hideAll(); setVisibility('adjust',true)") adjust
     .menu-element(onclick="hideAll(); setVisibility('notebook',true)") notebook
-    // <div class="menu-element gloss-button" onclick="hideAll(); setVisibility('gloss',true)">gloss</div>
     #menu-button-container
       input#download-button.menu-element.menu-icon(type='image' src='img/icon/download.png' title='save continua svg file' onclick='setVisibility("save-needed",false); downloadSVG();')
       img.save-needed-element(src='img/icon/save-needed.png' style='height:1.33em;width:auto;margin-left:0' title='save to see font changes')
@@ -74,7 +73,6 @@ head
         label(for='files' style='cursor:pointer')
           img(src='img/icon/open.png' title='open continua svg file' style="height:1em; display:inline-block;")
         input#files(type='file' name='files[]' multiple='')
-      .menu-element.loading-element(style='cursor:auto')
   br
   /////////////////////////////
   // FONT
@@ -161,9 +159,9 @@ head
     img.notebook-element.play-element(src='img/icon/play.png' title='start/stop reading text' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
     #conlang-text.notebook-element.third-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
   textarea#user-text.notebook-element.third-width.center.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
-  .chat-element.notebook-element.third-width.right.under
+  .chat-element.notebook-element.third-width.right.under.norm-height
     iframe#chat-iframe(src='' width='100%' height='100%' frameborder='0')
-  textarea#console.notebook-element.under(type='text' spellcheck='false' readonly='' placeholder="Welcome! Please don't use your browser's back button\nTo return to the general menu, press CTRL-G (or click the language name at the top-right)\nTo save your work, press CTRL-S (or click the save icon)")
+  textarea#console.notebook-element.under(type='text' spellcheck='false' readonly='' placeholder="Welcome! Please don't use your browser's back button ∼\n🙞 CTRL-G: Save and return to the general menu\n🙞 CTRL-S: Save")
 script(src='/version.js')
 script(src='https://dwn.github.io/common/js/chat.js')
 script(src='/js/continua.js')
