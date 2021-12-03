@@ -258,7 +258,7 @@ function hideAll() {
 ////////////////////////////////////////////
 function setPen() {
   var txtEl = document.getElementById('font-code');
-  var penProgressEl = document.getElementsByClassName('pen-progress-element')[0];
+  var penProgressEl = document.querySelector('.pen-progress-element');
   penProgressEl.value = 0;
   var txt = txtEl.value;
   var arr = txt.split(/\r?\n/g);
@@ -305,7 +305,7 @@ function setAdjustSetting() {
   json['note'] = document.getElementById('note').value;
   json['view'] = document.getElementById('view').value;
   json['name'] = timeStr+document.getElementById('font-name').value;
-  document.getElementsByClassName('select-selected-element')[0].innerText = json['name'];
+  document.querySelector('.select-selected-element').innerText = json['name'];
   el.style.fontWeight = (json['weight'] === 'bold'? 600 : 200);
   el.style.fontSize = (json['size'] === 'small'? '1.54rem' : '3.08rem');
   if (json['style'] === 'dark') {
@@ -783,7 +783,7 @@ function loadClientFile(evt) {
     reader.onload = (function(theFile) {
       return function(e) {
         var res = e.target.result;
-        var el = document.getElementsByClassName('select-selected-element')[0];
+        var el = document.querySelector('.select-selected-element');
         if (theFile.type==='image/svg+xml') {
           json['font'] = {};
           $.ajax({
@@ -980,6 +980,7 @@ function downloadOTF() {
     download(json['name']+'.otf', blob);
   });
 }
+////////////////////////////////////////////
 function openChat() {
   debug('openChat');
   const url = 'chat/'+json['name']+'?username='+myUsername;
@@ -1050,7 +1051,7 @@ var x, i, j, selElmnt, a, b, c;
 //Look for any elements with the class 'custom-select-element'
 x = document.getElementsByClassName('custom-select-element');
 for (i = 0; i < x.length; i++) {
-  selElmnt = x[i].getElementsByTagName('select')[0];
+  selElmnt = x[i].querySelector('select');
   //For each element, create a new DIV that will act as the selected item
   a = document.createElement('DIV');
   a.setAttribute('class', 'select-selected-element');
@@ -1071,7 +1072,7 @@ for (i = 0; i < x.length; i++) {
       }
       //When an item is clicked, update the original select box and the selected item
       var y, i, k, s, h;
-      s = this.parentNode.parentNode.getElementsByTagName('select')[0];
+      s = this.parentNode.parentNode.querySelector('select');
       loadConlangFont('currentFont' + (new Date()).toISOString().replace(/[A-Za-z.:]/g,"_"), 'https://dwn.github.io/common/lang/' + this.innerHTML + '.otf'); //*** ADDED ***
       h = this.parentNode.previousSibling;
       for (i = 0; i < s.length; i++) {
