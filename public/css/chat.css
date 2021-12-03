@@ -5,7 +5,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background:#876; color:#fed;}
 form { background: transparent; padding: 0; position: relative; width: 100%; }
-form input { background-color: #765; border: 0; width: 90%; height: 3rem; margin:.5rem 0; color:#fed; box-shadow:inset 0 0 1rem rgba(0,0,0,.125); }
+form input { background-color: #765; border: 0; width: calc(90% - 1px); height: 3rem; margin:.5rem 0; color:#fed; box-shadow:inset 0 0 1rem rgba(0,0,0,.125); }
 form button { color: darkgray; width: 9.5%; background: dimgray; border: 0px; padding: 10px; height: 3rem; }
 #messages { list-style-type: none; margin: 0; padding: 0; white-space: pre-wrap; }
 #messages li { font-size: 2.5rem; display:inline-block; box-shadow:inset 0 0 1rem rgba(0,0,0,.125); }

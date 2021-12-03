@@ -6,7 +6,6 @@ const fs = require('fs');
 const path = require('path');
 const cfg = JSON.parse(fs.readFileSync('cfg.json', 'utf8'));
 const PORT = cfg['PORT'];
-//
 const CLOUD_BUCKET = cfg['CLOUD_BUCKET'];
 const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
