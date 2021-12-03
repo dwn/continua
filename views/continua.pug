@@ -67,7 +67,7 @@ head
     .menu-element(onclick="hideAll(); setVisibility('adjust',true)") adjust
     .menu-element(onclick="hideAll(); setVisibility('notebook',true)") notebook
     #menu-button-container
-      input#download-button.menu-element.menu-icon(type='image' src='img/icon/download.png' title='save continua svg file' onclick='setVisibility("save-needed",false); downloadSVG();')
+      input#download-button.menu-element.menu-icon(type='image' src='img/icon/download.png' title='download files' onclick='setVisibility("save-needed",false); downloadSVG();')
       img.save-needed-element(src='img/icon/save-needed.png' style='height:1.33em;width:auto;margin-left:0' title='save to see font changes')
       .menu-element.file-upload.menu-icon(style='cursor:auto')
         label(for='files' style='cursor:pointer')
