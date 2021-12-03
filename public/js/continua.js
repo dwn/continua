@@ -20,7 +20,7 @@ $(document).ready(function() {
         // break;
       case 'g':
         event.preventDefault();
-        downloadSVG(true);
+        closeAllSelect(document.querySelector('.select-selected-element'));
       }
     }
   });
@@ -1132,6 +1132,7 @@ function getSVG(ctx,canvas,lineIndex,xAdvance,xExtra,yExtra,numHoles,numLastPath
 }
 ////////////////////////////////////////////
 function loadClientFile(evt) {
+  debug('loadClientFile');
   //Client opened SVG file from own computer, so load it and save it to the cloud
   var files = evt.target.files;
   for (var i = 0, f; f = files[i]; i++) {
@@ -1180,6 +1181,7 @@ function loadClientFile(evt) {
 document.getElementById('files').addEventListener('change', loadClientFile, false);
 ////////////////////////////////////////////
 function download(filename, blob) {
+  debug('download');
   if (window.navigator.msSaveOrOpenBlob) { //IE10+
     window.navigator.msSaveOrOpenBlob(blob, filename);
   } else { //Others
@@ -1193,7 +1195,8 @@ function download(filename, blob) {
   }
 }
 ////////////////////////////////////////////
-function downloadSVG(closeAfterward=false) { //Also calls DownloadOTF
+function downloadSVG() { //Also calls DownloadOTF
+  debug('downloadSVG');
   consoleEl = document.getElementById('console');
   consoleEl.value += 'Saving ∼ please wait ten seconds\n';
   consoleEl.scrollTop = consoleEl.scrollHeight;
@@ -1313,7 +1316,7 @@ function downloadSVG(closeAfterward=false) { //Also calls DownloadOTF
   var blob = new Blob([cat], {type: 'image/svg+xml'});
   download(json['name']+'.svg', blob);
   //Reload font data - will be saved to cloud and converted to OTF
-  var el = document.getElementsByClassName('select-selected-element')[0];
+  var el = document.querySelector('.select-selected-element');
   json['font'] = {};
   setVisibility('menu',false);
   setVisibility('select-selected',false);
@@ -1331,7 +1334,6 @@ function downloadSVG(closeAfterward=false) { //Also calls DownloadOTF
       loadConlangFont('currentFont' + timeStr, otfURI);
       setVisibility('conlang-loading',false);
       downloadOTF();
-      if (closeAfterward) closeAllSelect(el);
     },
     error: function(result){
       debug(result);
@@ -1340,6 +1342,7 @@ function downloadSVG(closeAfterward=false) { //Also calls DownloadOTF
 }
 ////////////////////////////////////////////
 function downloadOTF() {
+  debug('downloadOTF');
   fetch(otfURI)
   .then(res => res.blob())
   .then(blob => {
@@ -1347,16 +1350,32 @@ function downloadOTF() {
   });
 }
 function openChat() {
-  debug('opening chat');
-  const url = 'chat/'+json['name']+'?username='+myUsername;
-  debug(url);
-  document.getElementById('chat-iframe').src = url;
-  setVisibility('chat',true);
+  debug('openChat');
+  const menuTitleEl=document.querySelector('.select-selected-element').innerHTML;
+  debug(menuTitleEl);
+  const chatEl=document.querySelector('.chat-element');
+  if (menuTitleEl==='start') {
+    debug('.third-width.normheight');
+    chatEl.classList.remove('third-width');
+    chatEl.classList.remove('norm-height');
+    chatEl.classList.add('full');
+  } else {
+    debug('.full');
+    chatEl.classList.add('third-width');
+    chatEl.classList.add('norm-height');
+    chatEl.classList.remove('full');
+    const url = 'chat/'+json['name']+'?username='+myUsername;
+    debug(url);
+    document.getElementById('chat-iframe').src = url;
+    setVisibility('chat',false);
+    setVisibility('chat',true);
+  }
 }
 ////////////////////////////////////////////
 // CALLED BY CUSTOM SELECT DROPDOWN
 ////////////////////////////////////////////
 function selectFirstPage() {
+  debug('selectFirstPage');
   var el = document.getElementById('user-text');
   if (el) {
     openChat();
@@ -1462,18 +1481,33 @@ for (i = 0; i < x.length; i++) {
 }
 ////////////////////////////////////////////
 function closeAllSelect(el, skipConfirm = false) {
+  debug('closeAllSelect');
   if ($(el).hasClass('select-selected-element') && !$(el).hasClass('select-arrow-active')) {
-    debug(el.innerHTML.substr(0,5));
+    debug(el.innerHTML);
     if (el.innerHTML !== 'start') {
-      setVisibility('save-needed',false);
-      setAllData(false,el,'start');
-      setVisibility('settings',true);
-      setVisibility('logout',true);
-      setVisibility('title',true);
       if (!skipConfirm) {
-        document.getElementById('page-container').style.background='transparent';
-        setVisibility('play',false);
-        setVisibility('chat',true);
+        if (confirm('Are you sure you want to leave this page? Unsaved data will be lost!')) {
+          setVisibility('save-needed',false);
+          setAllData(false,el,'start');
+          setVisibility('settings',true);
+          setVisibility('logout',true);
+          document.getElementById('page-container').style.background='transparent';
+          setVisibility('play',false);
+          setVisibility('chat',true);
+          const chatEl=document.querySelector('.chat-element');
+          if (chatEl) {
+            chatEl.classList.remove('third-width');
+            chatEl.classList.remove('norm-height');
+            chatEl.classList.add('full');
+          }
+        } else {
+          doNotToggleOptionList=true;
+        }
+      } else {
+        setVisibility('save-needed',false);
+        setAllData(false,el,'start');
+        setVisibility('settings',true);
+        setVisibility('logout',true);
       }
     }
   }
