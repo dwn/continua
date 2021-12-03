@@ -8,10 +8,10 @@ $login-bkg-url:'/img/bkg/wallpaper-blue.jpg';
 $font:'EB Garamond';
 $font-url:'https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&display=swap';
 $text-highlight:0 0 .6rem rgba(255,255,255,.4),0 0 .6rem rgba(255,255,255,.4),0 0 .6rem rgba(255,255,255,.4);
-$text-shadow:.225rem .225rem .5rem rgba(0,0,0,.4),.225rem .225rem .5rem rgba(0,0,0,.4),.225rem .225rem .5rem rgba(0,0,0,.4);
-$box-shadow:.5rem .5rem 1rem rgba(0,0,0,.5);
-$box-shadow-down:0 .5rem 1rem rgba(0,0,0,.5);
-$box-shadow-up:0 -.5rem 1rem rgba(0,0,0,.5);
+$text-shadow:.225rem .225rem .4rem rgba(0,0,0,.4),.225rem .225rem .4rem rgba(0,0,0,.4),.225rem .225rem .4rem rgba(0,0,0,.4);
+$box-shadow:.4rem .4rem 1rem rgba(0,0,0,.5);
+$box-shadow-down:0 .4rem 1rem rgba(0,0,0,.5);
+$box-shadow-up:0 -.4rem 1rem rgba(0,0,0,.5);
 //Text size
 $base-font-size:1.275rem;
 $input-font-size:1.5rem;
@@ -200,6 +200,7 @@ select {
   height:10vh;
 }
 .chat-element {
+  background:#876;
   float:left;
   height:58vh;
 }

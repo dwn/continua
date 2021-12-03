@@ -1,14 +1,16 @@
 /*//////////////////////////////////////////
 // Dan Nielsen
 //////////////////////////////////////////*/
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&display=swap')
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background:#876; color:#fed;}
 form { background: transparent; padding: 0; position: relative; width: 100%; }
 form input { background-color: #765; border: 0; width: 90%; height: 3rem; margin:.5rem 0; color:#fed;}
-form button { color: darkgray; width: 10%; background: dimgray; border: 0px; padding: 10px; height: 3rem; }
+form button { color: darkgray; width: 9.5%; background: dimgray; border: 0px; padding: 10px; height: 3rem; }
 #messages { list-style-type: none; margin: 0; padding: 0; white-space: pre-wrap; }
-#messages li { font-size: 1.62rem; padding: 5px 10px; }
+#messages li { font-size: 2.5rem; display:inline-block; }
 #messages li:nth-child(odd) { background: #765; }
+body { margin:0; padding:0; }
 .container {
   display:flex;
   flex-wrap:wrap;
@@ -27,7 +29,12 @@ form button { color: darkgray; width: 10%; background: dimgray; border: 0px; pad
   text-shadow:0 0 3px black;
 }
 .login {
-  font-size:1.62rem;
+  font-size:2.5rem;
   color:black;
   background:ivory;
+}
+.chat-name {
+  font-family:'EB Garamond';
+  display:inline-block;
+  font-size:1rem;
 }
