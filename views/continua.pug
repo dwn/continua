@@ -153,15 +153,17 @@ head
   /////////////////////////////
   // NOTEBOOK
   /////////////////////////////
-  textarea#phoneme-map.notebook-element.half-width.under(type='text' spellcheck='false' onblur='loadPhonemeMap()' placeholder='PHONEME MAP')
-  textarea#grapheme-map.notebook-element.half-width.right.under(type='text' spellcheck='false' onblur='loadGraphemeMap()' placeholder='GRAPHEME MAP')
-  #conlang-text-container
-    img.notebook-element.play-element(src='img/icon/play.png' title='start/stop reading text' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
-    #conlang-text.notebook-element.third-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
-  textarea#user-text.notebook-element.third-width.center.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
-  .chat-element.notebook-element.third-width.right.under.norm-height
-    iframe#chat-iframe(src='' width='100%' height='100%' frameborder='0')
-  textarea#console.notebook-element.under(type='text' spellcheck='false' readonly='' placeholder="Welcome! Please don't use your browser's back button ∼\n🙞 CTRL-S: Save\n🙞 CTRL-G: Main menu")
+  #notebook-top-row-container
+    textarea#phoneme-map.notebook-element.half-width.under(type='text' spellcheck='false' onblur='loadPhonemeMap()' placeholder='PHONEME MAP')
+    textarea#grapheme-map.notebook-element.half-width.right.under(type='text' spellcheck='false' onblur='loadGraphemeMap()' placeholder='GRAPHEME MAP')
+  #notebook-bottom-row-container
+    #conlang-text-container
+      img.notebook-element.play-element(src='img/icon/play.png' title='start/stop reading text' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
+      #conlang-text.notebook-element.third-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
+    textarea#user-text.notebook-element.third-width.center.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
+    #chat.chat-element.notebook-element.third-width.right.under.norm-height
+      iframe#chat-iframe(src='' width='100%' height='100%' frameborder='0')
+  textarea#console.notebook-element.under(type='text' spellcheck='false' readonly='' placeholder="Welcome! Please don't use your browser's back button ∼\n🙞 To save: CTRL-S (or click save icon)\n🙞 To return to main: CTRL-G (or click language name at top-right)")
 script(src='/version.js')
 script(src='https://dwn.github.io/common/js/chat.js')
 script(src='/js/continua.js')

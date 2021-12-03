@@ -6,10 +6,10 @@ if (typeof DEBUG!=='undefined' && DEBUG==1) {function debug(s){console.log(s);}}
 $(document).ready(function() {
   document.getElementById('page-container').style.background='transparent'; //In case background state was cached
 ////////////////////////////////////////////
-  $(window).bind('keydown', function(event) { //For ctrl-s save hotkey
+  $(window).bind('keydown', function(event) {
     if (event.ctrlKey || event.metaKey) {
       switch(String.fromCharCode(event.which).toLowerCase()) {
-      case 's':
+      case 's': //CTRL-S
         event.preventDefault();
         setVisibility("save-needed",false);
         downloadSVG();
@@ -18,51 +18,53 @@ $(document).ready(function() {
         // event.preventDefault();
         // alert('ctrl-f');
         // break;
-      case 'g':
+      case 'g': //CTRL-G
         event.preventDefault();
         closeAllSelect(document.querySelector('.select-selected-element'));
       }
     }
   });
-  $('#phoneme-map').bind('keyup click focus paste', function() {
-    document.getElementById('phoneme-map').classList.add('active-textarea');
+////////////////////////////////////////////
+  function setActiveTextarea(id) {
+    debug('active: '+id);
     document.getElementById('grapheme-map').classList.remove('active-textarea');
-    document.getElementById('user-text').classList.remove('active-textarea');
-    //Expand textarea
-    document.getElementById('phoneme-map').classList.add('norm-height');
-    document.getElementById('grapheme-map').classList.add('norm-height');
-    document.getElementById('user-text').classList.remove('norm-height');
-    document.getElementById('conlang-text').classList.remove('norm-height');
-    document.getElementById('conlang-text').classList.add('narrow-height');
-  });
-////////////////////////////////////////////
-  $('#grapheme-map').bind('keyup click focus paste', function() {
     document.getElementById('phoneme-map').classList.remove('active-textarea');
-    document.getElementById('grapheme-map').classList.add('active-textarea');
+    document.getElementById('conlang-text').classList.remove('active-textarea');
     document.getElementById('user-text').classList.remove('active-textarea');
-    //Expand textarea
-    document.getElementById('phoneme-map').classList.add('norm-height');
-    document.getElementById('grapheme-map').classList.add('norm-height');
-    document.getElementById('user-text').classList.remove('norm-height');
-    document.getElementById('conlang-text').classList.remove('norm-height');
-    document.getElementById('conlang-text').classList.add('narrow-height');
-  });
-////////////////////////////////////////////
-  $('#font-code').bind('change', function() {
-    setVisibility('save-needed',true);
-  });
+    document.getElementById('chat').classList.remove('active-textarea');
+    document.getElementById(id).classList.add('active-textarea');
+  }
+  function expandTextarea(id) {
+    document.getElementById(id).classList.remove('narrow-height');
+    document.getElementById(id).classList.add('norm-height');
+  }
+  function reduceTextarea(id) {
+    document.getElementById(id).classList.remove('norm-height');
+    document.getElementById(id).classList.add('narrow-height');
+  }
+  function expandBottomRow() {
+    reduceTextarea('phoneme-map');
+    reduceTextarea('grapheme-map');
+    expandTextarea('user-text');
+    expandTextarea('conlang-text');
+    expandTextarea('chat');
+  }
+  function expandTopRow() {
+    expandTextarea('phoneme-map');
+    expandTextarea('grapheme-map');
+    reduceTextarea('user-text');
+    reduceTextarea('conlang-text');
+    reduceTextarea('chat');
+  }
+  $('#notebook-top-row-container').on('keyup click focus paste', expandTopRow);
+  $('#notebook-bottom-row-container').on('keyup click focus paste', expandBottomRow);
+  $('#phoneme-map').bind('keyup click focus paste', function() { setActiveTextarea('phoneme-map') });
+  $('#grapheme-map').bind('keyup click focus paste', function() { setActiveTextarea('grapheme-map') });
+  $('#conlang-text').bind('keyup click focus paste', function() { setActiveTextarea('conlang-text') });
 ////////////////////////////////////////////
   $('#user-text').bind('keyup click focus paste', function() {
+    setActiveTextarea('user-text');
     var txtEl = document.getElementById('user-text');
-    document.getElementById('phoneme-map').classList.remove('active-textarea');
-    document.getElementById('grapheme-map').classList.remove('active-textarea');
-    //Expand textarea
-    document.getElementById('phoneme-map').classList.remove('norm-height');
-    document.getElementById('grapheme-map').classList.remove('norm-height');
-    document.getElementById('user-text').classList.add('norm-height');
-    document.getElementById('conlang-text').classList.add('norm-height');
-    document.getElementById('conlang-text').classList.remove('narrow-height');
-    txtEl.classList.add('active-textarea');
     var sel = getSelectedText();
     if (sel !== '') return; //Do not process if any highlighted text
     txt = txtEl.value;
@@ -95,6 +97,10 @@ $(document).ready(function() {
         conlangTextEl.scrollLeft = -h;
       }
     }
+  });
+////////////////////////////////////////////
+  $('#font-code').bind('change', function() {
+    setVisibility('save-needed',true);
   });
 ////////////////////////////////////////////
   $('#font-code').bind('keyup click focus paste', function() {
