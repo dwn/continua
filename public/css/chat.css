@@ -33,7 +33,7 @@ body { margin:0; padding:0; font-size: .8rem; }
   color:black;
   background:ivory;
 }
-.chat-name {
+.chat-username {
   font-family:'EB Garamond';
   display:inline-block;
   font-size:1rem;

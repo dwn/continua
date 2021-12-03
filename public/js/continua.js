@@ -595,7 +595,6 @@ function hideAll() {
   setVisibility('font',false);
   setVisibility('adjust',false);
   setVisibility('notebook',false);
-  setVisibility('chat',false);
   setVisibility('title',false);
   setVisibility('settings',false);
   setVisibility('logout',false);
@@ -1352,6 +1351,7 @@ function selectFirstPage() {
   var el = document.getElementById('user-text');
   if (el) {
     //Open chatbox
+    debug('opening chat');
     const url = 'chat/'+json['name']+'?username='+myUsername;
     debug(url);
     document.getElementById('chat-iframe').src = url;
@@ -1462,24 +1462,14 @@ function closeAllSelect(el, skipConfirm = false) {
   if ($(el).hasClass('select-selected-element') && !$(el).hasClass('select-arrow-active')) {
     debug(el.innerHTML.substr(0,5));
     if (el.innerHTML !== 'start') {
+      setVisibility('save-needed',false);
+      setAllData(false,el,'start');
+      setVisibility('settings',true);
+      setVisibility('logout',true);
+      setVisibility('title',true);
       if (!skipConfirm) {
-        // if (confirm('Are you sure you want to leave this page? Unsaved data will be lost!')) {
-        setVisibility('save-needed',false);
-        setAllData(false,el,'start');
-        setVisibility('settings',true);
-        setVisibility('logout',true);
-        setVisibility('title',true);
         document.getElementById('page-container').style.background='transparent';
-        const playEl = document.getElementsByClassName('play-element')[0];
-        if (playEl) playEl.style = 'display:none';
-        // } else {
-        //   doNotToggleOptionList=true;
-        // }
-      } else {
-        setAllData(false,el,'start');
-        setVisibility('settings',true);
-        setVisibility('logout',true);
-        setVisibility('title',true);
+        if (document.querySelector('.play-element')) playEl.style = 'display:none';
       }
     }
   }
