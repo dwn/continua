@@ -1357,24 +1357,16 @@ function downloadOTF() {
 }
 function openChat() {
   debug('openChat');
-  const menuTitleEl=document.querySelector('.select-selected-element').innerHTML;
-  debug(menuTitleEl);
+  const url = 'chat/'+json['name']+'?username='+myUsername;
+  debug(url);
+  document.getElementById('chat-iframe').src = url;
+  setVisibility('chat',false);
+  setVisibility('chat',true);
   const chatEl=document.querySelector('.chat-element');
-  if (menuTitleEl==='start') {
-    debug('.third-width.normheight');
-    chatEl.classList.remove('third-width');
-    chatEl.classList.remove('norm-height');
-    chatEl.classList.add('full');
-  } else {
-    debug('.full');
+  if (chatEl) {
+    chatEl.classList.remove('full');
     chatEl.classList.add('third-width');
     chatEl.classList.add('norm-height');
-    chatEl.classList.remove('full');
-    const url = 'chat/'+json['name']+'?username='+myUsername;
-    debug(url);
-    document.getElementById('chat-iframe').src = url;
-    setVisibility('chat',false);
-    setVisibility('chat',true);
   }
 }
 ////////////////////////////////////////////
