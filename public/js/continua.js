@@ -1150,8 +1150,6 @@ function loadClientFile(evt) {
         var el = document.getElementsByClassName('select-selected-element')[0];
         if (theFile.type==='image/svg+xml') {
           json['font'] = {};
-          setVisibility('chat-loading',true);
-          setVisibility('chat-button',false);
           $.ajax({
             type: 'POST',
             url: '/upload-file-to-cloud',
@@ -1159,8 +1157,6 @@ function loadClientFile(evt) {
             contentType: 'application/json;charset=utf-8',
             data: res,
             success: function(result) {
-              setVisibility('chat-loading',false);
-              setVisibility('chat-button',true);
               setAllData(true, el, title = json['name'], res);
               otfURI = bucketURL+json['name']+'.otf';
               loadConlangFont('currentFont' + timeStr, otfURI);
@@ -1315,8 +1311,6 @@ function downloadSVG(closeAfterward=false) {
   //Reload font data - will be saved to cloud and converted to OTF
   var el = document.getElementsByClassName('select-selected-element')[0];
   json['font'] = {};
-  setVisibility('chat-loading',true);
-  setVisibility('chat-button',false);
   $.ajax({
     type: 'POST',
     url: '/upload-file-to-cloud',
@@ -1324,8 +1318,6 @@ function downloadSVG(closeAfterward=false) {
     contentType: 'application/json;charset=utf-8',
     data: cat,
     success: function(result) {
-      setVisibility('chat-loading',false);
-      setVisibility('chat-button',true);
       document.getElementById('console').value = '';
       setAllData(true, el, title = json['name'], cat);
       otfURI = bucketURL+json['name']+'.otf';
@@ -1347,7 +1339,6 @@ function downloadOTF() {
 }
 ////////////////////////////////////////////
 function openChat() {
-  setVisibility('chat-button',false);
   if (!openedChat) {
     const url = 'chat/'+json['name']+'?username='+myUsername;
     debug(url);
@@ -1372,6 +1363,7 @@ function selectFirstPage() {
     el.setSelectionRange(0,end);
     txt = fullTxt.substring(0,end);
     el.scrollTop = 0;
+    openChat();
   }
 }
 ////////////////////////////////////////////
