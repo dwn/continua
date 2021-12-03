@@ -595,6 +595,7 @@ function hideAll() {
   setVisibility('font',false);
   setVisibility('adjust',false);
   setVisibility('notebook',false);
+  setVisibility('chat',false);
   setVisibility('title',false);
   setVisibility('settings',false);
   setVisibility('logout',false);
