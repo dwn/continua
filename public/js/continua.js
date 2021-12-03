@@ -576,7 +576,9 @@ function setVisibility(name, on) {
     if (on) {
       if (name === 'title') {
         el.style.display = 'block'; //Title has centering rule
-        document.querySelector('.select-selected-element').classList.remove('small-title');
+      }
+      if (name === 'username') {
+        document.querySelector('.select-selected-element').classList.remove('small-menu-title');
       }
       else el.style.display = 'inline-block';
       if (name === 'font') {
@@ -584,8 +586,8 @@ function setVisibility(name, on) {
       }
     } else {
       el.style.display = 'none';
-      if (name === 'title') {
-        document.querySelector('.select-selected-element').classList.add('small-title');
+      if (name === 'username') {
+        document.querySelector('.select-selected-element').classList.add('small-menu-title');
       }
     }
   }
@@ -1344,19 +1346,20 @@ function downloadOTF() {
     download(json['name']+'.otf', blob);
   });
 }
+function openChat() {
+  debug('opening chat');
+  const url = 'chat/'+json['name']+'?username='+myUsername;
+  debug(url);
+  document.getElementById('chat-iframe').src = url;
+  setVisibility('chat',true);
+}
 ////////////////////////////////////////////
 // CALLED BY CUSTOM SELECT DROPDOWN
 ////////////////////////////////////////////
 function selectFirstPage() {
   var el = document.getElementById('user-text');
   if (el) {
-    //Open chatbox
-    debug('opening chat');
-    const url = 'chat/'+json['name']+'?username='+myUsername;
-    debug(url);
-    document.getElementById('chat-iframe').src = url;
-    setVisibility('chat',true);
-    //Select first page
+    openChat();
     var end = fullTxt.indexOf('{br}',0);
     if (end<0 || end>20000) { //Show single page if no break or long preface
       end = nthIndex(fullTxt,'\n',0,22);
@@ -1469,7 +1472,8 @@ function closeAllSelect(el, skipConfirm = false) {
       setVisibility('title',true);
       if (!skipConfirm) {
         document.getElementById('page-container').style.background='transparent';
-        if (document.querySelector('.play-element')) playEl.style = 'display:none';
+        setVisibility('play',false);
+        setVisibility('chat',true);
       }
     }
   }

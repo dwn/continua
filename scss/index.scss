@@ -38,7 +38,7 @@ $warning-bkg-color:rgba(255,0,0,.5);
 $bkg-color:#680068;
 @import url($font-url);
 @font-face{font-family:title;src:url(title.otf)}
-.menu-element{display:none;} .select-selected-element{display:inline-block;} .conlang-loading-element{display:none;} .save-needed-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .pen-progress-element{display:none;} .play-element{display:none;} .notebook-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;} .login-container-element{display:inline-block;} .login-element{display:none;} .username-element{display:none;} .intro-element{display:block;}
+.menu-element{display:none;} .select-selected-element{display:inline-block;} .conlang-loading-element{display:none;} .save-needed-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .pen-progress-element{display:none;} .play-element{display:none;} .notebook-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;} .login-container-element{display:inline-block;} .login-element{display:none;} .username-element{display:none;} .intro-element{display:block;} .chat-element{display:none;}
 * {-webkit-font-smoothing: antialiased;}
 html,
 body {
@@ -202,7 +202,6 @@ select {
 .chat-element {
   background:#876;
   float:left;
-  height:58vh;
 }
 .conlang-loading-element {
   height:3.25rem;
@@ -324,7 +323,7 @@ input[type=text], #utf-table, .login-container-element {
     text-shadow:$text-highlight;
   }
 }
-.small-title { //Must be after .select-selected-element
+.small-menu-title { //Must be after .select-selected-element
   font-size:$base-font-size;
 }
 input[type=text].username-element {
