@@ -183,8 +183,8 @@ select {
   width: calc(33.333% - 1px);
 }
 .full {
-  width:calc(100vw - 1px);
-  height:calc(100vw - 1px);
+  width:100%;
+  height:85vh;
 }
 .center {
   border-left:0;
