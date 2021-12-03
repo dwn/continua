@@ -36,12 +36,9 @@ $select-item-bkg-color:rgba(0,0,0,.5);
 $select-item-hover-bkg-color:rgba(150,150,150,.5);
 $warning-bkg-color:rgba(255,0,0,.5);
 $bkg-color:#680068;
-@import '_colors';
-@import '_layout';
-@import '_forms';
 @import url($font-url);
 @font-face{font-family:title;src:url(title.otf)}
-.menu-element{display:none;} .select-selected-element{display:inline-block;} .conscript-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .chat-in-new-page-element{display:inline-element;} .pen-progress-element{display:none;} .play-element{display:none;} .script-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;} .login-container-element{display:inline-block;} .login-element{display:none;} .username-element{display:none;} .intro-element{display:block;}
+.menu-element{display:none;} .select-selected-element{display:inline-block;} .conlang-loading-element{display:none;} .save-needed-element{display:none;} .otf-loading-element{display:none;} .otf-button-element{display:none;} .chat-loading-element{display:none;} .chat-button-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .donate-element{display:inline-block;} .help-element{display:inline-element;} .chat-in-new-page-element{display:inline-element;} .pen-progress-element{display:none;} .play-element{display:none;} .notebook-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;} .login-container-element{display:inline-block;} .login-element{display:none;} .username-element{display:none;} .intro-element{display:block;} .chat-element{display:inline-block;}
 * {-webkit-font-smoothing: antialiased;}
 html,
 body {
@@ -183,6 +180,13 @@ select {
 .half-width {
   width: calc(50% - 3px);
 }
+.third-width {
+  width: calc(33% - 1px);
+}
+.center {
+  border-left:0;
+  border-right:0;
+}
 .right {
   border-left:0;
 }
@@ -194,6 +198,10 @@ select {
 }
 .narrow-height {
   height:10vh;
+}
+.chat-element {
+  float:left;
+  height:58vh;
 }
 #kerning-map, #font-svg-container-container, .custom-select-element, #console {
   box-shadow:$box-shadow-down;
@@ -233,10 +241,9 @@ input[type=text], #utf-table, .login-container-element {
   color:$console-text-color;
 }
 #console {
-  height:10vh;
+  height:13.333vh;
 }
 #font-svg-container-container {
-  // width:calc(50% - 3px);
   width:800px;
   height:180px;
   font-size:40px;
@@ -331,7 +338,6 @@ input[type=text].username-element {
 }
 .select-items div {
   color: $select-item-color;
-  // font-weight: bold;
   text-shadow:$text-shadow;
   padding: calc(16px + 0.5vw) 0;
   border: 1px solid transparent;
@@ -385,10 +391,10 @@ input[type=text].username-element {
   height:1.25rem;
   width:auto;
 }
-#conscript-text-container {
+#conlang-text-container {
   position:relative;
 }
-#conscript-text {
+#conlang-text {
   line-height:1.25em;
 }
 .file-upload input {
@@ -404,28 +410,12 @@ input[type=text].username-element {
 }
 .play-element {
   position:absolute;
-  top:calc(70vh - 10px);
+  top:calc(71.667vh - 10px);
   left:88vw;
   -webkit-filter:drop-shadow(3px 3px 3px #222);
   filter:drop-shadow(3px 3px 3px #222);
 }
-.help-element {
-  filter: brightness(2);
-  position:absolute;
-  top:20px;
-  left:5px;
-  height:1.33em;
-  width:auto;
-}
-.chat-in-new-page-element {
-  filter: brightness(2);
-  position:absolute;
-  top:20px;
-  left:60px;
-  height:1.33em;
-  width:auto;
-}
-// Animated lights ///////////////////////////
+// Sparkle effect ///////////////////////////
 .circle-container {
   $particleNum: 200;
   $particleColor: hsl(180, 100%, 80%);
@@ -468,7 +458,6 @@ $startPositionY: random(10) + 100;
       animation-duration: $moveDuration;
       animation-delay: random(37000) + ms;
       @keyframes #{$framesName} {
- //Sparkle effect
 $sparkle-effect-left:5; //Implicitly in vw
 $sparkle-effect-width:90; //Implicitly in vw
        from {

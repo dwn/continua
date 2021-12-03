@@ -32,8 +32,8 @@ $(document).ready(function() {
     document.getElementById('phoneme-map').classList.add('norm-height');
     document.getElementById('grapheme-map').classList.add('norm-height');
     document.getElementById('user-text').classList.remove('norm-height');
-    document.getElementById('conscript-text').classList.remove('norm-height');
-    document.getElementById('conscript-text').classList.add('narrow-height');
+    document.getElementById('conlang-text').classList.remove('norm-height');
+    document.getElementById('conlang-text').classList.add('narrow-height');
   });
 ////////////////////////////////////////////
   $('#grapheme-map').bind('keyup click focus paste', function() {
@@ -44,8 +44,8 @@ $(document).ready(function() {
     document.getElementById('phoneme-map').classList.add('norm-height');
     document.getElementById('grapheme-map').classList.add('norm-height');
     document.getElementById('user-text').classList.remove('norm-height');
-    document.getElementById('conscript-text').classList.remove('norm-height');
-    document.getElementById('conscript-text').classList.add('narrow-height');
+    document.getElementById('conlang-text').classList.remove('norm-height');
+    document.getElementById('conlang-text').classList.add('narrow-height');
   });
 ////////////////////////////////////////////
   $('#font-code').bind('change', function() {
@@ -60,39 +60,39 @@ $(document).ready(function() {
     document.getElementById('phoneme-map').classList.remove('norm-height');
     document.getElementById('grapheme-map').classList.remove('norm-height');
     document.getElementById('user-text').classList.add('norm-height');
-    document.getElementById('conscript-text').classList.add('norm-height');
-    document.getElementById('conscript-text').classList.remove('narrow-height');
+    document.getElementById('conlang-text').classList.add('norm-height');
+    document.getElementById('conlang-text').classList.remove('narrow-height');
     txtEl.classList.add('active-textarea');
     var sel = getSelectedText();
     if (sel !== '') return; //Do not process if any highlighted text
     txt = txtEl.value;
     fullTxt = txt;
-    var conscriptTextEl = document.getElementById('conscript-text');
+    var conlangTextEl = document.getElementById('conlang-text');
     grProcess();
-    if (!conscriptTextReady) return; //Keep 'loading' showing unless ready
-    conscriptTextEl.innerText = txt;
-    conscriptTextEl.innerHTML = conscriptTextEl.innerText.replace(/⟨/g,"<span style='font-family:arial;font-size:.5em'>").replace(/⟩/g,'</span>');
-    //Scroll conscript text to center
+    if (!conlangTextReady) return; //Keep 'loading' showing unless ready
+    conlangTextEl.innerText = txt;
+    conlangTextEl.innerHTML = conlangTextEl.innerText.replace(/⟨/g,"<span style='font-family:arial;font-size:.5em'>").replace(/⟩/g,'</span>');
+    //Scroll conlang text to center
     var hDiv,hScroll;
     var len = fullTxt.length;
     var valDirect = json['direction'];
     if (valDirect==='right-down' || valDirect==='left-down') {
-      hDiv = conscriptTextEl.offsetHeight;
-      hScroll = conscriptTextEl.scrollHeight;
+      hDiv = conlangTextEl.offsetHeight;
+      hScroll = conlangTextEl.scrollHeight;
     } else if (valDirect==='down-right' || valDirect==='down-left') {
-      hDiv = conscriptTextEl.offsetWidth;
-      hScroll = conscriptTextEl.scrollWidth;
+      hDiv = conlangTextEl.offsetWidth;
+      hScroll = conlangTextEl.scrollWidth;
     }
     var pos = txtEl.selectionStart;
     if (json['view'] === 'view single page') { pos = 0; } //If single-page-only view, then go to beginning
     var h = ((hScroll*pos) / len) - .5 * hDiv;
     if (valDirect==='right-down' || valDirect==='left-down') {
-      conscriptTextEl.scrollTop = h;
+      conlangTextEl.scrollTop = h;
     } else {
       if (valDirect==='down-right') {
-        conscriptTextEl.scrollLeft = h;
+        conlangTextEl.scrollLeft = h;
       } else if (valDirect==='down-left') {
-        conscriptTextEl.scrollLeft = -h;
+        conlangTextEl.scrollLeft = -h;
       }
     }
   });
@@ -587,7 +587,7 @@ function setVisibility(name, on) {
       el.style.display = 'none';
     }
   }
-  if (name==='script') {
+  if (name==='notebook') {
     if (!openedChat) setVisibility('chat',false); //Only show chat if open
   }
 }
@@ -595,7 +595,7 @@ function setVisibility(name, on) {
 function hideAll() {
   setVisibility('font',false);
   setVisibility('adjust',false);
-  setVisibility('script',false);
+  setVisibility('notebook',false);
   setVisibility('title',false);
   setVisibility('settings',false);
   setVisibility('logout',false);
@@ -612,7 +612,7 @@ function toggleFS() {
     document.msExitFullscreen();
   } else {
     // hideAll();
-    // setVisibility('script',true);
+    // setVisibility('notebook',true);
     // el.focus();
     // el.scrollTop = 0;
     if (el.requestFullscreen) {
@@ -652,7 +652,7 @@ function setPen() {
 }
 ////////////////////////////////////////////
 function setAdjustSetting() {
-  var el = document.getElementById('conscript-text');
+  var el = document.getElementById('conlang-text');
   el.style.textOrientation = 'upright';
   var valDirect = document.getElementById('direction').value;
   json['direction'] = valDirect;
@@ -760,7 +760,7 @@ function setAdjustSetting() {
     el.style.color = '#e6e2e2';
     el.style.textShadow = '#555 1px -1px 2px,red -1px 1px 2px';
     el.style.outline = '#da0 dashed 2px';
-    el.style.outlineOffset = '-15px';
+    el.style.outlineOffset = '-11px';
   } else if (json['style'] === 'splotch') {
     el.style.overflowWrap = 'break-word';
     el.style.float = 'left';
@@ -1149,10 +1149,7 @@ function loadClientFile(evt) {
         var res = e.target.result;
         var el = document.getElementsByClassName('select-selected-element')[0];
         if (theFile.type==='image/svg+xml') {
-          //SVG
           json['font'] = {};
-          setVisibility('otf-loading',true);
-          setVisibility('otf-button',false);
           setVisibility('chat-loading',true);
           setVisibility('chat-button',false);
           $.ajax({
@@ -1162,14 +1159,11 @@ function loadClientFile(evt) {
             contentType: 'application/json;charset=utf-8',
             data: res,
             success: function(result) {
-              //OTF
-              setVisibility('otf-loading',false);
-              setVisibility('otf-button',true);
               setVisibility('chat-loading',false);
               setVisibility('chat-button',true);
               setAllData(true, el, title = json['name'], res);
               otfURI = bucketURL+json['name']+'.otf';
-              loadConscriptFont('currentFont' + timeStr, otfURI);
+              loadConlangFont('currentFont' + timeStr, otfURI);
             },
             error: function(result){
               debug(result);
@@ -1321,8 +1315,6 @@ function downloadSVG(closeAfterward=false) {
   //Reload font data - will be saved to cloud and converted to OTF
   var el = document.getElementsByClassName('select-selected-element')[0];
   json['font'] = {};
-  setVisibility('otf-loading',true);
-  setVisibility('otf-button',false);
   setVisibility('chat-loading',true);
   setVisibility('chat-button',false);
   $.ajax({
@@ -1332,15 +1324,12 @@ function downloadSVG(closeAfterward=false) {
     contentType: 'application/json;charset=utf-8',
     data: cat,
     success: function(result) {
-      //OTF
-      setVisibility('otf-loading',false);
-      setVisibility('otf-button',true);
       setVisibility('chat-loading',false);
       setVisibility('chat-button',true);
       document.getElementById('console').value = '';
       setAllData(true, el, title = json['name'], cat);
       otfURI = bucketURL+json['name']+'.otf';
-      loadConscriptFont('currentFont' + timeStr, otfURI);
+      loadConlangFont('currentFont' + timeStr, otfURI);
       if (closeAfterward) closeAllSelect(el);
     },
     error: function(result){
@@ -1350,7 +1339,6 @@ function downloadSVG(closeAfterward=false) {
 }
 ////////////////////////////////////////////
 function downloadOTF() {
-  setVisibility('otf-button',false);
   fetch(otfURI)
   .then(res => res.blob())
   .then(blob => {
@@ -1363,13 +1351,9 @@ function openChat() {
   if (!openedChat) {
     const url = 'chat/'+json['name']+'?username='+myUsername;
     debug(url);
-    document.getElementsByClassName('chat-element')[0].src = url;
+    document.getElementById('chat-iframe').src = url;
     setVisibility('chat',true);
     openedChat = true;
-    setTimeout(function() {
-      // document.body.scrollTo({left:1000,behavior:'smooth'});
-      // TODO ...
-    },2000);
   }
 }
 ////////////////////////////////////////////
@@ -1399,20 +1383,21 @@ function loadTryForever(font) {
     }, 1000);
   });
 }
-function loadConscriptFont(family, addr) {
-  debug('loadConscriptFont');
-  conscriptTextReady = false;
-  var tmp = document.getElementById('conscript-text').value;
-  document.getElementById('conscript-text').innerHTML = "<img src='img/icon/progress.gif'></img>";
+function loadConlangFont(family, addr) {
+  debug('loadConlangFont');
+  conlangTextReady = false;
+  var tmp = document.getElementById('conlang-text').value;
+  document.getElementById('conlang-text').innerHTML = "<img src='img/icon/progress.gif'></img>";
   setVisibility('play',false);
   var newFont = new FontFace(family, 'url(' + addr + ')');
   loadTryForever(newFont).then(function(loadedFace) {
     setTimeout(function() { //Occasionally even after the font was successfully loaded, it needs a brief moment before adding
       document.fonts.add(loadedFace);
     }, 1000);
-    document.getElementById('conscript-text').style.fontFamily = family;
-    document.getElementById('conscript-text').innerText = tmp;
-    conscriptTextReady = true;
+    const conlangTextEl = document.getElementById('conlang-text');
+    conlangTextEl.style.fontFamily = family;
+    conlangTextEl.innerText = tmp;
+    conlangTextReady = true;
     selectFirstPage();
     if (document.querySelector('.select-selected-element').innerHTML!=='start') {
       setVisibility('play',true);
@@ -1448,7 +1433,7 @@ for (i = 0; i < x.length; i++) {
       //When an item is clicked, update the original select box and the selected item
       var y, i, k, s, h;
       s = this.parentNode.parentNode.getElementsByTagName('select')[0];
-      loadConscriptFont('currentFont' + (new Date()).toISOString().replace(/[A-Za-z.:]/g,"_"), 'https://dwn.github.io/common/lang/' + this.innerHTML + '.otf'); //*** ADDED ***
+      loadConlangFont('currentFont' + (new Date()).toISOString().replace(/[A-Za-z.:]/g,"_"), 'https://dwn.github.io/common/lang/' + this.innerHTML + '.otf'); //*** ADDED ***
       h = this.parentNode.previousSibling;
       for (i = 0; i < s.length; i++) {
         if (s.options[i].innerHTML == this.innerHTML) {

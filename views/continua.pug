@@ -47,9 +47,7 @@ head
     //-   br
     //-   input#username-submit(type='submit' value='↩')
   .custom-select-element
-    //- a(href='/chat' target='_blank')
-      img.chat-in-new-page-element(src='img/icon/chat.png' title='chat')
-    input.conscript-loading-element(type='image' src='img/icon/loading.gif' title='please wait')
+    input.conlang-loading-element(type='image' src='img/icon/loading.gif' title='please wait')
     select#lang
       option start
       each lang in arrLang
@@ -67,7 +65,7 @@ head
         img(alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1")
     .menu-element(onclick="hideAll(); setVisibility('font',true)") font
     .menu-element(onclick="hideAll(); setVisibility('adjust',true)") adjust
-    .menu-element(onclick="hideAll(); setVisibility('script',true)") script
+    .menu-element(onclick="hideAll(); setVisibility('notebook',true)") notebook
     // <div class="menu-element gloss-button" onclick="hideAll(); setVisibility('gloss',true)">gloss</div>
     #menu-button-container
       input#download-button.menu-element.menu-icon(type='image' src='img/icon/download.png' title='save continua svg file' onclick='setVisibility("save-needed",false); downloadSVG();')
@@ -76,10 +74,7 @@ head
         label(for='files' style='cursor:pointer')
           img(src='img/icon/open.png' title='open continua svg file' style="height:1em; display:inline-block;")
         input#files(type='file' name='files[]' multiple='')
-      input#fullscreen-button.menu-element.menu-icon(type='image' src='img/icon/fullscreen.png' title='fullscreen' style='margin-left:0' onclick='toggleFS();')
       .menu-element.loading-element(style='cursor:auto')
-        input.otf-loading-element(type='image' src='img/icon/loading-small.gif' title='please wait' style='cursor:pointer')
-        input.otf-button-element.menu-icon(type='image' src='img/icon/otf.png' title='download otf' style='cursor:pointer' onclick='downloadOTF();')
         input.chat-loading-element(type='image' src='img/icon/loading-small.gif' title='please wait' style='cursor:pointer')
         input.chat-button-element.menu-icon(type='image' src='img/icon/chat.png' title='chat' style='cursor:pointer' onclick='openChat();')
   br
@@ -162,15 +157,15 @@ head
   /////////////////////////////
   // SCRIPT
   /////////////////////////////
-  textarea#phoneme-map.script-element.half-width.under(type='text' spellcheck='false' onblur='loadPhonemeMap()' placeholder='PHONEME MAP')
-  textarea#grapheme-map.script-element.half-width.right.under(type='text' spellcheck='false' onblur='loadGraphemeMap()' placeholder='GRAPHEME MAP')
-  #conscript-text-container
-    img.script-element.play-element(src='img/icon/play.png' title='start/stop reading text' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
-    #conscript-text.script-element.half-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
-  textarea#user-text.script-element.half-width.right.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
-  textarea#console.script-element.under(type='text' spellcheck='false' readonly='' placeholder="Welcome! Please don't use your browser's back button\nTo return to the general menu, press CTRL-G (or click the language name at the top-right)\nTo save your work, press CTRL-S (or click the save icon)")
-  br
-  iframe.chat-element.script-element(src='' width='100%' height='800' frameborder='0')
+  textarea#phoneme-map.notebook-element.half-width.under(type='text' spellcheck='false' onblur='loadPhonemeMap()' placeholder='PHONEME MAP')
+  textarea#grapheme-map.notebook-element.half-width.right.under(type='text' spellcheck='false' onblur='loadGraphemeMap()' placeholder='GRAPHEME MAP')
+  #conlang-text-container
+    img.notebook-element.play-element(src='img/icon/play.png' title='start/stop reading text' onclick='if (alreadyPlaying) {arrTxt=null; return;} txt=tmpTxt; phProcess()')
+    #conlang-text.notebook-element.third-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
+  textarea#user-text.notebook-element.third-width.center.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
+  .chat-element.notebook-element.third-width.right.under
+    iframe#chat-iframe(src='' width='100%' height='100%' frameborder='0')
+  textarea#console.notebook-element.under(type='text' spellcheck='false' readonly='' placeholder="Welcome! Please don't use your browser's back button\nTo return to the general menu, press CTRL-G (or click the language name at the top-right)\nTo save your work, press CTRL-S (or click the save icon)")
 script(src='/version.js')
 script(src='https://dwn.github.io/common/js/chat.js')
 script(src='/js/continua.js')
