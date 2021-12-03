@@ -1350,7 +1350,12 @@ function downloadOTF() {
 function selectFirstPage() {
   var el = document.getElementById('user-text');
   if (el) {
-    // el.scrollTo(0,el.scrollHeight);
+    //Open chatbox
+    const url = 'chat/'+json['name']+'?username='+myUsername;
+    debug(url);
+    document.getElementById('chat-iframe').src = url;
+    setVisibility('chat',true);
+    //Select first page
     var end = fullTxt.indexOf('{br}',0);
     if (end<0 || end>20000) { //Show single page if no break or long preface
       end = nthIndex(fullTxt,'\n',0,22);
@@ -1360,10 +1365,6 @@ function selectFirstPage() {
     el.setSelectionRange(0,end);
     txt = fullTxt.substring(0,end);
     el.scrollTop = 0;
-    const url = 'chat/'+json['name']+'?username='+myUsername;
-    debug(url);
-    document.getElementById('chat-iframe').src = url;
-    setVisibility('chat',true);
   }
 }
 ////////////////////////////////////////////
