@@ -5,13 +5,16 @@ $title-bkg-position:20%;
 $title-bkg-url:'/img/continua/continua-bird.jpg';
 $bkg-upholstry-url:'/img/bkg/upholstry.png';
 $login-bkg-url:'/img/bkg/wallpaper-blue.jpg';
+$chat-upholstry:'/img/bkg/texture.png';
 $font:'EB Garamond';
 $font-url:'https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&display=swap';
 $text-highlight:0 0 .6rem rgba(255,255,255,.4),0 0 .6rem rgba(255,255,255,.4),0 0 .6rem rgba(255,255,255,.4);
 $text-shadow:.225rem .225rem .4rem rgba(0,0,0,.4),.225rem .225rem .4rem rgba(0,0,0,.4),.225rem .225rem .4rem rgba(0,0,0,.4);
+$text-outline:0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;
 $box-shadow:.4rem .4rem 1rem rgba(0,0,0,.5);
 $box-shadow-down:0 .4rem 1rem rgba(0,0,0,.5);
 $box-shadow-up:0 -.4rem 1rem rgba(0,0,0,.5);
+$inset-box-shadow:inset 0 0 1rem rgba(0,0,0,.2);
 //Text size
 $base-font-size:1.275rem;
 $input-font-size:1.5rem;
@@ -19,6 +22,7 @@ $login-font-size:1.05rem;
 $title-size:10rem;
 $motto-size:1.5rem;
 $menu-item-size:1.5rem;
+$chat-message-text-size:2.5rem;
 //Text color
 $menu-item-color:#fed;
 $login-text-color:#111;
@@ -26,6 +30,7 @@ $textarea-text-color:darkgray;
 $console-text-color:darkgray;
 $select-item-color:ivory;
 $motto-color:#ccc;
+$chat-text-color:seashell;
 $placeholder-text-color:#bbb;
 //Background color
 $textarea-active-color:#500050;
@@ -34,6 +39,8 @@ $title-menu-bkg-color:#68006870; //RGB must match $bkg-color
 $title-bkg-color:white;
 $select-item-bkg-color:rgba(0,0,0,.5);
 $select-item-hover-bkg-color:rgba(150,150,150,.5);
+$chat-bkg-color:#876;
+$chat-input-bkg-color:#7658;
 $warning-bkg-color:rgba(255,0,0,.5);
 $bkg-color:#680068;
 @import url($font-url);
@@ -126,16 +133,6 @@ input[type='checkbox'] {
 .intro-element {
   white-space:pre-wrap;
 }
-ul,ol,li {
-  line-height:1.8rem;
-  text-align:left;
-  list-style-type:none;
-}
-li:before { content: '\1f65e'; margin-left: -20px; margin-right: 10px; }
-#login > div {
-  margin:0 auto;
-  text-align:left;
-}
 #title {
   font-family:title;
   font-size:$title-size;
@@ -202,15 +199,28 @@ select {
 .narrow-height {
   height:10vh;
 }
-#chat { background:#876 url('/img/bkg/texture.png') repeat fixed; background-blend-mode: 'soft-light'; color:#fed; margin:0; padding:0; font-size: .8rem; float:left; overflow-x:hidden; overflow-y:auto; }
+ul,ol,li {
+  line-height:1.8rem;
+  text-align:left;
+  list-style-type:none;
+}
+li::before {
+  content:'\1f65e';
+  margin-left:-20px;
+  margin-right:10px; }
+#login > div {
+  margin:0 auto;
+  text-align:left;
+}
+#chat { background:$chat-bkg-color url($chat-upholstry) repeat fixed; background-blend-mode: 'soft-light'; color:$chat-text-color; margin:0; padding:0; font-size: .8rem; float:left; overflow-x:hidden; overflow-y:auto; }
 #chat form { background: transparent; padding: 0; position: relative; width: 100%; }
-#chat form input { background-color: #7658; border: 0; width: calc(90% - 1px); height: 3rem; margin:.5rem 0; color:#fed; box-shadow:inset 0 0 1rem rgba(0,0,0,.2); }
+#chat form input { background-color: $chat-input-bkg-color; border: 0; width: calc(90% - 1px); height: 3rem; margin:.5rem 0; color:$chat-text-color; box-shadow:$inset-box-shadow; }
 #chat form button { color: darkgray; width: 9.5%; background: dimgray; border: 0px; padding: 10px; height: 3rem; }
-#chat #messages { list-style-type: none; margin: 0; padding: 0; white-space: pre-wrap; }
-#chat #messages li { font-size: 2.5rem; display:inline-block; box-shadow:inset 0 0 1rem rgba(0,0,0,.2); }
-#chat #messages li:nth-child(odd) { background: #7658; }
-#chat #search-result { text-align:left; }
-.chat-username { font-family:'EB Garamond'; display:inline-block; font-size:1rem; }
+#chat-messages { list-style-type: none; margin: 0; padding: 0; white-space: pre-wrap; }
+#chat-messages li { font-size:$chat-message-text-size; display:inline-block; box-shadow:$inset-box-shadow; text-shadow:$text-shadow; padding:.5rem; }
+#chat-messages li:nth-child(odd) { background:$chat-input-bkg-color; }
+#chat-search-result { text-align:left; text-shadow:$text-outline,$text-shadow; font-weight:bold; }
+.chat-username { display:inline-block; font-size:1rem; }
 .conlang-loading-element {
   height:3.25rem;
 }
