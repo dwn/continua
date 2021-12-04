@@ -1,19 +1,18 @@
+var myUser;
 var oldUsername;
 $(':checkbox').prop('checked', false); //Makes sure all checkboxes are unchecked on a page reload
-function onSuccess(googleUser) {
-  let profile = googleUser.getBasicProfile();
-  let name = profile.getName();
-  let email = profile.getEmail();
-  console.log('name: ' + name);
-  console.log('email: ' + email);
-  console.log('id: ' + profile.getId());
-  console.log('image url: ' + profile.getImageUrl());
-  document.getElementsByClassName('login-container-element')[0].style.display = 'none';
-  document.getElementsByClassName('custom-select-element')[0].style.display = 'inline-block';
+function onSuccess(googleUser) { 
+  const profile = googleUser.getBasicProfile();
+  document.querySelector('.login-container-element').style.display = 'none';
+  document.querySelector('.custom-select-element').style.display = 'inline-block';
   let usernameEl = document.getElementsByClassName('username-element')[0];
-  oldUsername = name.toLowerCase().replace(' ','-');
+  oldUsername = profile.getName().toLowerCase().replace(' ','-');
+  myUser = { username:oldUsername, id:profile.getId(), email:profile.getEmail(), imageURL:profile.getImageUrl() }
+  myUser.longId = `g${myUser.id}_${myUser.username}`;
   usernameEl.value = oldUsername;
   usernameEl.style.display = 'inline-block';
+  debug(`auth~myUser.username: ${myUser.username}`);
+  debug(`auth~myUser.longId: ${myUser.longId}`);
 }
 function onFailure(error) {
   console.log(error);

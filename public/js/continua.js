@@ -66,6 +66,7 @@ $(document).ready(function() {
     if (sel !== '') return; //Do not process if any highlighted text
     txt = txtEl.value;
     fullTxt = txt;
+    debug(fullTxt);
     var conlangTextEl = document.getElementById('conlang-text');
     grProcess();
     if (!conlangTextReady) return; //Keep 'loading' showing unless ready
@@ -187,7 +188,6 @@ $(document).ready(function() {
   });
 });
 ////////////////////////////////////////////
-var myUsername;
 var speakId;
 var kerning;
 var otfURI;
@@ -213,6 +213,11 @@ document.querySelector('.username-element').addEventListener('blur', e => {
   if (!/^[a-z0-9.-]+$/.test(e.target.value)) {
     e.target.value = oldUsername;
     alert('Sorry, only the following are allowed in a username ∼ \n\n🙞 lowercase English letters (a-z)\n🙞 digits (0-9)\n🙞 period (.)\n🙞 hyphen (-)');
+  } else {
+    myUser.username = e.target.value;
+    myUser.longId = `g${myUser.id}_${myUser.username}`;
+    debug(`blur-username~myUser.username: ${myUser.username}`);
+    debug(`blur-username~myUser.longId: ${myUser.longId}`);
   }
 });
 ////////////////////////////////////////////
@@ -696,9 +701,6 @@ function downloadOTF() {
 ////////////////////////////////////////////
 function openChat() {
   debug('openChat');
-  const url = 'chat/'+json['name']+'?username='+myUsername;
-  debug(url);
-  document.getElementById('chat-iframe').src = url;
   setVisibility('chat',false);
   setVisibility('chat',true);
   const chatEl=document.querySelector('.chat-element');

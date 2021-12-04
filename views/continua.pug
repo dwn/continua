@@ -162,7 +162,11 @@ head
       #conlang-text.notebook-element.third-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
     textarea#user-text.notebook-element.third-width.center.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
     #chat.chat-element.notebook-element.third-width.right.under.norm-height
-      iframe#chat-iframe(src='' width='100%' height='100%' frameborder='0')
+      ul(id='messages')
+      form(action='')
+        input#message-input(autocomplete='off' autofocus)
+        button &rarrhk;
+      p#search-result
   textarea#console.notebook-element.under(type='text' spellcheck='false' readonly='' placeholder="Welcome! Please don't use your browser's back button ∼\n🙞 To save: CTRL-S (or click save icon)\n🙞 To return to main: CTRL-G (or click language name at top-right)")
 script(src='/version.js')
 script(src='https://dwn.github.io/common/js/util.js')
