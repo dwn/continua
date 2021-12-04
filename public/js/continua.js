@@ -14,7 +14,6 @@ $(document).ready(function() {
         setVisibility("save-needed",false);
         downloadSVG();
         break;
-      // case 'f':
       case 'g': //CTRL-G
         event.preventDefault();
         closeAllSelect(document.querySelector('.select-selected-element'));
@@ -307,128 +306,8 @@ function setAdjustSetting() {
   document.querySelector('.select-selected-element').innerText = json['name'];
   el.style.fontWeight = (json['weight'] === 'bold'? 600 : 200);
   el.style.fontSize = (json['size'] === 'small'? '1.54rem' : '3.08rem');
-  if (json['style'] === 'dark') {
-    el.style.overflowWrap = 'break-word';
-    el.style.float = 'left';
-    el.style.backgroundImage = null;
-    el.style.backgroundSize = null;
-    el.style.backgroundRepeat = null;
-    el.style.backgroundBlendMode = null;
-    el.style.backgroundColor = '#224';
-    el.style.color = '#8ef2e8';
-    el.style.textShadow = '0 0 1px slategray';
-    el.style.outline = null;
-    el.style.outlineOffset = null;
-  } else if (json['style'] === 'illuminated') {
-    el.style.overflowWrap = 'break-word';
-    el.style.float = 'left';
-    el.style.backgroundImage = 'url(img/bkg/illuminated.png), linear-gradient(to bottom right,tan,sienna)';
-    el.style.backgroundSize = 'cover';
-    el.style.backgroundRepeat = 'no-repeat';
-    el.style.backgroundBlendMode = null;
-    el.style.backgroundColor = 'wheat';
-    el.style.color = '#ffd780';
-    el.style.textShadow = 'sienna 0px 0px 30px,sienna 0px 0px 30px,gray 0px 0px 3px,gray 0px 0px 3px,black 0px 0px 2px,black 1px 1px 2px,black 1px 1px 1px,black 1px 1px 1px';
-    el.style.outline = null;
-    el.style.outlineOffset = null;
-  } else if (json['style'] === 'terminal') {
-    el.style.overflowWrap = 'break-word';
-    el.style.float = 'left';
-    el.style.backgroundImage = 'linear-gradient(rgba(235, 233, 249, 0.8) 0%, rgba(216, 208, 239, 0.54) 27%, rgba(196, 189, 226, 0.53) 28%, rgba(193, 191, 234, 0.18) 100%), radial-gradient(rgba(0, 85, 150, 0.75), #000032 120%),url(img/bkg/terminal.jpg)';
-    el.style.backgroundSize = 'cover';
-    el.style.backgroundRepeat = 'no-repeat';
-    el.style.backgroundBlendMode = null; el.style.backgroundBlendMode = 'luminosity color'; //Firefox hack
-    el.style.backgroundColor = 'black';
-    el.style.color = 'white';
-    el.style.textShadow = '0 0 .5rem #c8c8c8';
-    el.style.outline = null;
-    el.style.outlineOffset = null;
-  } else if (json['style'] === 'papyrus') {
-    el.style.overflowWrap = 'break-word';
-    el.style.float = 'left';
-    el.style.backgroundImage = 'linear-gradient(rgba(165, 163, 170, 0.8) 0%, rgba(115, 113, 116, 0.18) 100%), url("img/bkg/papyrus.jpg")';
-    el.style.backgroundSize = 'cover';
-    el.style.backgroundRepeat = 'no-repeat';
-    el.style.backgroundBlendMode = null; el.style.backgroundBlendMode = 'hard-light'; //Firefox hack
-    el.style.backgroundColor = '#808080';
-    el.style.color = '#605040';
-    el.style.textShadow = '0 0 2px #a08040';
-    el.style.outline = null;
-    el.style.outlineOffset = null;
-  } else if (json['style'] === 'fire') {
-    el.style.overflowWrap = 'break-word';
-    el.style.float = 'left';
-    el.style.backgroundImage = 'url(img/bkg/fire.gif)';
-    el.style.backgroundSize = 'cover';
-    el.style.backgroundPosition = 'bottom';
-    el.style.backgroundRepeat = 'repeat-y';
-    el.style.backgroundBlendMode = null;
-    el.style.backgroundColor = 'black';
-    el.style.color = 'white';
-    el.style.textShadow = 'rgb(254 252 201) 0px 0px .25rem, rgb(254 236 133) 10px -10px .5rem, rgb(255 174 52) -20px -20px .75rem, rgb(236 118 12) 20px -40px 1rem, rgb(205 70 6) -20px -60px 1.25rem, rgb(151 55 22) 0px -80px 1.5rem, rgb(69 27 14) 10px -90px 1.75rem';
-    el.style.outline = null;
-    el.style.outlineOffset = null;
-  } else if (json['style'] === 'stone') {
-    el.style.overflowWrap = 'break-word';
-    el.style.float = 'left';
-    el.style.backgroundImage = 'linear-gradient(to bottom right,#ccc,#667),url(img/bkg/stone.jpg)';
-    el.style.backgroundSize = 'cover';
-    el.style.backgroundRepeat = 'no-repeat';
-    el.style.backgroundBlendMode = null; el.style.backgroundBlendMode = 'soft-light'; //Firefox hack
-    el.style.backgroundColor = '#8abce2';
-    el.style.color = 'steelblue';
-    el.style.textShadow = 'ivory 1px 1px 1px, #505050 0px 0px 3px, ivory 0px 0px 5px';
-    el.style.outline = null;
-    el.style.outlineOffset = null;
-  } else if (json['style'] === 'stitch') {
-    el.style.overflowWrap = 'break-word';
-    el.style.float = 'left';
-    el.style.backgroundImage = 'url(img/bkg/stitch.png)';
-    el.style.backgroundSize = null;
-    el.style.backgroundRepeat = null;
-    el.style.backgroundBlendMode = null;
-    el.style.backgroundColor = 'red';
-    el.style.color = '#e6e2e2';
-    el.style.textShadow = '#555 1px -1px 2px,red -1px 1px 2px';
-    el.style.outline = '#da0 dashed 2px';
-    el.style.outlineOffset = '-11px';
-  } else if (json['style'] === 'splotch') {
-    el.style.overflowWrap = 'break-word';
-    el.style.float = 'left';
-    el.style.backgroundImage = 'url(img/bkg/splotch.jpg)';
-    el.style.backgroundSize = null;
-    el.style.backgroundRepeat = null;
-    el.style.backgroundBlendMode = null;
-    el.style.backgroundColor = 'black';
-    el.style.color = 'white';
-    el.style.textShadow = 'black 2px 0px 0px, black -2px 0px 0px, black 0px 2px 0px, black 0px -2px 0px, white 3px 3px 2px, white 3px -3px 2px, white -3px 3px 2px, white -3px -3px 2px, white 4px 4px 1px, white 4px -4px 1px, white -4px 4px 1px, white -4px -4px 1px, white 5px 5px 0px, white 5px -5px 0px, white -5px 5px 0px, white -5px -5px 0px';
-    el.style.outline = null;
-    el.style.outlineOffset = null;
-  } else if (json['style'] === 'shadow') {
-    el.style.overflowWrap = 'break-word';
-    el.style.float = 'left';
-    el.style.backgroundImage = 'url(img/bkg/shadow.jpg)';
-    el.style.backgroundSize = null;
-    el.style.backgroundRepeat = null;
-    el.style.backgroundBlendMode = null;
-    el.style.backgroundColor = '#e7e5e4';
-    el.style.color = '#c40';
-    el.style.textShadow = 'ivory 0px 0px 1px,ivory 0px 0px 1px,ivory 0px 0px 2px,ivory 0px 0px 2px,rgba(175, 175, 175, 0.5) -4px 8px 2px';
-    el.style.outline = null;
-    el.style.outlineOffset = null;
-    } else { //Plain
-    el.style.overflowWrap = 'break-word';
-    el.style.float = 'left';
-    el.style.backgroundImage = null;
-    el.style.backgroundSize = null;
-    el.style.backgroundRepeat = null;
-    el.style.backgroundBlendMode = null;
-    el.style.backgroundColor = 'white';
-    el.style.color = 'black';
-    el.style.textShadow = null;
-    el.style.outline = null;
-    el.style.outlineOffset = null;
-  }
+  el.style.backgroundBlendMode = 'null'; //Firefox hack - sometimes background blend mode requires null first in order to update
+  Object.assign(el.style,style[json['style']]);
   if (json['view']==='view full text') {
     alert('Processing long, complex texts all at once can stall performance - consider viewing only the current page instead');
   }
