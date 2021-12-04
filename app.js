@@ -68,11 +68,6 @@ io.on('connection', (socket) => {
   });
 });
 ////////////////////////////////////////////
-function connectChat(username,fontBasename,isMe=false) {
-  io.emit('chat message', '_connected:'+username+':'+fontBasename);
-  dicFontBasename[username] = fontBasename;
-}
-////////////////////////////////////////////
 app.get('/lang-file-url/:langFilename', (req, res) => {
   let langFilename = req.params.langFilename;
   if (langFilename.match(/\d{4}[-]\d{2}[-]\d{2}[_]\d{2}[_]\d{2}[_]\d{2}[_]\d{3}[_]/)) {
@@ -80,6 +75,14 @@ app.get('/lang-file-url/:langFilename', (req, res) => {
   } else {
     res.send(`https://dwn.github.io/common/lang/${langFilename}`);
   }
+});
+////////////////////////////////////////////
+app.get('/chat/username/:username/lang/:lang', (req, res) => {
+  let username = req.params.username;
+  let lang = req.params.lang;
+  io.emit('chat message', '_connected:'+username+':'+lang);
+  dicFontBasename[username] = lang;
+  res.sendStatus(200);
 });
 ////////////////////////////////////////////
 // CRUD

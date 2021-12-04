@@ -6,7 +6,7 @@ if (typeof DEBUG!=='undefined' && DEBUG==1) {function debug(s){console.log(s);}}
 $(document).ready(function() {
   document.getElementById('page-container').style.background='transparent'; //In case background state was cached
 ////////////////////////////////////////////
-  $(window).bind('keydown', function(event) {
+  $(window).on('keydown', function(event) {
     if (event.ctrlKey || event.metaKey) {
       switch(String.fromCharCode(event.which).toLowerCase()) {
       case 's': //CTRL-S
@@ -55,11 +55,11 @@ $(document).ready(function() {
   }
   $('#notebook-top-row-container').on('keyup click focus paste', expandTopRow);
   $('#notebook-bottom-row-container').on('keyup click focus paste', expandBottomRow);
-  $('#phoneme-map').bind('keyup click focus paste', function() { setActiveTextarea('phoneme-map') });
-  $('#grapheme-map').bind('keyup click focus paste', function() { setActiveTextarea('grapheme-map') });
-  $('#conlang-text').bind('keyup click focus paste', function() { setActiveTextarea('conlang-text') });
+  $('#phoneme-map').on('keyup click focus paste', function() { setActiveTextarea('phoneme-map') });
+  $('#grapheme-map').on('keyup click focus paste', function() { setActiveTextarea('grapheme-map') });
+  $('#conlang-text').on('keyup click focus paste', function() { setActiveTextarea('conlang-text') });
 ////////////////////////////////////////////
-  $('#user-text').bind('keyup click focus paste', function() {
+  $('#user-text').on('keyup click focus paste', function() {
     setActiveTextarea('user-text');
     var txtEl = document.getElementById('user-text');
     var sel = getSelectedText();
@@ -97,11 +97,11 @@ $(document).ready(function() {
     }
   });
 ////////////////////////////////////////////
-  $('#font-code').bind('change', function() {
+  $('#font-code').on('change', function() {
     setVisibility('save-needed',true);
   });
 ////////////////////////////////////////////
-  $('#font-code').bind('keyup click focus paste', function() {
+  $('#font-code').on('keyup click focus paste', function() {
     if (alreadyProcessingLine) return;
     alreadyProcessingLine = true;
     var k = this.selectionEnd;
