@@ -188,7 +188,6 @@ $(document).ready(function() {
 });
 ////////////////////////////////////////////
 var myUsername;
-var fullTxt = '';
 var speakId;
 var kerning;
 var otfURI;
@@ -507,6 +506,7 @@ function loadClientFile(evt) {
             contentType: 'application/json;charset=utf-8',
             data: res,
             success: function(result) {
+              debug('setAllData 1');
               setAllData(true, el, title = json['name'], res);
               loadConlangFont('currentFont'+timeStr,json['name']+'.otf');
               setVisibility('conlang-loading',false);
@@ -673,6 +673,7 @@ function downloadSVG() { //Also calls DownloadOTF
     data: cat,
     success: function(result) {
       document.getElementById('console').value = '';
+      debug('setAllData 2');
       setAllData(true, el, title = json['name'], cat);
       loadConlangFont('currentFont'+timeStr,json['name']+'.otf');
       setVisibility('conlang-loading',false);
@@ -782,6 +783,7 @@ for (i = 0; i < x.length; i++) {
     c.addEventListener('click', function(e) {
       if ($(this).hasClass('select-selected-element') || $(this).parent().hasClass('select-items')) {
         timeStr = ''; //*** ADDED ***
+        debug('setAllData 3');
         setAllData(true,this); //*** ADDED ***
       }
       //When an item is clicked, update the original select box and the selected item
@@ -826,6 +828,7 @@ function closeAllSelect(el, skipConfirm = false) {
       if (!skipConfirm) {
         if (confirm('Are you sure you want to leave this page? Unsaved data will be lost!')) {
           setVisibility('save-needed',false);
+          debug('setAllData 4');
           setAllData(false,el,'start');
           setVisibility('settings',true);
           setVisibility('logout',true);
@@ -842,6 +845,7 @@ function closeAllSelect(el, skipConfirm = false) {
         doNotToggleSelectList=true;
       } else {
         setVisibility('save-needed',false);
+        debug('setAllData 5');
         setAllData(false,el,'start');
         setVisibility('settings',true);
         setVisibility('logout',true);
