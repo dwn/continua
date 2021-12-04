@@ -57,34 +57,6 @@ var jsonAfter = {};
 var alreadyPlaying=false;
 var conlangTextReady=false;
 ////////////////////////////////////////////
-function loadFileURL(fileURL) {
-  var result = null;
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open('GET', fileURL, false);
-  xmlhttp.send();
-  if (xmlhttp.status==200) {
-    result = xmlhttp.responseText;
-  }
-  return result;
-}
-////////////////////////////////////////////
-function getSelectedText() {
-  var userSelection='', ta;
-  if (window.getSelection && document.activeElement) {
-    if (document.activeElement.nodeName == 'TEXTAREA' ||
-        (document.activeElement.nodeName == 'INPUT' &&
-        document.activeElement.getAttribute('type').toLowerCase() == 'text')) {
-      ta = document.activeElement;
-      userSelection = ta.value.substring(ta.selectionStart, ta.selectionEnd);
-    } else {
-      userSelection = window.getSelection();
-    }
-  } else {
-    userSelection = document.getSelection();
-  }
-  return userSelection.toString();
-}
-////////////////////////////////////////////
 function nastyHack(key) { //Dollar sign followed by tick would crash the program otherwise
   const s = json[key];
   if (s.includes('$`') || s.includes('$\\`')) {
@@ -169,26 +141,28 @@ function setAllData(on, titleEl = null, title = null, dat = null) {
   var el;
   if (on) {
     if (!dat) { //Only called when font selected from title screen or when user on chat page
-      debug('Getting font data');
-      var urlParts = window.location.href.split('/');
-      urlParts = urlParts.filter(e => e && e!=='http:' && e!=='https:'); //Filter out null and protocol elements
-      const urlParams = new URLSearchParams(window.location.search);
-      var fontBasename = urlParams.get('font'); //Font as query variable
-      if (!fontBasename && urlParts.length > 1) {
-        debug('Getting font name from url');
-        fontBasename = urlParts.pop() || urlParts.pop();
-        fontBasename = fontBasename.split('?')[0]; //Font as URL param
+      let chatIframeSrc = document.getElementById('chat-iframe').src;
+      let fontBasename;
+      if (chatIframeSrc) {
+        let urlParts = chatIframeSrc.split('/');
+        urlParts = urlParts.filter(e => e && e!=='http:' && e!=='https:'); //Filter out null and protocol elements
+        const urlParams = new URLSearchParams(chatIframeSrc.search);
+        fontBasename = urlParams.get('font'); //Font as query variable
+        // debug(`setAllData~urlParts: ${urlParts}`);
+        // debug(`setAllData~urlParams: ${urlParams} (${urlParams.length})`);
+        if (!fontBasename && urlParts && urlParts.length > 1) {
+          debug('Getting font name from url');
+          fontBasename = urlParts.pop() || urlParts.pop();
+          fontBasename = fontBasename.split('?')[0]; //Font as URL param
+        }
+        if (typeof setVisibility === "function") {
+          setVisibility('select-selected',false);
+          setVisibility('conlang-loading',true);
+        }
       }
-      if (typeof setVisibility === "function") {
-        setVisibility('select-selected',false);
-        setVisibility('conlang-loading',true);
-      }
-      debug('fontBasename: '+fontBasename);
-
       //Get lang file URL
       let langFileURL; $.ajax({async:false,type:'GET',dataType:'text',url:`/lang-file-url/${titleEl? titleEl.innerHTML : fontBasename}.svg`,success:function(r){langFileURL=r;},error:function(r){}});
-
-      debug('fileURL: '+langFileURL);
+      debug('setAllData~langFileURL: '+langFileURL);
       dat = loadFileURL(langFileURL);
       var nameInput;
       if (typeof setVisibility === "function") {
@@ -527,14 +501,17 @@ $('form').submit(function(){
 });
 ////////////////////////////////////////////
 socket.on('chat message', function(msg){
+  debug('chat message point A');
   msg = msg.split(':');
   var username = msg[0];
   msg.shift();
   msg = msg.join(':');
   const shortUsername=username.split('_').pop(); //Without uid
+  debug('chat message point B');
   if (shortUsername==='connected') {
     socket.emit('chat font', msg);
   }
+  debug('chat message point C');
   $('#messages')
   .append($("<li style='font-family:" +
     (shortUsername==='connected'? ';font-size:1rem' : (shortUsername? shortUsername : '')) +
@@ -555,6 +532,7 @@ socket.on('chat font', function(msg){
   let langFileURL; $.ajax({async:false,type:'GET',dataType:'text',url:`/lang-file-url/${langFileBasename}`,success:function(r){langFileURL=r;},error:function(r){}});
 
   setAllData(true, null, null, null);
+  debug(`Loading font from ${langFileURL}.otf`)
   var newFont = new FontFace(username, `url(${langFileURL}.otf)`);
   newFont.load().then(function(loadedFace) {
     setTimeout(function() { //Occasionally even after the font was successfully loaded, it needs a brief moment before adding
@@ -562,11 +540,6 @@ socket.on('chat font', function(msg){
     }, 1000);
   });
 });
-
-
-
-
-
 
 
 
