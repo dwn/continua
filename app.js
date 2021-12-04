@@ -128,6 +128,14 @@ app.get('/bucket-url', (req, res) => {
 app.get('/common-lang-url', (req, res) => {
   res.send(`https://dwn.github.io/common/lang/`);
 });
+app.get('/lang-file-url/:langFilename', (req, res) => {
+  let langFilename = req.params.langFilename;
+  if (langFilename.match(/\d{4}[-]\d{2}[-]\d{2}[_]\d{2}[_]\d{2}[_]\d{2}[_]\d{3}[_]/)) {
+    res.send(`https://storage.googleapis.com/${CLOUD_BUCKET}/${langFilename}`);
+  } else {
+    res.send(`https://dwn.github.io/common/lang/${langFilename}`);
+  }
+});
 ////////////////////////////////////////////
 // CRUD
 ////////////////////////////////////////////

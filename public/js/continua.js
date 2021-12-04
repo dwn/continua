@@ -4,6 +4,625 @@
 if (typeof DEBUG!=='undefined' && DEBUG==1) {function debug(s){console.log(s);}} else {function debug(s){}}
 ////////////////////////////////////////////
 $(document).ready(function() {
+  // $(window).bind('keydown', function(event) {
+  //   debug('hotkey in iframe')
+  //   event.preventDefault();
+  //   if (event.ctrlKey || event.metaKey)
+  //     parent.$(parent.document).dispatchEvent(new KeyboardEvent('keydown', { key: 's',code: 'KeyS',ctrlKey: true}));
+  // });
+  $('#message-input').bind('keyup click focus paste', function() {
+    var k = this.selectionEnd;
+    var str = this.value;
+    var begin = str.lastIndexOf(' ',k-1);
+    begin = (begin<0? 0 : begin);
+    var end = str.indexOf(' ',k);
+    end = (end<0? str.length : end);
+    str = str.substring(begin,end).trim();
+    if (str.length>2) {
+      k=0;
+      var searchEl = document.getElementById('search-result');
+      if (searchEl) searchEl.innerText='';
+      while((k=fullTxt.indexOf(str,k))>=0) {
+        begin = fullTxt.lastIndexOf('\n',k);
+        begin = (begin<0? 0 : begin);
+        end = fullTxt.indexOf('\n',k);
+        end = (end<0? fullTxt.length : end);
+        var res = fullTxt.substring(begin,end).trim();
+        if (res===res.toUpperCase()) { //If all uppercase, include preceding line as well
+          begin = fullTxt.lastIndexOf('\n',begin-1);
+          begin = (begin<0? 0 : begin);
+        }
+        else if (res===res.toLowerCase()) { //If all lowercase, include succeeding line as well
+          end = fullTxt.indexOf('\n',end+1);
+          end = (end<0? fullTxt.length : end);
+        }
+        res = fullTxt.substring(begin,end).trim();
+        document.getElementById('search-result').innerText+=res+'\n';
+        k++;
+      }
+      window.scrollTo(0, document.body.scrollHeight);
+    }
+  });
+});
+////////////////////////////////////////////
+var tmpTxt;
+var arrTxt;
+var txt = '';
+var phoneme;
+var phonemeEsc;
+var grapheme;
+var graphemeEsc;
+var json = {};
+var jsonAfter = {};
+var alreadyPlaying=false;
+var conlangTextReady=false;
+////////////////////////////////////////////
+function loadFileURL(fileURL) {
+  var result = null;
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open('GET', fileURL, false);
+  xmlhttp.send();
+  if (xmlhttp.status==200) {
+    result = xmlhttp.responseText;
+  }
+  return result;
+}
+////////////////////////////////////////////
+function getSelectedText() {
+  var userSelection='', ta;
+  if (window.getSelection && document.activeElement) {
+    if (document.activeElement.nodeName == 'TEXTAREA' ||
+        (document.activeElement.nodeName == 'INPUT' &&
+        document.activeElement.getAttribute('type').toLowerCase() == 'text')) {
+      ta = document.activeElement;
+      userSelection = ta.value.substring(ta.selectionStart, ta.selectionEnd);
+    } else {
+      userSelection = window.getSelection();
+    }
+  } else {
+    userSelection = document.getSelection();
+  }
+  return userSelection.toString();
+}
+////////////////////////////////////////////
+function nastyHack(key) { //Dollar sign followed by tick would crash the program otherwise
+  const s = json[key];
+  if (s.includes('$`') || s.includes('$\\`')) {
+    alert('NOT SAVED! PLEASE CHANGE: dollar sign cannot be followed by tick ($`)');
+    return true;
+  }
+  return false;
+}
+function invalidCharacterCombo() {
+  return nastyHack('font-code') || nastyHack('kerning-map') || nastyHack('phoneme-map') || nastyHack('grapheme-map') || nastyHack('user-text') || nastyHack('conlang-text');
+}
+////////////////////////////////////////////
+function loadMap(title,mappingText) {
+  var r = mappingText;
+  json[title] = r.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  if (invalidCharacterCombo()) return;
+  r = r.split(/\r?\n/g);
+  for(var j in r) r[j] = r[j].trim();
+  r = r.filter(function(el) { return el!=''; });
+  for(var j in r) {
+    r[j] = r[j].split(/\s+/g);
+    for(var i in r[j]) {
+      r[j][i] = r[j][i].split(',');
+    }
+  }
+  return r;
+}
+////////////////////////////////////////////
+function loadKerningMap() {
+  var kernSet;
+  if (typeof setVisibility === "function") {
+    kernSet = document.getElementById('kerning-map').value;
+  } else {
+    kernSet = jsonAfter['kerning-map'];
+  }
+  json['kerning-map'] = kernSet.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  if (invalidCharacterCombo()) return;
+  kernSet = kernSet.split(' ');
+  kerning = { };
+  for(var i=0;i<kernSet.length;i++) {
+    var numShiftLeft = (kernSet[i].split('<').length - 1) - (kernSet[i].split('>').length - 1);
+    var dat = kernSet[i].split(/[<>]/).filter(function(el) {return el.length != 0});
+    if (dat.length<2) continue;
+    lhs0 = dat[0].split('-')[0];
+    rhs0 = dat[0].split('-')[1];
+    lhs1 = dat[1].split('-')[0];
+    rhs1 = dat[1].split('-')[1];
+    kerning[i] = { 'lhs0':lhs0, 'rhs0':rhs0, 'lhs1':lhs1, 'rhs1':rhs1, 'numShiftLeft':numShiftLeft };
+  }
+}
+////////////////////////////////////////////
+function loadPhonemeMap() {
+  var phonemeSet;
+  if (typeof setVisibility === "function") {
+    phonemeSet = document.getElementById('phoneme-map').value;
+  } else {
+    phonemeSet = jsonAfter['phoneme-map'];
+  }
+  phoneme = loadMap('phoneme-map',phonemeSet);
+  if (!phoneme) {
+    phoneme = json['phoneme'];
+  }
+  var last = phoneme.length-1;
+  if (last<0) { last=0; phoneme.push([]); }
+  phoneme[last] = phoneme[last].concat([[' ','\'']]);
+}
+////////////////////////////////////////////
+function loadGraphemeMap() {
+  var graphemeSet;
+  if (typeof setVisibility === "function") {
+    graphemeSet = document.getElementById('grapheme-map').value;
+  } else {
+    graphemeSet = jsonAfter['grapheme-map'];
+  }
+  grapheme = loadMap('grapheme-map',graphemeSet);
+  if (!grapheme) {
+    grapheme = json['grapheme'];
+  }
+}
+////////////////////////////////////////////
+function setAllData(on, titleEl = null, title = null, dat = null) {
+  var el;
+  if (on) {
+    if (!dat) { //Only called when font selected from title screen or when user on chat page
+      debug('Getting font data');
+      var urlParts = window.location.href.split('/');
+      urlParts = urlParts.filter(e => e && e!=='http:' && e!=='https:'); //Filter out null and protocol elements
+      const urlParams = new URLSearchParams(window.location.search);
+      var fontBasename = urlParams.get('font'); //Font as query variable
+      if (!fontBasename && urlParts.length > 1) {
+        debug('Getting font name from url');
+        fontBasename = urlParts.pop() || urlParts.pop();
+        fontBasename = fontBasename.split('?')[0]; //Font as URL param
+      }
+      if (typeof setVisibility === "function") {
+        setVisibility('select-selected',false);
+        setVisibility('conlang-loading',true);
+      }
+      debug('fontBasename: '+fontBasename);
+
+      //Get lang file URL
+      let langFileURL; $.ajax({async:false,type:'GET',dataType:'text',url:`/lang-file-url/${titleEl? titleEl.innerHTML : fontBasename}.svg`,success:function(r){langFileURL=r;},error:function(r){}});
+
+      debug('fileURL: '+langFileURL);
+      dat = loadFileURL(langFileURL);
+      var nameInput;
+      if (typeof setVisibility === "function") {
+        setVisibility('conlang-loading',false);
+        setVisibility('select-selected',true);
+        nameInput = document.querySelector('.username-element').value;
+      } else {
+        const urlParams = new URLSearchParams(window.location.search);
+        nameInput = urlParams.get('username');
+      }
+      //Blocking Ajax unique-username -> myUsername
+      $.ajax({async:false,type:'GET',dataType:'text',url:'/unique-username?name='+(nameInput? nameInput : ''),
+        success:function(r){myUsername=r;},error:function(r){}});
+    }
+    if (!dat) { debug('Failed to get font at '+fileURL); return; }
+    dat = dat.split('<desc>');
+    dat = dat[1].split('</desc>')[0];
+    json = JSON.parse(dat); if (json['conscript-text']) { json['conlang-text']=json['conscript-text']; delete json['conscript-text']; } //Legacy fix: formerly called conscript-text
+    jsonAfter['phoneme-map'] = json['phoneme-map'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+    jsonAfter['grapheme-map'] = json['grapheme-map'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+    jsonAfter['kerning-map'] = json['kerning-map'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+    jsonAfter['user-text'] = json['user-text'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+    // jsonAfter['conlang-text'] = json['conlang-text'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+    jsonAfter['font-code'] = json['font-code'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+    jsonAfter['direction'] = json['direction'];
+    jsonAfter['pen'] = json['pen'];
+    jsonAfter['weight'] = json['weight'];
+    jsonAfter['size'] = json['size'];
+    jsonAfter['style'] = json['style'];
+    jsonAfter['space'] = json['space'];
+    jsonAfter['note'] = json['note'];
+    jsonAfter['view'] = json['view'];
+    jsonAfter['name'] = json['name'].replace(/\d{4}[-]\d{2}[-]\d{2}[_]\d{2}[_]\d{2}[_]\d{2}[_]\d{3}[_]/g, '');
+    if (typeof setVisibility === "function") {
+      document.getElementById('phoneme-map').value = jsonAfter['phoneme-map'];
+      document.getElementById('grapheme-map').value = jsonAfter['grapheme-map'];
+      document.getElementById('kerning-map').value = jsonAfter['kerning-map'];
+      document.getElementById('user-text').value = jsonAfter['user-text'];
+      document.getElementById('conlang-text').value = jsonAfter['conlang-text'];
+      document.getElementById('font-code').value = jsonAfter['font-code'];
+      document.getElementById('direction').value = jsonAfter['direction'];
+      document.getElementById('pen').value = jsonAfter['pen'];
+      document.getElementById('weight').value = jsonAfter['weight'];
+      document.getElementById('size').value = jsonAfter['size'];
+      document.getElementById('style').value = jsonAfter['style'];
+      document.getElementById('space').value = jsonAfter['space'];
+      document.getElementById('note').value = jsonAfter['note'];
+      document.getElementById('view').value = jsonAfter['view'];
+      document.getElementById('font-name').value = jsonAfter['name'];
+    }
+    if (typeof setVisibility === "function") {
+      setAdjustSetting();
+      //Clear canvas
+      el = document.getElementById('font-canvas');
+      if (el) {
+        var ctx = el.getContext('2d');
+        ctx.beginPath();
+        ctx.clearRect(0, 0, el.width, el.height);
+      }
+    }
+    //Load mappings
+    loadKerningMap();
+    loadPhonemeMap();
+    loadGraphemeMap();
+    fullTxt = jsonAfter['user-text'];
+    if (typeof setVisibility === "function") {
+      document.body.style.backgroundImage = 'none';
+      document.body.style.backgroundColor = '#680068';
+      hideAll();
+      document.getElementById('page-container').style.backgroundColor = '#680068';
+      setVisibility('username',false);
+      setVisibility('menu',true);
+      setVisibility('notebook',true);
+    }
+  } else {
+    if (typeof setVisibility === "function") {
+      document.body.style.backgroundImage = 'url(img/continua/continua-bird.jpg)';
+      document.getElementById('page-container').style.backgroundColor = 'transparent';
+      hideAll();
+      setVisibility('menu',false);
+      setVisibility('username',true);
+    }
+  }
+  if (titleEl && title) {
+    titleEl.innerHTML = title;
+  }
+}
+////////////////////////////////////////////
+function phProcessInit() {
+  if (typeof meSpeak === "undefined") {
+    setTimeout(phProcessInit, 200);
+  } else {
+    if (!meSpeak.isVoiceLoaded()) {
+      meSpeak.loadVoice('en/en');
+      debug('Loading speech module');
+    }
+  }
+}
+////////////////////////////////////////////
+function phProcessHelper() {
+  do {
+    if (arrTxt===null || !arrTxt.length) {
+      const playEl = document.querySelector('.play-element');
+      if (playEl) playEl.src = 'img/icon/play.png';
+      alreadyPlaying=false;
+      return;
+    }
+    txt=arrTxt.shift();
+    if (txt===null) return;
+    txt=txt.trim();
+  } while(txt==='');
+  try {
+    var uipa = '_' + txt + '_'; //Underscores allow replacement at beginning and end of word
+    for(var j in phonemeEsc) {
+      uipa = addEscaping(uipa);
+      for(var i in phonemeEsc[j]) {
+        uipa = uipa.split(phonemeEsc[j][i][0]).join(phonemeEsc[j][i][1]);
+      }
+      uipa = removeEscaping(uipa);
+    }
+    consoleEl = document.getElementById('console');
+    if (consoleEl) {
+      consoleEl.value += uipa + '\n';
+      consoleEl.scrollTop = consoleEl.scrollHeight;
+    }
+    var mappings = [
+     { 'src': /[0|!=]\//g, 'dest': 'qk' }, //Click - Exact sound not available
+     { 'src': /[0|!=]\/`/g, 'dest': 'qk' }, //Click - Exact sound not available
+     { 'src': /r\/`/g, 'dest': 'r' }, //Exact sound not available
+     { 'src': /k`/g, 'dest': 'k' }, //Exact sound not available
+     { 'src': /g`/g, 'dest': 'g' }, //Exact sound not available
+     { 'src': /n`/g, 'dest': 'N' }, //Exact sound not available
+     { 'src': /s`/g, 'dest': 'Sx' }, //Exact sound not available
+     { 'src': /z`/g, 'dest': 'Zx' }, //Exact sound not available
+     { 'src': /l`/g, 'dest': 'l' }, //Exact sound not available
+     { 'src': /u\//g, 'dest': 'U' }, //Exact sound not available
+     { 'src': /I\//g, 'dest': 'I' }, //Exact sound not available
+     { 'src': /U\//g, 'dest': 'U' }, //Exact sound not available
+     { 'src': /@\//g, 'dest': 'I' }, //Exact sound not available
+     { 'src': /3\//g, 'dest': '@' }, //Exact sound not available
+     { 'src': /&\//g, 'dest': '@' }, //Exact sound not available
+     { 'src': /J\//g, 'dest': 'gj' }, //Exact sound not available
+     { 'src': /G\//g, 'dest': 'qg' }, //Exact sound not available
+     { 'src': />\//g, 'dest': 'p' }, //Exact sound not available
+     { 'src': /B\//g, 'dest': 'blb' }, //Exact sound not available
+     { 'src': /f\//g, 'dest': 'fh' }, //Exact sound not available
+     { 'src': /p\//g, 'dest': 'hv' }, //Exact sound not available
+     { 'src': /j\//g, 'dest': 'j' }, //Exact sound not available
+     { 'src': /X\//g, 'dest': 'hX' }, //Exact sound not available
+     { 'src': /\?\//g, 'dest': 'hvw' }, //Exact sound not available
+     { 'src': /H\//g, 'dest': 'XX' }, //Exact sound not available
+     { 'src': /\<\//g, 'dest': 'Xhh' }, //Exact sound not available
+     { 'src': /h\//g, 'dest': 'hh' }, //Exact sound not available
+     { 'src': /K\//g, 'dest': 'zhl' }, //Exact sound not available
+     { 'src': /r\//g, 'dest': 'ѨѨѨѨѨ' }, //Placeholder for r
+     { 'src': /M\//g, 'dest': 'hr' }, //Exact sound not available
+     { 'src': /L\//g, 'dest': 'l' }, //Exact sound not available
+     { 'src': /\&/g, 'dest': 'Ea' }, //Exact sound not available
+     { 'src': /y/g, 'dest': 'UI' }, //Exact sound not available
+     { 'src': /1/g, 'dest': 'I' }, //Exact sound not available
+     { 'src': /M/g, 'dest': 'U' }, //Exact sound not available
+     { 'src': /Y/g, 'dest': 'U' }, //Exact sound not available
+     { 'src': /2/g, 'dest': 'U' }, //Exact sound not available
+     { 'src': /8/g, 'dest': 'U' }, //Exact sound not available
+     { 'src': /7/g, 'dest': 'U' }, //Exact sound not available
+     { 'src': /9/g, 'dest': 'oE' }, //Exact sound not available
+     { 'src': /O/g, 'dest': 'ao' }, //Exact sound not available
+     { 'src': /6/g, 'dest': 'ah' }, //Exact sound not available
+     { 'src': /A/g, 'dest': 'ah' }, //Exact sound not available
+     { 'src': /Q/g, 'dest': 'ao' }, //Exact sound not available
+     { 'src': /F/g, 'dest': 'm' }, //Exact sound not available
+     { 'src': /c/g, 'dest': 'kj' }, //Exact sound not available
+     { 'src': /\?/g, 'dest': '\'' },
+     { 'src': /J/g, 'dest': 'nj' },
+     { 'src': /r/g, 'dest': 'rlr' }, //Exact sound not available
+     { 'src': /R/g, 'dest': 'Xrlr' }, //Exact sound not available
+     { 'src': /4/g, 'dest': 'R' }, //Exact sound not available
+     { 'src': /C/g, 'dest': 'Sx' }, //Exact sound not available
+     { 'src': /G/g, 'dest': 'xR' }, //Exact sound not available
+     { 'src': /R/g, 'dest': 'XR' }, //Exact sound not available
+     { 'src': /K/g, 'dest': 'Sl' }, //Exact sound not available
+     { 'src': /P/g, 'dest': 'v' }, //Exact sound not available
+     { 'src': /L/g, 'dest': 'j' }, //Exact sound not available
+     { 'src': /ѨѨѨѨѨ/g, 'dest': '@r' }, //Evaluting r
+     { 'src': /@@/g, 'dest': '@' }, //Fixing any doubled schwas
+     { 'src': /,/g, 'dest': '____' }, //Pause on comma
+    ];
+    for (var i = 0; i < mappings.length; i++) {
+      uipa = uipa.replace(mappings[i].src, mappings[i].dest);
+    }
+    debug(uipa);
+    speakId = meSpeak.speak(uipa,null,phProcessHelper);
+  }
+  catch(err) {
+    alert('An error occurred - speaking failed');
+  }
+}
+////////////////////////////////////////////
+function phProcess() {
+  if (alreadyPlaying) return;
+  alreadyPlaying=true;
+  const playEl = document.getElementsByClassName('play-element')[0];
+  if (playEl) playEl.src = 'img/icon/stop.png';
+  debug('PHONOLOGY');
+  phonemeEsc = escapeArray(phoneme);
+  arrTxt = txt.split('{br}')[0].split(/\r?\n/g); //Text {br} stops speech
+  phProcessHelper();
+}
+////////////////////////////////////////////
+function grProcess(txtIn='') {
+  tmpTxt = txt;
+  if (txtIn) {
+    txt=txtIn;
+  } else {
+    if (json['view'] === 'view single page' && getSelectedText() === '') {
+      var userTextEl = document.getElementById('user-text');
+      if (userTextEl) {
+        var k = userTextEl.selectionEnd;
+        var lineIndex = txt.substring(0,k).split(/\r?\n/g).length;
+        var begin = txt.lastIndexOf('\n',k-1);
+        begin = begin<0? 0 : begin;
+        var end = nthIndex(txt,'\n',k,22); //22nd txt.indexOf('\n',k);
+        end = end<0? txt.length : end;
+        txt = txt.substring(begin,end);
+      }
+    }
+  }
+  debug('ORTHOGRAPHY');
+  graphemeEsc = escapeArray(grapheme);
+  json['user-text'] = txt;
+  txt = txt.replace(/\n/g,'_⚠_'); //Weird newline character hopefully no one else will use
+  txt = txt.replace(/ /g,'_');
+  if (txt[0]!=='_') txt='_'+txt;
+  if (txt[txt.length-1]!=='_') txt=txt+'_';
+  var runningSection=0;
+  var skipping=false;
+  var sectionBegin={};
+  var currLine=0;
+  var stopLine=graphemeEsc.length;
+  var currSectionBegin=0;
+  for(var j=0; j<graphemeEsc.length; j++) {
+    if (graphemeEsc[j][0][0]==='\\=\\=\\=\\=\\S\\E\\C\\T\\I\\O\\N') {
+      if (runningSection) {
+        runningSection--;
+        if (runningSection) {
+          j = currSectionBegin;
+        } else {
+          j = currLine;
+        }
+        continue;
+      }
+      var sectionTitle = graphemeEsc[j][0][1];
+      sectionBegin[sectionTitle] = j;
+      if (sectionTitle === 'MAIN') skipping = false;
+      else skipping = true;
+      continue;
+    }
+    if (skipping) continue;
+    var strRun=graphemeEsc[j][0][0].split('\\-');
+    if (strRun[0]==='\\=\\=\\=\\=\\R\\U\\N'&&!runningSection) {
+      if (strRun[1]===undefined||strRun[1]==='') { //Element [1] contains number of times to run
+        runningSection = 1;
+      } else {
+        strRun[1]=strRun[1].replace(/\\/g,'');
+        runningSection = parseInt(strRun[1]);
+      }
+      currLine = j;
+      currSectionBegin = sectionBegin[graphemeEsc[j][0][1]];
+      j = currSectionBegin;
+      continue;
+    }
+    txt = addEscaping(txt);
+    for(var i in graphemeEsc[j]) {
+      if (graphemeEsc[j][i][0]==='') continue;
+      txt = txt.split(graphemeEsc[j][i][0]).join(graphemeEsc[j][i][1]);
+    }
+    txt = removeEscaping(txt);
+  }
+  txt = txt.replace(/_⚠_/g,'\n');
+  txt = txt.replace(/_/g,' ');
+  debug(txt);
+  if (conlangTextReady) {
+    const conlangTextEl = document.getElementById('conlang-text');
+    if (conlangTextEl) conlangTextEl.innerHTML = txt.replace(/⟨/g,"<span style='font-family:arial;font-size:1rem'>").replace(/⟩/g,'</span>');
+  }
+  json['conlang-text'] = txt;
+  json['user-text']=json['user-text'].replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  json['conlang-text']=json['conlang-text'].replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+////////////////////////////////////////////
+phProcessInit();
+////////////////////////////////////////////
+// CHAT
+////////////////////////////////////////////
+function getParameterByName(name, url) {
+  if (!url) url = window.location.href;
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+  var results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+////////////////////////////////////////////
+function langList() {
+  var result = null;
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open('GET', 'https://dwn.github.io/common/lang/list', false);
+  xmlhttp.send();
+  if (xmlhttp.status===200) {
+    result = xmlhttp.responseText;
+  }
+  return result;
+}
+var arrLang=langList().split('\n');
+arrLang = arrLang.filter(function (el) { return el !== null && el !== ''; }); //Remove empty entries
+////////////////////////////////////////////
+var socket = io();
+var uniqueUsername = decodeURIComponent(getParameterByName('username'));
+if (!uniqueUsername) {
+  //Okay to call this async since it cannot be used quickly
+  //Ajax unique-username -> uniqueUsername
+  $.ajax({type:'GET',dataType:'text',url:'/my-unique-username',
+    success:function(r){uniqueUsername=r;},error:function(r){}});
+}
+////////////////////////////////////////////
+$('form').submit(function(){
+  var str=$('#message-input').val();
+  if (!str) return false;
+  str+='\n';
+  grProcess(str);
+  socket.emit('chat message', uniqueUsername+':'+json['conlang-text']);
+  $('#message-input').val('');
+  $('#message-input').focus();
+  return false; //Non-refreshing submit
+});
+////////////////////////////////////////////
+socket.on('chat message', function(msg){
+  msg = msg.split(':');
+  var username = msg[0];
+  msg.shift();
+  msg = msg.join(':');
+  const shortUsername=username.split('_').pop(); //Without uid
+  if (shortUsername==='connected') {
+    socket.emit('chat font', msg);
+  }
+  $('#messages')
+  .append($("<li style='font-family:" +
+    (shortUsername==='connected'? ';font-size:1rem' : (shortUsername? shortUsername : '')) +
+    ';text-orientation:upright;writing-mode:' +
+    (json['direction']==='down-right'? 'vertical-lr' :
+    json['direction']==='down-left'? 'vertical-rl' : 'horizontal-tb') +
+    "'>").html("<div class='chat-username'>"+shortUsername+"&nbsp;</div><div>"+msg+"</div>"));
+  window.scrollTo(0, document.body.scrollHeight);
+  // say(msg);
+});
+////////////////////////////////////////////
+socket.on('chat font', function(msg){
+  debug(msg);
+  msg = msg.split(':');
+  const username = msg[0];
+  const langFileBasename = msg[1];
+  
+  let langFileURL; $.ajax({async:false,type:'GET',dataType:'text',url:`/lang-file-url/${langFileBasename}`,success:function(r){langFileURL=r;},error:function(r){}});
+
+  setAllData(true, null, null, null);
+  var newFont = new FontFace(username, `url(${langFileURL}.otf)`);
+  newFont.load().then(function(loadedFace) {
+    setTimeout(function() { //Occasionally even after the font was successfully loaded, it needs a brief moment before adding
+      document.fonts.add(loadedFace);
+    }, 1000);
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////
+// Dan Nielsen
+////////////////////////////////////////////
+if (typeof DEBUG!=='undefined' && DEBUG==1) {function debug(s){console.log(s);}} else {function debug(s){}}
+////////////////////////////////////////////
+$(document).ready(function() {
   document.getElementById('page-container').style.background='transparent'; //In case background state was cached
 ////////////////////////////////////////////
   $(window).bind('keydown', function(event) {
@@ -176,7 +795,7 @@ $(document).ready(function() {
               r = 16;
             }
             for(var j=-r;j<=r;j++) {
-              agCurve(ctx,(xo+j+xoOffset)<<16,(yo-j+yoOffset)<<16,(xf+j+xfOffset)<<16,(yf-j+yfOffset)<<16,c1,false);
+              agCurve(ctx,json['pen'],(xo+j+xoOffset)<<16,(yo-j+yoOffset)<<16,(xf+j+xfOffset)<<16,(yf-j+yfOffset)<<16,c1,false);
             }
           }
         }
@@ -187,11 +806,6 @@ $(document).ready(function() {
   });
 });
 ////////////////////////////////////////////
-var bucketURL;
-//Okay to call this async since it cannot be used quickly
-//Ajax bucket-url/ -> bucketURL
-$.ajax({type:'GET',dataType:'text',url:'/bucket-url',
-  success:function(r){bucketURL=r;},error:function(r){}});
 var myUsername;
 var fullTxt = '';
 var speakId;
@@ -435,287 +1049,6 @@ function setAdjustSetting() {
   }
 }
 ////////////////////////////////////////////
-function shiftUpFontCode() {
-  var el = document.getElementById('font-code');
-  el.focus();
-  var k = el.selectionEnd;
-  var txt = el.value;
-  var lineIndex = txt.substring(0,k).split(/\r\n|\r|\n/).length;
-  var begin = txt.lastIndexOf('\n',k-1);
-  var end = txt.indexOf('\n',k);
-  begin = begin<0? 0 : begin;
-  end = end<0? txt.length : end;
-  var s = txt.substring(begin,end).trim();
-  for(var i = 97; i < 97+25; i++) {
-    var c0 = String.fromCharCode(i);
-    var c1 = String.fromCharCode(i - 5);
-    // if (c0==='^') c0= '$'; //Caret symbol was already reserved
-    // if (c1==='^') c1= '$'; //Caret symbol was already reserved
-    s = s.replace(new RegExp(c0 + "(?![-\|+])", 'g'), c1+'|');
-    s = s.replace(new RegExp(c0 + "[-]", 'g'), c1+'+');
-    s = s.replace(new RegExp(c0 + "[|]", 'g'), c0);
-    s = s.replace(new RegExp(c0 + "[+]", 'g'), c0+'-');
-  }
-  for(var i=0;i<2;i++) {
-    s = s.replace(/\\\+/g, 'u+');
-    s = s.replace(/\]\+/g, 'v+');
-    s = s.replace(/\^\+/g, 'w+'); //Caret symbol was already reserved
-    s = s.replace(/\_\+/g, 'x+');
-    s = s.replace(/\`\+/g, 'y+');
-    s = s.replace(/\\\|/g, 'u|');
-    s = s.replace(/\]\|/g, 'v|');
-    s = s.replace(/\^\|/g, 'w|'); //Caret symbol was already reserved
-    s = s.replace(/\_\|/g, 'x|');
-    s = s.replace(/\`\|/g, 'y|');
-  }
-  var arr = txt.split(/\r\n|\r|\n/);
-  arr[lineIndex-1] = s;
-  el.value = arr.join('\n');
-  el.selectionStart = el.selectionEnd = begin + 1;
-  el.focus();
-  setTimeout(function() {
-    el.click();
-  }, 200);
-  return s;
-}
-////////////////////////////////////////////
-function shiftLeftFontCode() {
-  var el = document.getElementById('font-code');
-  el.focus();
-  var k = el.selectionEnd;
-  var txt = el.value;
-  var lineIndex = txt.substring(0,k).split(/\r\n|\r|\n/).length;
-  var begin = txt.lastIndexOf('\n',k-1);
-  var end = txt.indexOf('\n',k);
-  begin = begin<0? 0 : begin;
-  end = end<0? txt.length : end;
-  var s = txt.substring(begin,end).trim();
-  for(var i = 97; i < 97+25; i++) {
-    const c0 = String.fromCharCode(i);
-    const c1 = String.fromCharCode(i - 1);
-    s = s.replace(new RegExp(c0 + "(?![-\|+])", 'g'), c1+'-');
-    s = s.replace(new RegExp(c0 + "[|]", 'g'), c1+'+');
-    s = s.replace(new RegExp(c0 + "[-]", 'g'), c0);
-    s = s.replace(new RegExp(c0 + "[+]", 'g'), c0+'|');
-  }
-  for(var i=0;i<2;i++) {
-    s = s.replace(/y\-/g, 'y+');
-    s = s.replace(/t\+/g, 'y-');
-    s = s.replace(/t\-/g, 't+');
-    s = s.replace(/o\+/g, 't-');
-    s = s.replace(/o\-/g, 'o+');
-    s = s.replace(/j\+/g, 'o-');
-    s = s.replace(/j\-/g, 'j+');
-    s = s.replace(/e\+/g, 'j-');
-    s = s.replace(/e\-/g, 'e+');
-    s = s.replace(/\`\+/g, 'e-');
-    s = s.replace(/\`\-/g, '`+');
-  }
-  var arr = txt.split(/\r\n|\r|\n/);
-  arr[lineIndex-1] = s;
-  el.value = arr.join('\n');
-  el.selectionStart = el.selectionEnd = begin + 1;
-  el.focus();
-  setTimeout(function() {
-    el.click();
-  }, 200);
-  return s;
-}
-////////////////////////////////////////////
-// function imageErode(ctx,canvas,radius=2,threshold=1) {
-//   var imgdat = ctx.getImageData(0,0,canvas.width,canvas.height);
-//   var pix = imgdat.data;
-//   var pix2 = new Array((canvas.width*canvas.height)<<2);
-//   for(var y=0; y<canvas.height; y++) {
-//     for(var x=0; x<canvas.width; x++) {
-//       var i = (canvas.width*(y-2) + x-2)<<2;
-//       var s = 0;
-//       var q = 0;
-//       for(var n=-radius; n<=radius; n++) {
-//         for(var m=-radius; m<=radius; m++) {
-//           if (x+m<0 || x+m>=canvas.width || y+n<0 || y+n>=canvas.height) { i+=4; continue };
-//           if (pix[i+3]>64) s++;
-//           i+=4;
-//           q++;
-//         }
-//         i += (canvas.width-5)<<2;
-//       }
-//       i += (radius - (radius+1)*canvas.width)<<2;
-//       s =  (s>=threshold? 0 : 255);
-//       pix2[i  ] = s;
-//       pix2[i+1] = s;
-//       pix2[i+2] = s;
-//       pix2[i+3] = 255-s;
-//     }
-//   }
-//   imgdat.data.set(pix2);
-//   ctx.putImageData(imgdat,0,0)
-// }
-////////////////////////////////////////////
-function agEllipticArc(ctx,x0,y0,x1,y1,numQuarters,orientation) {
-  numQuarters=(numQuarters? numQuarters : 4);
-  var tmp;
-  var q=[false,false,false,false];
-  x0>>=16; x1>>=16; y0>>=16; y1>>=16;
-  if (numQuarters&1) {
-    if (orientation) { x0-=x1-x0; y1+=y1-y0; }
-    else { x1+=x1-x0; y0-=y1-y0; }
-    tmp=(((orientation<<1)+(y0>y1))<<1)+(x0>x1);
-    q[tmp<4? tmp : 7-tmp]=true;
-    if (numQuarters==3) {
-      for(var i=0;i<4;i++) {
-        q[i]=!q[i];
-      }
-    }
-  }
-  else if (numQuarters==2) {
-    if (orientation) x0-=x1-x0;
-    else y0-=y1-y0;
-    tmp=(((orientation<<1)+(y0>y1))<<1)+(x0>x1);
-    q[((tmp>1)<<1)-(tmp>3)-(tmp>4? tmp&1 : 0)]=
-    q[1+((tmp>1)<<1)-(tmp>4? tmp&1 : 0)]=true;
-  }
-  else {
-    q[0]=q[1]=q[2]=q[3]=true;
-  }
-  tmp=x0; x0=Math.min(x0,x1); x1=Math.max(tmp,x1);
-  tmp=y0; y0=Math.min(y0,y1); y1=Math.max(tmp,y1);
-  var cx=(x0+x1)>>1,cy=(y0+y1)>>1,
-      rx=(x1-x0)>>1,ry=(y1-y0)>>1;
-  if (q[0]) {
-    ctx.moveTo(cx,cy+ry);
-    ctx.ellipse(cx,cy,rx,ry,0,.5*Math.PI,Math.PI);
-  }
-  if (q[1]) {
-    ctx.moveTo(cx+rx,cy);
-    ctx.ellipse(cx,cy,rx,ry,0,0,.5*Math.PI);
-  }
-  if (q[2]) {
-    ctx.moveTo(cx-rx,cy);
-    ctx.ellipse(cx,cy,rx,ry,0,Math.PI,1.5*Math.PI);
-  }
-  if (q[3]) {
-    ctx.moveTo(cx,cy-ry);
-    ctx.ellipse(cx,cy,rx,ry,0,1.5*Math.PI,2*Math.PI);
-  }
-}
-////////////////////////////////////////////
-function agCurve(ctx,x0,y0,x1,y1,curveForm,flipBowlShape) {
-  if (json['pen'] === 'round') {
-    ctx.lineWidth = 25;
-    ctx.lineCap = 'round';
-  } else if (json['pen'] === 'medium') {
-    ctx.lineWidth = 13;
-    ctx.lineCap = 'round';
-  } else {
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'butt';
-  }
-  if (x0==x1&&y0==y1) {
-    for(var i=-3;i<4;i++) { //Point
-      ctx.moveTo((x0>>16)-10-i,499 - ((y0>>16)-10+i));
-      ctx.lineTo((x0>>16)+10-i,499 - ((y0>>16)+10+i));
-    }
-    return;
-  }
-  if (curveForm<=-1) { //Line
-    ctx.moveTo(x0>>16,499 - (y0>>16));
-    ctx.lineTo(x1>>16,499 - (y1>>16));
-  }
-  else {
-    var dq;
-    if (curveForm<=9) {
-      var cx=(x0+x1)>>1;
-      var cy=(y0+y1)>>1;
-      var dx=(x1-x0)>>1;
-      var dy=(y1-y0)>>1;
-      var s,t,u,v,p=[];
-      dq=(Math.abs(dx)+Math.abs(dy))>>1;
-      var dq2=(dy>0? dq : -dq);
-      dq=(dx>0? dq : -dq);
-      p[0]=-dx;
-      p[1]=-dy;
-      p[6]=dx;
-      p[7]=dy;
-      s=t=u=v=0;
-      if (curveForm<=0) {
-        t=v=dy;
-      }
-      else if (curveForm<=2) { //Elliptic arc
-        var numQuarters=1;
-        var orientation=curveForm&1;
-        if (x0==x1) {
-          if (y0>y1) { var tmp=y0; y0=y1; y1=tmp; } //For GM1 compatibility
-          numQuarters=2;
-          dq=(y1-y0)>>1;
-          dq=(orientation? -dq : dq);
-          orientation=true;
-          x1+=dq;
-        }
-        else if (y0==y1) {
-          if (x0>x1&&!flipBowlShape) { //For GM1 compatibility
-            var tmp=x0; x0=x1; x1=tmp;
-          }
-          if (!flipBowlShape) { //For GM1 compatibility
-            var tmp=x0; x0=x1; x1=tmp;
-          }
-          if (curveForm==2) {
-            var tmp=x0; x0=x1; x1=tmp;
-          }
-          numQuarters=2;
-          dq=(x1-x0)>>1;
-          //dq=(orientation? dq : -dq); //Removed for GM1 compatibilty
-          orientation=false;
-          y1+=dq;
-        }
-        agEllipticArc(ctx,x0,(499<<16) - y0,x1,(499<<16) - y1,numQuarters,orientation);
-        return;
-      }
-      else {
-        if (y0==y1) dq2=-dq2; //For GM1 compatibility
-        if (curveForm<=3) { //Bezier curve
-          s=dx; u=dq; v=dq2;
-        }
-        else if (curveForm<=4) {
-          t=dy; u=dq; v=dq2;
-        }
-        else if (curveForm<=5) {
-          s=dq; t=dq2; v=dy;
-        }
-        else if (curveForm<=6) {
-          s=dq; t=dq2; u=dx;
-        }
-        else if (curveForm<=7) {
-          s=u=dq; t=v=dq2;
-        }
-        else if (curveForm<=8) {
-          if (Math.abs(dx)<Math.abs(dy)) { dq=-dq; dq2=-dq2; }
-          s=u=dq; t=v=-dq2;
-        }
-        else {
-          s=u=dx;
-        }
-      }
-      p[2]=p[0]+s; p[3]=p[1]+t; p[4]=p[6]-u; p[5]=p[7]-v;
-      for(var i=0;i<8;i+=2) {
-        p[i]+=cx;
-        p[i+1]+=cy;
-      }
-      ctx.moveTo(p[0]>>16,499 - (p[1]>>16));
-      ctx.bezierCurveTo(p[2]>>16,499 - (p[3]>>16), p[4]>>16,499 - (p[5]>>16), p[6]>>16,499 - (p[7]>>16));
-    }
-  }
-}
-////////////////////////////////////////////
-function nthIndex(str, pat, k, n) {
-  var L=str.length, i=k-1;
-  while(n-- && ++i<L){
-    i=str.indexOf(pat,i);
-    if (i<0) break;
-  }
-  return i;
-}
-////////////////////////////////////////////
 function getSVG(ctx,canvas,lineIndex,xAdvance,xExtra,yExtra,numHoles,numLastPaths) {
   var fontSVGContainer = document.getElementById('font-svg-container');
   while (fontSVGContainer.firstChild) {
@@ -794,8 +1127,7 @@ function loadClientFile(evt) {
             data: res,
             success: function(result) {
               setAllData(true, el, title = json['name'], res);
-              otfURI = bucketURL+json['name']+'.otf';
-              loadConlangFont('currentFont' + timeStr, otfURI);
+              loadConlangFont('currentFont'+timeStr,json['name']+'.otf');
               setVisibility('conlang-loading',false);
             },
             error: function(result){
@@ -961,8 +1293,7 @@ function downloadSVG() { //Also calls DownloadOTF
     success: function(result) {
       document.getElementById('console').value = '';
       setAllData(true, el, title = json['name'], cat);
-      otfURI = bucketURL+json['name']+'.otf';
-      loadConlangFont('currentFont' + timeStr, otfURI);
+      loadConlangFont('currentFont'+timeStr,json['name']+'.otf');
       setVisibility('conlang-loading',false);
       downloadOTF();
     },
@@ -998,23 +1329,6 @@ function openChat() {
 ////////////////////////////////////////////
 // CALLED BY CUSTOM SELECT DROPDOWN
 ////////////////////////////////////////////
-function selectFirstPage() {
-  debug('selectFirstPage');
-  var el = document.getElementById('user-text');
-  if (el) {
-    openChat();
-    var end = fullTxt.indexOf('{br}',0);
-    if (end<0 || end>20000) { //Show single page if no break or long preface
-      end = nthIndex(fullTxt,'\n',0,22);
-      end = end<0? fullTxt.length : end;
-    }
-    el.focus();
-    el.setSelectionRange(0,end);
-    txt = fullTxt.substring(0,end);
-    el.scrollTop = 0;
-  }
-}
-////////////////////////////////////////////
 function loadTryForever(font) {
   return font.load().catch(function(err) { 
     setTimeout(function() {
@@ -1023,13 +1337,18 @@ function loadTryForever(font) {
     }, 1000);
   });
 }
-function loadConlangFont(family, addr) {
+function loadConlangFont(family, langFilename) {
   debug('loadConlangFont');
   conlangTextReady = false;
   var tmp = document.getElementById('conlang-text').value;
   document.getElementById('conlang-text').innerHTML = "<img src='img/icon/progress.gif'></img>";
   setVisibility('play',false);
-  var newFont = new FontFace(family, 'url(' + addr + ')');
+  //Get lang file URL
+  let langFileURL; $.ajax({async:false,type:'GET',dataType:'text',url:`/lang-file-url/${langFilename}`,success:function(r){langFileURL=r;},error:function(r){}});
+  //OTF file location for later download
+  if (langFilename.split('.').pop()==='otf') otfURI = langFileURL;
+  //Load font
+  var newFont = new FontFace(family, 'url(' + langFileURL + ')');
   loadTryForever(newFont).then(function(loadedFace) {
     setTimeout(function() { //Occasionally even after the font was successfully loaded, it needs a brief moment before adding
       document.fonts.add(loadedFace);
@@ -1038,7 +1357,21 @@ function loadConlangFont(family, addr) {
     conlangTextEl.style.fontFamily = family;
     conlangTextEl.innerText = tmp;
     conlangTextReady = true;
-    selectFirstPage();
+    //Select first page
+    var el = document.getElementById('user-text');
+    if (el) {
+      openChat();
+      var end = fullTxt.indexOf('{br}',0);
+      if (end<0 || end>20000) { //Show single page if no break or long preface
+        end = nthIndex(fullTxt,'\n',0,22);
+        end = end<0? fullTxt.length : end;
+      }
+      el.focus();
+      el.setSelectionRange(0,end);
+      txt = fullTxt.substring(0,end);
+      el.scrollTop = 0;
+    }
+    //Show play element
     if (document.querySelector('.select-selected-element').innerHTML!=='start') {
       setVisibility('play',true);
     }
@@ -1073,7 +1406,7 @@ for (i = 0; i < x.length; i++) {
       //When an item is clicked, update the original select box and the selected item
       var y, i, k, s, h;
       s = this.parentNode.parentNode.querySelector('select');
-      loadConlangFont('currentFont' + (new Date()).toISOString().replace(/[A-Za-z.:]/g,"_"), 'https://dwn.github.io/common/lang/' + this.innerHTML + '.otf'); //*** ADDED ***
+      loadConlangFont('currentFont' + (new Date()).toISOString().replace(/[A-Za-z.:]/g,"_"), this.innerHTML + '.otf'); //*** ADDED ***
       h = this.parentNode.previousSibling;
       for (i = 0; i < s.length; i++) {
         if (s.options[i].innerHTML == this.innerHTML) {
