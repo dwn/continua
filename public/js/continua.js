@@ -322,6 +322,7 @@ function loadClientFile(evt) {
     setVisibility('menu',false);
     setVisibility('select-selected',false);
     setVisibility('conlang-loading',true);
+    invalidateMessagesWithOldFont(myUser.longId);
     var reader = new FileReader();
     reader.onload = (function(theFile) {
       return function(e) {

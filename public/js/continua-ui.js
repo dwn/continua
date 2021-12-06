@@ -48,6 +48,10 @@ function expandTopRow() {
   reduceTextarea('conlang-text');
   reduceTextarea('chat');
 }
+function invalidateMessagesWithOldFont(longId) {
+  debug('invalidating old messages for '+longId)
+  let arrEl = $(`[style*="${longId}"]`).html('ᵖʳᶦᵒʳ ᶠᵒⁿᵗ').parent().css('color','rgba(0,0,0,.35)');
+}
 ////////////////////////////////////////////
   function closeAllSelect(el, skipConfirm = false) {
     debug('closeAllSelect');
