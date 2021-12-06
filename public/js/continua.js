@@ -316,8 +316,8 @@ function loadClientFile(evt) {
     json['name'] = f.name.split('.').slice(0,-1).join('.');
     timeStr = json['name'].match(/\d{4}[-]\d{2}[-]\d{2}[_]\d{2}[_]\d{2}[_]\d{2}[_]\d{3}[_]/);
     if (!timeStr) {
-      alert('File failed to load - filename missing timestamp');
-      return true;
+      timeStr = (new Date()).toISOString().replace(/[A-Za-z.:]/g,"_");
+      json['name'] = `${timeStr}${json['name']}`;
     }
     setVisibility('menu',false);
     setVisibility('select-selected',false);

@@ -50,7 +50,7 @@ function expandTopRow() {
 }
 function invalidateMessagesWithOldFont(longId) {
   debug('invalidating old messages for '+longId)
-  let arrEl = $(`[style*="${longId}"]`).css('font','1.25rem Arial').html('prior font').parent().css('color','rgba(35,35,35,.5)');
+  let arrEl = $(`[style*="${longId}"]`).css('font','1.25rem Arial').html('prior font').parent().css('color','rgba(35,35,35,.5)').css('text-shadow','none');
 }
 ////////////////////////////////////////////
   function closeAllSelect(el, skipConfirm = false) {
