@@ -77,11 +77,28 @@ app.get('/lang-file-url/:langFilename', (req, res) => {
   }
 });
 ////////////////////////////////////////////
-app.get('/chat/username/:username/lang/:lang', (req, res) => {
-  let username = req.params.username;
+// app.get('/lang-writing-direction/:lang', (req, res) => {
+//   let langFileURL; $.ajax({async:false,type:'GET',dataType:'text',url:`/lang-file-url/${lang}`,success:function(r){langFileURL=r;},error:function(r){}})
+//   let langFileURL = `${langFileURL}.svg`;
+//       var request = new XMLHttpRequest();
+
+//   // request.open('GET',langFileURL,true);
+//   // request.send(null);
+//   // request.onreadystatechange = function () {
+//   //   if (request.readyState === 4 && request.status === 200) {
+//   //     var type = request.getResponseHeader('Content-Type');
+//   //     if (type.indexOf("text") !== 1) {
+//   //       return request.responseText;
+//   //     }
+//   //   }
+//   // }
+// });
+////////////////////////////////////////////
+app.get('/chat/longId/:longId/lang/:lang', (req, res) => {
+  let longId = req.params.longId;
   let lang = req.params.lang;
-  io.emit('chat message', '_connected:'+username+':'+lang);
-  dicFontBasename[username] = lang;
+  io.emit('chat message', '_connected:'+longId+':'+lang);
+  dicFontBasename[longId] = lang;
   res.sendStatus(200);
 });
 ////////////////////////////////////////////

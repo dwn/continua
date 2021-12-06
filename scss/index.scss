@@ -14,7 +14,7 @@ $text-outline:0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;
 $box-shadow:.4rem .4rem 1rem rgba(0,0,0,.5);
 $box-shadow-down:0 .4rem 1rem rgba(0,0,0,.5);
 $box-shadow-up:0 -.4rem 1rem rgba(0,0,0,.5);
-$inset-box-shadow:inset 0 0 1rem rgba(0,0,0,.2);
+$inset-box-shadow:inset 0 0 1rem rgba(0, 0, 0, 0.2), inset 0 0 1px black, 0 0 1px rgba(255,255,255,.8);
 //Text size
 $base-font-size:1.275rem;
 $input-font-size:1.5rem;
@@ -199,6 +199,10 @@ select {
 .narrow-height {
   height:10vh;
 }
+#login > div {
+  margin:0 auto;
+  text-align:left;
+}
 ul,ol,li {
   line-height:1.8rem;
   text-align:left;
@@ -207,18 +211,14 @@ ul,ol,li {
 li::before {
   content:'\1f65e';
   margin-left:-20px;
-  margin-right:10px; }
-#login > div {
-  margin:0 auto;
-  text-align:left;
+  margin-right:10px;
 }
+#chat-messages { margin:0; white-space:pre-wrap; }
+.chat-message { margin:.1rem; font-size:$chat-message-text-size; display:inline-block; box-shadow:$inset-box-shadow; border-radius:20px; text-shadow:$text-shadow; padding: 0 .65rem .65rem .65rem; }
 #chat { background:$chat-bkg-color url($chat-upholstry) repeat fixed; background-blend-mode: 'soft-light'; color:$chat-text-color; margin:0; padding:0; font-size: .8rem; float:left; overflow-x:hidden; overflow-y:auto; }
 #chat form { background: transparent; padding: 0; position: relative; width: 100%; }
-#chat form input { background-color: $chat-input-bkg-color; border: 0; width: calc(90% - 1px); height: 3rem; margin:.5rem 0; color:$chat-text-color; box-shadow:$inset-box-shadow; }
-#chat form button { color: darkgray; width: 9.5%; background: dimgray; border: 0px; padding: 10px; height: 3rem; }
-#chat-messages { list-style-type: none; margin: 0; padding: 0; white-space: pre-wrap; }
-#chat-messages li { font-size:$chat-message-text-size; display:inline-block; box-shadow:$inset-box-shadow; text-shadow:$text-shadow; padding:.5rem; }
-#chat-messages li:nth-child(odd) { background:$chat-input-bkg-color; }
+#chat form input { background-color: $chat-input-bkg-color; border: 0; width: calc(90% - 1px); height: 3rem; margin:.1rem 0; color:$chat-text-color; box-shadow:$inset-box-shadow; }
+#chat form button { color: darkgray; width: 9.5%; background: dimgray; border: 0px; padding: .25rem; height: 3rem; }
 #chat-search-result { text-align:left; text-shadow:$text-outline,$text-shadow; font-weight:bold; }
 .chat-username { display:inline-block; font-size:1rem; }
 .conlang-loading-element {
@@ -327,7 +327,7 @@ input[type=text], #utf-table, .login-container-element {
 .username-element, .logout-element, .select-selected-element {
   position:absolute;
   top:0;
-  padding:1rem;
+  padding:calc(16px + 0.5vw) 5vw;
   font-size:$menu-item-size;
   text-shadow:$text-shadow;
   text-decoration:none;
@@ -373,9 +373,6 @@ input[type=text].username-element {
     background-color:$select-item-hover-bkg-color;
     text-shadow:$text-highlight;
   }
-}
-.select-selected-element {
-  display:inline-block;
 }
 .select-items div {
   float:left;

@@ -67,7 +67,7 @@ head
     .menu-element(onclick="hideAll(); setVisibility('adjust',true)") adjust
     .menu-element(onclick="hideAll(); setVisibility('notebook',true)") notebook
     #menu-button-container
-      input#download-button.menu-element.menu-icon(type='image' src='img/icon/download.png' title='download files' onclick='setVisibility("save-needed",false); downloadSVG();')
+      input#download-button.menu-element.menu-icon(type='image' src='img/icon/download.png' title='download files' onclick='setVisibility("save-needed",false); downloadSVGAndOTF();')
       img.save-needed-element(src='img/icon/save-needed.png' style='height:1.33em;width:auto;margin-left:0' title='save to see font changes')
       .menu-element.file-upload.menu-icon(style='cursor:auto')
         label(for='files' style='cursor:pointer')
@@ -162,17 +162,18 @@ head
       #conlang-text.notebook-element.third-width.under.norm-height(type='text' spellcheck='false' style='positive:relative; overflow-y:scroll; text-orientation: upright; writing-mode: horizontal-tb;' readonly='')
     textarea#user-text.notebook-element.third-width.center.under.norm-height(type='text' spellcheck='false' onselect='txt=getSelectedText(); grProcess()' placeholder='TYPE IN YOUR CONSCRIPT')
     #chat.chat-element.notebook-element.third-width.right.under.norm-height
-      ul#chat-messages
+      #chat-messages
       form(action='')
         input#chat-message-input(autocomplete='off' autofocus)
         button &rarrhk;
       p#chat-search-result
   textarea#console.notebook-element.under(type='text' spellcheck='false' readonly='' placeholder="Welcome! Please don't use your browser's back button ∼\n🙞 To save: CTRL-S (or click save icon)\n🙞 To return to main: CTRL-G (or click language name at top-right)")
 script(src='/version.js')
+script(src='/js/auth.js')
 script(src='https://dwn.github.io/common/js/util.js')
 script(src='https://dwn.github.io/common/js/chat.js')
 script(src='/js/continua-const.js')
+script(src='/js/continua-ui.js')
 script(src='/js/continua-util.js')
 script(src='/js/continua.js')
-script(src='/js/auth.js')
 script(src="https://apis.google.com/js/platform.js?onload=renderButton" async defer)
