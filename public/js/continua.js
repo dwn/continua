@@ -340,6 +340,7 @@ function loadClientFile(evt) {
               setAllData(true, el, title = json['name'], res);
               loadConlangFont('currentFont'+timeStr,json['name']+'.otf');
               setVisibility('conlang-loading',false);
+              setVisibility('select-selected',true);
             },
             error: function(result){
               debug(result);

@@ -215,7 +215,7 @@ li::before {
   margin-right:10px;
 }
 #chat-messages { margin:0; white-space:pre-wrap; }
-.chat-message { margin:.1rem; font-size:$chat-message-text-size; display:inline-block; box-shadow:$inset-box-shadow; border-radius:$border-radius; text-shadow:$text-shadow; padding: 0 .65rem .65rem .65rem; }
+.chat-message { margin:.1rem; font-size:$chat-message-text-size; display:inline-block; box-shadow:$inset-box-shadow; border-radius:$border-radius; text-shadow:$text-shadow; padding: 0 .9rem .6rem .9rem; }
 .chat-message-text { margin:-.5rem; }
 #chat { background:$chat-bkg-color url($chat-upholstry) repeat fixed; background-blend-mode: 'soft-light'; color:$chat-text-color; margin:0; padding:0; font-size: .8rem; float:left; overflow-x:hidden; overflow-y:auto; }
 #chat form { background: transparent; padding: 0; position: relative; width: 100%; }
