@@ -48,6 +48,57 @@ function expandTopRow() {
   reduceTextarea('conlang-text');
   reduceTextarea('chat');
 }
+////////////////////////////////////////////
+  function closeAllSelect(el, skipConfirm = false) {
+    debug('closeAllSelect');
+    if ($(el).hasClass('select-selected-element') && !$(el).hasClass('select-arrow-active')) {
+      debug(el.innerHTML);
+      if (el.innerHTML !== 'start') {
+        if (!skipConfirm) {
+          if (confirm('Are you sure you want to leave this page? Unsaved data will be lost!')) {
+            closeNotebook();
+            setVisibility('save-needed',false);
+            debug('setAllData 4');
+            setAllData(false,el,'start');
+            setVisibility('settings',true);
+            setVisibility('logout',true);
+            document.getElementById('page-container').style.background='transparent';
+            setVisibility('play',false);
+            setVisibility('chat',true);
+            const chatEl=document.querySelector('.chat-element');
+            if (chatEl) {
+              chatEl.classList.remove('third-width');
+              chatEl.classList.remove('norm-height');
+              chatEl.classList.add('full');
+            }
+          }
+          doNotToggleSelectList=true;
+        } else {
+          setVisibility('save-needed',false);
+          debug('setAllData 5');
+          setAllData(false,el,'start');
+          setVisibility('settings',true);
+          setVisibility('logout',true);
+        }
+      }
+    }
+    //A function that will close all select boxes in the document, except the current select box
+    var x, y, i, arrNo = [];
+    x = document.getElementsByClassName('select-items');
+    y = document.getElementsByClassName('select-selected-element');
+    for (i = 0; i < y.length; i++) {
+      if (el == y[i]) {
+        arrNo.push(i)
+      } else {
+        y[i].classList.remove('select-arrow-active');
+      }
+    }
+    for (i = 0; i < x.length; i++) {
+      if (arrNo.indexOf(i)) {
+        x[i].classList.add('select-hide');
+      }
+    }
+  }
 $(document).ready(function() {
   function customSelectInit() {
     var x, i, j, selElmnt, a, b, c;
@@ -107,57 +158,6 @@ $(document).ready(function() {
         }
         doNotToggleSelectList=false;
       });
-    }
-  }
-////////////////////////////////////////////
-  function closeAllSelect(el, skipConfirm = false) {
-    debug('closeAllSelect');
-    if ($(el).hasClass('select-selected-element') && !$(el).hasClass('select-arrow-active')) {
-      debug(el.innerHTML);
-      if (el.innerHTML !== 'start') {
-        if (!skipConfirm) {
-          if (confirm('Are you sure you want to leave this page? Unsaved data will be lost!')) {
-            closeNotebook();
-            setVisibility('save-needed',false);
-            debug('setAllData 4');
-            setAllData(false,el,'start');
-            setVisibility('settings',true);
-            setVisibility('logout',true);
-            document.getElementById('page-container').style.background='transparent';
-            setVisibility('play',false);
-            setVisibility('chat',true);
-            const chatEl=document.querySelector('.chat-element');
-            if (chatEl) {
-              chatEl.classList.remove('third-width');
-              chatEl.classList.remove('norm-height');
-              chatEl.classList.add('full');
-            }
-          }
-          doNotToggleSelectList=true;
-        } else {
-          setVisibility('save-needed',false);
-          debug('setAllData 5');
-          setAllData(false,el,'start');
-          setVisibility('settings',true);
-          setVisibility('logout',true);
-        }
-      }
-    }
-    //A function that will close all select boxes in the document, except the current select box
-    var x, y, i, arrNo = [];
-    x = document.getElementsByClassName('select-items');
-    y = document.getElementsByClassName('select-selected-element');
-    for (i = 0; i < y.length; i++) {
-      if (el == y[i]) {
-        arrNo.push(i)
-      } else {
-        y[i].classList.remove('select-arrow-active');
-      }
-    }
-    for (i = 0; i < x.length; i++) {
-      if (arrNo.indexOf(i)) {
-        x[i].classList.add('select-hide');
-      }
     }
   }
 ////////////////////////////////////////////
