@@ -68,7 +68,7 @@ io.on('connection', (socket) => {
   });
 });
 ////////////////////////////////////////////
-app.get('/lang-file-url/:langFilename', (req, res) => {
+app.get('/lang-file-url/:langFilename', (req, res) => { //Can be basename or full name of file
   let langFilename = req.params.langFilename;
   if (langFilename.match(/\d{4}[-]\d{2}[-]\d{2}[_]\d{2}[_]\d{2}[_]\d{2}[_]\d{3}[_]/)) {
     res.send(`https://storage.googleapis.com/${CLOUD_BUCKET}/${langFilename}`);
@@ -77,22 +77,24 @@ app.get('/lang-file-url/:langFilename', (req, res) => {
   }
 });
 ////////////////////////////////////////////
-// app.get('/lang-writing-direction/:lang', (req, res) => {
-//   let langFileURL; $.ajax({async:false,type:'GET',dataType:'text',url:`/lang-file-url/${lang}`,success:function(r){langFileURL=r;},error:function(r){}})
-//   let langFileURL = `${langFileURL}.svg`;
-//       var request = new XMLHttpRequest();
-
-//   // request.open('GET',langFileURL,true);
-//   // request.send(null);
-//   // request.onreadystatechange = function () {
-//   //   if (request.readyState === 4 && request.status === 200) {
-//   //     var type = request.getResponseHeader('Content-Type');
-//   //     if (type.indexOf("text") !== 1) {
-//   //       return request.responseText;
-//   //     }
-//   //   }
-//   // }
-// });
+app.get('/writing-mode/:langFilename', (req, res) => { //Can be basename or full name of file
+  request.get(`/lang-file-url/${req.params.langFilename}`, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      let langFileURL;
+      langFileURL = body;
+      if (!langFileURL.includes('.svg')) langFileURL+='.svg';
+      let json;
+      request.get(langFileURL, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+          json = JSON.parse(body.split(/<desc>|\/desc>/g)[1]);
+          let d = json['direction'];
+          res.send(d==='right-down'? 'horizontal-tb' :
+                   d==='down-right'? 'vertical-lr': 'vertical-rl');
+        }
+      });
+    }
+  });
+});
 ////////////////////////////////////////////
 app.get('/chat/longId/:longId/lang/:lang', (req, res) => {
   let longId = req.params.longId;

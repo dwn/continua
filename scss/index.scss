@@ -15,6 +15,7 @@ $box-shadow:.4rem .4rem 1rem rgba(0,0,0,.5);
 $box-shadow-down:0 .4rem 1rem rgba(0,0,0,.5);
 $box-shadow-up:0 -.4rem 1rem rgba(0,0,0,.5);
 $inset-box-shadow:inset 0 0 1rem rgba(0, 0, 0, 0.2), inset 0 0 1px black, 0 0 1px rgba(255,255,255,.8);
+$border-radius:.75rem;
 //Text size
 $base-font-size:1.275rem;
 $input-font-size:1.5rem;
@@ -45,7 +46,7 @@ $warning-bkg-color:rgba(255,0,0,.5);
 $bkg-color:#680068;
 @import url($font-url);
 @font-face{font-family:title;src:url(title.otf)}
-.menu-element{display:none;} .select-selected-element{display:inline-block;} .conlang-loading-element{display:none;} .save-needed-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .pen-progress-element{display:none;} .play-element{display:none;} .notebook-element{display:none;} .title-element{display:block;} .custom-select-element{display:none;} .login-container-element{display:inline-block;} .login-element{display:none;} .username-element{display:none;} .intro-element{display:block;} .chat-element{display:none;}
+.menu-element{display:none;} .select-selected-element{display:inline-block;} .conlang-loading-element{display:none;} .save-needed-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .pen-progress-element{display:none;} .play-element{display:none;} .notebook-element{display:none;} .title-container-element{display:block;} .custom-select-element{display:none;} .login-container-element{display:inline-block;} .login-element{display:none;} .username-element{display:none;} .intro-element{display:block;} .chat-element{display:none;}
 * {-webkit-font-smoothing: antialiased;}
 html,
 body {
@@ -77,7 +78,7 @@ input[type='text'] {
   font-size:2rem;
   color:black;
   background-color:$title-bkg-color;
-  border-radius:1rem;
+  border-radius:$border-radius;
   text-align:center;
 }
 input[type='checkbox'] {
@@ -121,7 +122,7 @@ input[type='checkbox'] {
   left:calc(50% - 330px - 2rem);
   bottom:25px;
   opacity:1;
-  border-radius:20px;
+  border-radius:$border-radius;
   color:$login-text-color;
   background:linear-gradient(to bottom,#aaa,#aaa,#bbb,#fff), url($login-bkg-url) no-repeat scroll center center;
   -webkit-background-size: cover;
@@ -214,13 +215,14 @@ li::before {
   margin-right:10px;
 }
 #chat-messages { margin:0; white-space:pre-wrap; }
-.chat-message { margin:.1rem; font-size:$chat-message-text-size; display:inline-block; box-shadow:$inset-box-shadow; border-radius:20px; text-shadow:$text-shadow; padding: 0 .65rem .65rem .65rem; }
+.chat-message { margin:.1rem; font-size:$chat-message-text-size; display:inline-block; box-shadow:$inset-box-shadow; border-radius:$border-radius; text-shadow:$text-shadow; padding: 0 .65rem .65rem .65rem; }
+.chat-message-text { margin:-.5rem; }
 #chat { background:$chat-bkg-color url($chat-upholstry) repeat fixed; background-blend-mode: 'soft-light'; color:$chat-text-color; margin:0; padding:0; font-size: .8rem; float:left; overflow-x:hidden; overflow-y:auto; }
 #chat form { background: transparent; padding: 0; position: relative; width: 100%; }
-#chat form input { background-color: $chat-input-bkg-color; border: 0; width: calc(90% - 1px); height: 3rem; margin:.1rem 0; color:$chat-text-color; box-shadow:$inset-box-shadow; }
+#chat form input { background-color: $chat-input-bkg-color; border: 0; width: calc(90% - 1px); height: 3rem; margin:.1rem 0; color:$chat-text-color; box-shadow:$inset-box-shadow; border-radius:$border-radius 0 0 $border-radius; }
 #chat form button { color: darkgray; width: 9.5%; background: dimgray; border: 0px; padding: .25rem; height: 3rem; }
 #chat-search-result { text-align:left; text-shadow:$text-outline,$text-shadow; font-weight:bold; }
-.chat-username { display:inline-block; font-size:1rem; }
+.chat-username { display:relative; font-size:1rem; margin: 0 0 .5rem 0; }
 .conlang-loading-element {
   height:3.25rem;
 }

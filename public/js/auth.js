@@ -5,6 +5,7 @@ function onSuccess(googleUser) {
   const profile = googleUser.getBasicProfile();
   document.querySelector('.login-container-element').style.display = 'none';
   document.querySelector('.custom-select-element').style.display = 'inline-block';
+  document.querySelector('.select-selected-element').innerHTML = 'start';
   let usernameEl = document.getElementsByClassName('username-element')[0];
   oldUsername = profile.getName().toLowerCase().replace(' ','-');
   myUser = { username:oldUsername, id:profile.getId(), email:profile.getEmail(), imageURL:profile.getImageUrl() }

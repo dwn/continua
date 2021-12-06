@@ -171,7 +171,7 @@ function setVisibility(name, on) {
   for(var i=0;i<arrEl.length;i++) {
     var el = arrEl[i];
     if (on) {
-      if (name === 'title') {
+      if (name === 'title-container') {
         el.style.display = 'block'; //Title has centering rule
       }
       if (name === 'username') {
@@ -194,7 +194,7 @@ function hideAll() {
   setVisibility('font',false);
   setVisibility('adjust',false);
   setVisibility('notebook',false);
-  setVisibility('title',false);
+  setVisibility('title-container',false);
   setVisibility('settings',false);
   setVisibility('logout',false);
   document.getElementById('page-container').style.background='url(/img/bkg/upholstry.png)';
@@ -611,4 +611,3 @@ document.querySelector('.username-element').addEventListener('blur', e => {
     debug(`blur-username~myUser.longId: ${myUser.longId}`);
   }
 });
-customSelectInit();
