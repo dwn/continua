@@ -40,12 +40,6 @@ head
       br
       #login.login-element
       p#warning-mobile INTENDED FOR USE ON<br>A KEYBOARD DEVICE,<br>NOT A PHONE
-    //- form(action='/username/new').username-element
-    //-   label(for='username') username
-    //-   br
-    //-   input#username-input(type='text' name='username')
-    //-   br
-    //-   input#username-submit(type='submit' value='↩')
   .custom-select-element
     input.conlang-loading-element(type='image' src='img/icon/loading.gif' title='please wait')
     select#lang
@@ -54,15 +48,6 @@ head
         option=lang
     a.logout-element(href="#" onclick="logout();") logout
     input.username-element(type='text' value='username')
-    //- form
-      input.username-element(type='text' placeholder='USERNAME OPTIONAL' pattern='[A-Za-z0-9]+')
-    //- .donate-element
-      form(action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top")
-        input(type="hidden" name="cmd" value="_donations")
-        input(type="hidden" name="business" value="danwnielsen@gmail.com")
-        input(type="hidden" name="currency_code" value="USD")
-        input(type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" title="thank you!" alt="donate")
-        img(alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1")
     .menu-element(onclick="hideAll(); closeNotebook(); setVisibility('font',true)") font
     .menu-element(onclick="hideAll(); closeNotebook(); setVisibility('adjust',true)") adjust
     .menu-element(onclick="hideAll(); openNotebook(); setVisibility('notebook',true)") notebook
