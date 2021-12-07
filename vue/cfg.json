@@ -1,0 +1,7 @@
+{
+  "PROJECT_ID": "continua-service",
+  "CLOUD_BUCKET": "continua-bucket",
+  "SVG_TO_OTF_SERVICE_URL": "https://svg2otf-ujzvhu72lq-uc.a.run.app",
+  "PORT": 8080,
+  "AUTHENTICATION_DIR": "/home/dwn/.ssh"
+}

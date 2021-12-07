@@ -1,3 +1,8 @@
+////////////////////////////////////////////
+// Dan Nielsen
+////////////////////////////////////////////
+if (typeof DEBUG!=='undefined' && DEBUG==1) {function debug(s){console.log(s);}} else {function debug(s){}}
+////////////////////////////////////////////
 var myUser;
 var oldUsername;
 $(':checkbox').prop('checked', false); //Makes sure all checkboxes are unchecked on a page reload
