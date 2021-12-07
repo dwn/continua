@@ -50,7 +50,7 @@ function expandTopRow() {
 }
 function invalidateMessagesWithOldFont(longId) {
   debug('invalidating old messages for '+longId)
-  let arrEl = $(`[style*="${longId}"]`).css('font','1.25rem Arial').html('prior font').parent().css('color','rgba(35,35,35,.5)').css('text-shadow','none');
+  let arrEl = $(`.chat-message-text[style*="${longId}"]`).css('font','1.25rem Arial').html('prior font').parent().css('color','rgba(35,35,35,.5)').css('text-shadow','none');
 }
 ////////////////////////////////////////////
   function closeAllSelect(el, skipConfirm = false) {
@@ -134,7 +134,7 @@ $(document).ready(function() {
           var y, i, k, s, h;
           s = this.parentNode.parentNode.querySelector('select');
           debug('loadConlangFont 0');
-          loadConlangFont('currentFont' + (new Date()).toISOString().replace(/[A-Za-z.:]/g,"_"), this.innerHTML + '.otf'); //*** ADDED ***
+          loadConlangFont(this.innerHTML + '.otf'); //*** ADDED ***
           h = this.parentNode.previousSibling;
           for (i = 0; i < s.length; i++) {
             if (s.options[i].innerHTML == this.innerHTML) {

@@ -33,7 +33,7 @@ $(document).ready(function() {
     grProcess();
     if (!conlangTextReady) return; //Keep 'loading' showing unless ready
     conlangTextEl.innerText = txt;
-    conlangTextEl.innerHTML = conlangTextEl.innerText.replace(/⟨/g,"<span style='font-family:arial;font-size:.5em'>").replace(/⟩/g,'</span>');
+    conlangTextEl.innerHTML = conlangTextEl.innerText.replace(/⟨/g,"<span style='font-family:Arial;font-size:.5em'>").replace(/⟩/g,'</span>');
     //Scroll conlang text to center
     var hDiv,hScroll;
     var len = fullTxt.length;
@@ -342,7 +342,7 @@ function loadClientFile(evt) {
               debug('setAllData 1');
               setAllData(true, el, title = json['name'], res);
               debug('loadConlangFont 1');
-              loadConlangFont('currentFont'+timeStr,json['name']+'.otf');
+              loadConlangFont(json['name']+'.otf');
               setVisibility('conlang-loading',false);
               setVisibility('select-selected',true);
             },
@@ -511,7 +511,7 @@ function downloadSVGAndOTF() {
       debug('setAllData 2');
       setAllData(true, el, title = json['name'], cat);
       debug('loadConlangFont 2');
-      loadConlangFont('currentFont'+timeStr,json['name']+'.otf');
+      loadConlangFont(json['name']+'.otf');
       setVisibility('conlang-loading',false);
       setVisibility('select-selected',true);
       debug('downloading OTF');
@@ -550,15 +550,7 @@ function openChat() {
 ////////////////////////////////////////////
 // CALLED BY CUSTOM SELECT DROPDOWN
 ////////////////////////////////////////////
-function loadTryForever(font) {
-  return font.load().catch(function(err) { 
-    setTimeout(function() {
-      debug('FAILED TO LOAD FONT\nTrying again');
-      return loadTryForever(font); 
-    }, 1000);
-  });
-}
-function loadConlangFont(family, langFilename) {
+function loadConlangFont(langFilename) {
   debug('loadConlangFont starting');
   conlangTextReady = false;
   var tmp = document.getElementById('conlang-text').value;
@@ -568,35 +560,28 @@ function loadConlangFont(family, langFilename) {
   let langFileURL; $.ajax({async:false,type:'GET',dataType:'text',url:`/lang-file-url/${langFilename}`,success:function(r){langFileURL=r;},error:function(r){}});
   //OTF file location for later download
   if (langFilename.split('.').pop()==='otf') otfURI = langFileURL;
-  //Load font
-  var newFont = new FontFace(family, 'url(' + langFileURL + ')');
-  loadTryForever(newFont).then(function(loadedFace) {
-    setTimeout(function() { //Occasionally even after the font was successfully loaded, it needs a brief moment before adding
-      document.fonts.add(loadedFace);
-    }, 1000);
-    const conlangTextEl = document.getElementById('conlang-text');
-    conlangTextEl.style.fontFamily = family;
-    conlangTextEl.innerText = tmp;
-    conlangTextReady = true;
-    //Select first page
-    var el = document.getElementById('user-text');
-    if (el) {
-      openChat();
-      var end = fullTxt.indexOf('{br}',0);
-      if (end<0 || end>20000) { //Show single page if no break or long preface
-        end = nthIndex(fullTxt,'\n',0,22);
-        end = end<0? fullTxt.length : end;
-      }
-      el.focus();
-      el.setSelectionRange(0,end);
-      txt = fullTxt.substring(0,end);
-      el.scrollTop = 0;
+  const conlangTextEl = document.getElementById('conlang-text');
+  conlangTextEl.style.fontFamily = myUser.longId;
+  conlangTextEl.innerText = tmp;
+  conlangTextReady = true;
+  //Select first page
+  var el = document.getElementById('user-text');
+  if (el) {
+    openChat();
+    var end = fullTxt.indexOf('{br}',0);
+    if (end<0 || end>20000) { //Show single page if no break or long preface
+      end = nthIndex(fullTxt,'\n',0,22);
+      end = end<0? fullTxt.length : end;
     }
-    //Show play element
-    if (document.querySelector('.select-selected-element').innerHTML!=='start') {
-      setVisibility('play',true);
-    }
-  });
+    el.focus();
+    el.setSelectionRange(0,end);
+    txt = fullTxt.substring(0,end);
+    el.scrollTop = 0;
+  }
+  //Show play element
+  if (document.querySelector('.select-selected-element').innerHTML!=='start') {
+    setVisibility('play',true);
+  }
 }
 ////////////////////////////////////////////
 //Load file when file opened
