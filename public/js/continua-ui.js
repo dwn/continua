@@ -133,6 +133,7 @@ $(document).ready(function() {
           //When an item is clicked, update the original select box and the selected item
           var y, i, k, s, h;
           s = this.parentNode.parentNode.querySelector('select');
+          debug('loadConlangFont 0');
           loadConlangFont('currentFont' + (new Date()).toISOString().replace(/[A-Za-z.:]/g,"_"), this.innerHTML + '.otf'); //*** ADDED ***
           h = this.parentNode.previousSibling;
           for (i = 0; i < s.length; i++) {

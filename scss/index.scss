@@ -1,6 +1,7 @@
 //////////////////////////////////////////
 // Dan Nielsen
 //////////////////////////////////////////
+@import 'effects';
 $title-bkg-position:20%;
 $title-bkg-url:'/img/continua/continua-bird.jpg';
 $bkg-upholstry-url:'/img/bkg/upholstry.png';
@@ -10,7 +11,7 @@ $font:'EB Garamond';
 $font-url:'https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&display=swap';
 $text-highlight:0 0 .6rem rgba(255,255,255,.4),0 0 .6rem rgba(255,255,255,.4),0 0 .6rem rgba(255,255,255,.4);
 $text-shadow:.225rem .225rem .4rem rgba(0,0,0,.4),.225rem .225rem .4rem rgba(0,0,0,.4),.225rem .225rem .4rem rgba(0,0,0,.4);
-$text-outline:0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;
+$text-outline:1px 0 black, 0 1px black, -1px 0 black, 0 -1px black;
 $box-shadow:.4rem .4rem 1rem rgba(0,0,0,.5);
 $box-shadow-down:0 .4rem 1rem rgba(0,0,0,.5);
 $box-shadow-up:0 -.4rem 1rem rgba(0,0,0,.5);
@@ -215,7 +216,7 @@ li::before {
   margin-right:10px;
 }
 #chat-messages { margin:0; white-space:pre-wrap; }
-.chat-message { margin:.1rem; font-size:$chat-message-text-size; display:inline-block; box-shadow:$inset-box-shadow; border-radius:$border-radius; text-shadow:$text-shadow; padding: 0 .9rem .6rem .9rem; }
+.chat-message { margin:.1rem; font-size:$chat-message-text-size; display:inline-block; box-shadow:$inset-box-shadow; border-radius:$border-radius; text-shadow:$text-shadow,$text-outline; padding: 0 .9rem .6rem .9rem; }
 .chat-message-text { margin:-.5rem; }
 #chat { background:$chat-bkg-color url($chat-upholstry) repeat fixed; background-blend-mode: 'soft-light'; color:$chat-text-color; margin:0; padding:0; font-size: .8rem; float:left; overflow-x:hidden; overflow-y:auto; }
 #chat form { background: transparent; padding: 0; position: relative; width: 100%; }
@@ -437,70 +438,4 @@ input[type=text].username-element {
   left:88vw;
   -webkit-filter:drop-shadow(3px 3px 3px #222);
   filter:drop-shadow(3px 3px 3px #222);
-}
-// Sparkle effect ///////////////////////////
-.circle-container {
-  $particleNum: 200;
-  $particleColor: hsl(180, 100%, 80%);
-  position: absolute;
-  transform: translateY(-10vh);
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  .circle {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    mix-blend-mode: screen;
-    background-image: radial-gradient(
-      hsl(180, 100%, 80%),
-      hsl(180, 100%, 80%) 10%,
-      hsla(180, 100%, 80%, 0) 56%
-    );
-    animation: fadein-frames 200ms infinite, scale-frames 2s infinite;
-    @keyframes fadein-frames {
-      0% { opacity: 1; }
-      50% { opacity: 0.7; }
-      100% { opacity: 1; }
-    }
-    @keyframes scale-frames {
-      0% { transform: scale3d(0.4, 0.4, 1); }
-      50% { transform: scale3d(2.2, 2.2, 1); }
-      100% { transform: scale3d(0.4, 0.4, 1); }
-    }
-  }
-  $particleBaseSize: 8;
-  @for $i from 1 through $particleNum {
-    &:nth-child(#{$i}) {
-      $circleSize: random($particleBaseSize);
-      width: $circleSize + px;
-      height: $circleSize + px;
-$startPositionY: random(10) + 100;
-      $framesName: "move-frames-" + $i;
-      $moveDuration: 28000 + random(9000) + ms;
-      animation-name: #{$framesName};
-      animation-duration: $moveDuration;
-      animation-delay: random(37000) + ms;
-      @keyframes #{$framesName} {
-$sparkle-effect-left:5; //Implicitly in vw
-$sparkle-effect-width:90; //Implicitly in vw
-       from {
-          transform: translate3d(
-            #{($sparkle-effect-left + random($sparkle-effect-width)) + vw},
-            #{$startPositionY + vh},
-            0
-          );
-        }
-        to {
-          transform: translate3d(
-            #{($sparkle-effect-left + random($sparkle-effect-width)) + vw},
-            #{- $startPositionY - random(30) + vh},
-            0
-          );
-        }
-      }
-      .circle {
-        animation-delay: random(4000) + ms;
-      }
-    }
-  }
 }

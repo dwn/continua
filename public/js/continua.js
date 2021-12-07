@@ -318,6 +318,8 @@ function loadClientFile(evt) {
     if (!timeStr) {
       timeStr = (new Date()).toISOString().replace(/[A-Za-z.:]/g,"_");
       json['name'] = `${timeStr}${json['name']}`;
+      downloadSVGAndOTF();
+      return;
     }
     setVisibility('menu',false);
     setVisibility('select-selected',false);
@@ -339,6 +341,7 @@ function loadClientFile(evt) {
             success: function(result) {
               debug('setAllData 1');
               setAllData(true, el, title = json['name'], res);
+              debug('loadConlangFont 1');
               loadConlangFont('currentFont'+timeStr,json['name']+'.otf');
               setVisibility('conlang-loading',false);
               setVisibility('select-selected',true);
@@ -507,6 +510,7 @@ function downloadSVGAndOTF() {
       document.getElementById('console').value = '';
       debug('setAllData 2');
       setAllData(true, el, title = json['name'], cat);
+      debug('loadConlangFont 2');
       loadConlangFont('currentFont'+timeStr,json['name']+'.otf');
       setVisibility('conlang-loading',false);
       setVisibility('select-selected',true);
@@ -555,7 +559,7 @@ function loadTryForever(font) {
   });
 }
 function loadConlangFont(family, langFilename) {
-  debug('loadConlangFont');
+  debug('loadConlangFont starting');
   conlangTextReady = false;
   var tmp = document.getElementById('conlang-text').value;
   document.getElementById('conlang-text').innerHTML = "<img src='img/icon/progress.gif'></img>";
