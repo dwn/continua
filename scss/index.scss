@@ -32,7 +32,7 @@ $textarea-text-color:darkgray;
 $console-text-color:darkgray;
 $select-item-color:ivory;
 $motto-color:#ccc;
-$chat-text-color:seashell;
+$input-text-color:seashell;
 $placeholder-text-color:#bbb;
 //Background color
 $textarea-active-color:#500050;
@@ -42,7 +42,8 @@ $title-bkg-color:white;
 $select-item-bkg-color:rgba(0,0,0,.5);
 $select-item-hover-bkg-color:rgba(150,150,150,.5);
 $chat-bkg-color:#876;
-$chat-input-bkg-color:#7658;
+$input-bkg-color:#5438;
+$input-focus-bkg-color:#7658;
 $warning-bkg-color:rgba(255,0,0,.5);
 $bkg-color:#680068;
 @import url($font-url);
@@ -60,28 +61,26 @@ body {
   border: 0;
   margin: 0;
   color: gold;
-  background: $title-bkg-color url($title-bkg-url) no-repeat fixed top center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-position: $title-bkg-position;
+  background: $title-bkg-color url($title-bkg-url) no-repeat fixed $title-bkg-position center / cover;
 }
 input[type='text'] {
   font-size: $input-font-size;
   font-family: $font;
+  color:$input-text-color;
+  background-color:$input-bkg-color;
+  border-radius:$border-radius;
+  box-shadow:$inset-box-shadow;
   padding:5px;
   box-sizing:border-box;
   margin:1rem .1rem;
   border:0;
+  outline:none;
   width:calc(400px - .2rem);
-  height:auto;
+  height:2.5rem;
   font-size:2rem;
-  color:black;
-  background-color:$title-bkg-color;
-  border-radius:$border-radius;
   text-align:center;
 }
+*:focus { outline:none; } //Chrome will still add outline on div elements and such, so this is required to remove focus outline
 input[type='checkbox'] {
   width:1.5rem;
   height:1.5rem;
@@ -125,12 +124,8 @@ input[type='checkbox'] {
   opacity:1;
   border-radius:$border-radius;
   color:$login-text-color;
-  background:linear-gradient(to bottom,#aaa,#aaa,#bbb,#fff), url($login-bkg-url) no-repeat scroll center center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  background-blend-mode: screen;
+  background:linear-gradient(to bottom,#aaa,#aaa,#bbb,#fff), url($login-bkg-url) no-repeat scroll center center / cover;
+  background-blend-mode:screen;
 }
 .intro-element {
   white-space:pre-wrap;
@@ -218,10 +213,10 @@ li::before {
 #chat-messages { margin:0; white-space:pre-wrap; }
 .chat-message { margin:.1rem; font-size:$chat-message-text-size; display:inline-block; box-shadow:$inset-box-shadow; border-radius:$border-radius; text-shadow:$text-shadow,$text-outline; padding: 0 .9rem .6rem .9rem; }
 .chat-message-text { margin:-.5rem; }
-#chat { background:$chat-bkg-color url($chat-upholstry) repeat fixed; background-blend-mode: 'soft-light'; color:$chat-text-color; margin:0; padding:0; font-size: .8rem; float:left; overflow-x:hidden; overflow-y:auto; }
-#chat form { background: transparent; padding: 0; position: relative; width: 100%; }
-#chat form input { background-color: $chat-input-bkg-color; border: 0; width: calc(90% - 1px); height: 3rem; margin:.1rem 0; color:$chat-text-color; box-shadow:$inset-box-shadow; border-radius:$border-radius 0 0 $border-radius; }
-#chat form button { color: darkgray; width: 9.5%; background: dimgray; border: 0px; padding: .25rem; height: 3rem; }
+#chat { background:$chat-bkg-color url($chat-upholstry) repeat fixed; background-blend-mode:'soft-light'; color:$input-text-color; margin:0; padding:0; font-size: .8rem; float:left; overflow-x:hidden; overflow-y:auto; }
+#chat-message-input { margin:0; font-size:1rem; width:calc(90% - 1px); border-radius:$border-radius 0 0 $border-radius; }
+#chat-message-input:focus { background-color:$input-focus-bkg-color; }
+#chat-message-input-button { color: darkgray; width: 9.5%; background: dimgray; border:0; height:2.5rem; transform:translateY(-3px); }
 #chat-search-result { text-align:left; text-shadow:$text-outline,$text-shadow; font-weight:bold; }
 .chat-username { display:relative; font-size:1rem; margin: 0 0 .5rem 0; }
 .conlang-loading-element {
@@ -230,7 +225,7 @@ li::before {
 #kerning-map, #font-svg-container-container, .custom-select-element, #console {
   box-shadow:$box-shadow-down;
 }
-input[type=text], #utf-table, .login-container-element {
+#utf-table, .login-container-element {
   box-shadow:$box-shadow;
 }
 #font-canvas { box-shadow:$box-shadow-up; }

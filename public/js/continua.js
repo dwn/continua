@@ -596,7 +596,7 @@ document.querySelector('.username-element').addEventListener('blur', e => {
     alert('Sorry, only the following are allowed in a username ∼ \n\n🙞 lowercase English letters (a-z)\n🙞 digits (0-9)\n🙞 period (.)\n🙞 hyphen (-)');
   } else {
     myUser.username = e.target.value;
-    myUser.longId = `g${myUser.id}_${myUser.username}`;
+    myUser.longId = `${myUser.id}_${myUser.username}`;
     debug(`blur-username~myUser.username: ${myUser.username}`);
     debug(`blur-username~myUser.longId: ${myUser.longId}`);
   }

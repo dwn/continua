@@ -14,7 +14,8 @@ function onSuccess(googleUser) {
   let usernameEl = document.getElementsByClassName('username-element')[0];
   oldUsername = profile.getName().toLowerCase().replace(' ','-');
   myUser = { username:oldUsername, id:profile.getId(), email:profile.getEmail(), imageURL:profile.getImageUrl() }
-  myUser.longId = `g${myUser.id}_${myUser.username}`;
+  myUser.id = `g${myUser.id}`;
+  myUser.longId = `${myUser.id}_${myUser.username}`;
   usernameEl.value = oldUsername;
   usernameEl.style.display = 'inline-block';
   debug(`auth~myUser.username: ${myUser.username}`);

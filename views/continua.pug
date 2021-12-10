@@ -150,8 +150,8 @@ head
       #chat.chat-element.notebook-element.third-width.right.under.norm-height
         #chat-messages
         form(action='')
-          input#chat-message-input(autocomplete='off' autofocus)
-          button &rarrhk;
+          input#chat-message-input(type='text' autocomplete='off' autofocus)
+          button#chat-message-input-button &rarrhk;
         p#chat-search-result
     textarea#console.notebook-element.under(type='text' spellcheck='false' readonly='' placeholder="Welcome! Please don't use your browser's back button ∼\n🙞 To save: CTRL-S (or click save icon)\n🙞 To return to main: CTRL-G (or click language name at top-right)")
 script(src='/version.js')
