@@ -252,7 +252,7 @@ function setAdjustSetting() {
   document.querySelector('.select-selected-element').innerText = json['name'];
   el.style.fontWeight = (json['weight'] === 'bold'? 600 : 200);
   el.style.fontSize = (json['size'] === 'small'? '1.54rem' : '3.08rem');
-  el.style.backgroundBlendMode = 'null'; //Firefox hack - sometimes background blend mode requires null first in order to update
+  // el.style.backgroundBlendMode = 'null'; //Sometimes background blend mode gets buffered and requires null first in order to update
   Object.assign(el.style,style[json['style']]);
   if (json['view']==='view full text') {
     alert('Processing long, complex texts all at once can stall performance - consider viewing only the current page instead');
