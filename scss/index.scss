@@ -211,7 +211,7 @@ li::before {
   margin-right:10px;
 }
 #chat-messages { margin:0; white-space:pre-wrap; }
-.chat-message { margin:.1rem; font-size:$chat-message-text-size; display:inline-block; box-shadow:$inset-box-shadow; border-radius:$border-radius; text-shadow:$text-shadow,$text-outline; padding: 0 .9rem .6rem .9rem; }
+.chat-message { margin:.1rem; font-size:$chat-message-text-size; display:inline-block; box-shadow:$inset-box-shadow; border-radius:$border-radius; text-shadow:$text-shadow,$text-outline; padding: 0 .9rem .9rem .9rem; }
 .chat-message-text { margin:-.5rem; }
 #chat { background:$chat-bkg-color url($chat-upholstry) repeat fixed; background-blend-mode:'soft-light'; color:$input-text-color; margin:0; padding:0; font-size: .8rem; float:left; overflow-x:hidden; overflow-y:auto; }
 #chat-message-input { margin:0; font-size:1rem; width:calc(90% - 1px); border-radius:$border-radius 0 0 $border-radius; }
