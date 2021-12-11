@@ -48,8 +48,8 @@ var dicFontBasename = {};
 var connections = new Set();
 io.on('connection', (socket) => {
   connections.add(socket);
-  for(var user in dicFontBasename) {
-    socket.emit('chat font', user+':'+dicFontBasename[user]);
+  for(var longId in dicFontBasename) {
+    socket.emit('chat font', longId+':'+dicFontBasename[longId]);
   }
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
