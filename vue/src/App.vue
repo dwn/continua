@@ -1,26 +1,27 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<template lang='pug'>
+TitleScreen(title='comntiua--' motto='🙞 a web app for language construction 🙜')
+Menubar
 </template>
-
+<!--==============================================-->
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import TitleScreen from './components/TitleScreen.vue'
+import Menubar from './components/Menubar.vue'
 export default {
-  name: 'App',
+  name:'App',
   components: {
-    HelloWorld
+    TitleScreen,
+    Menubar
   }
 }
 </script>
-
-<style>
+<!--==============================================-->
+<style lang='scss'>
+@import url($font-url);
+html, body, #app { padding:0; margin:0; width:100vw; min-height:100vh; overflow:hidden; }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family:$font;
+  font-size:$font-size;
+  text-align:center;
+  color:$color;
 }
 </style>

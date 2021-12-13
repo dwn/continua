@@ -34,6 +34,7 @@
   "dependencies": {
     "@google-cloud/storage": "^5.7.4",
     "body-parser": "^1.18.3",
+    "core-js": "^3.6.5",
     "express": "^4.16.4",
     "firebase-admin": "^10.0.0",
     "firebase-functions": "^3.16.0",
@@ -42,26 +43,28 @@
     "nconf": "^0.10.0",
     "path": "^0.12.7",
     "prompt": "^1.0.0",
-    "pug": "^2.0.3",
     "request": "^2.88.0",
+    "sass-loader": "^10.1.1",
     "socket.io": "^2.3.0",
     "uglify-js": "^3.4.9",
     "ulid": "^2.3.0",
-    "core-js": "^3.6.5",
     "vue": "^3.2.24"
   },
   "devDependencies": {
     "@google-cloud/nodejs-repo-tools": "^3.0.0",
-    "ava": "^0.25.0",
-    "proxyquire": "^2.1.0",
-    "sinon": "^7.0.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
+    "ava": "^0.25.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0"
+    "eslint-plugin-vue": "^7.0.0",
+    "proxyquire": "^2.1.0",
+    "pug": "^2.0.4",
+    "pug-plain-loader": "^1.1.0",
+    "sass": "^1.45.0",
+    "sinon": "^7.0.0"
   },
   "eslintConfig": {
     "root": true,
