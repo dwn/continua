@@ -48,6 +48,7 @@ $warning-bkg-color:rgba(255,0,0,.5);
 $bkg-color:#680068;
 @import url($font-url);
 @font-face{font-family:title;src:url(title.otf)}
+@font-face {font-family:unifont;src:url(unifont.otf)}
 .menu-element{display:none;} .select-selected-element{display:inline-block;} .conlang-loading-element{display:none;} .save-needed-element{display:none;} .font-element{display:none;} .adjust-element{display:none;} .pen-progress-element{display:none;} .play-element{display:none;} .notebook-element{display:none;} .title-container-element{display:block;} .custom-select-element{display:none;} .login-container-element{display:inline-block;} .login-element{display:none;} .username-element{display:none;} .intro-element{display:block;} .chat-element{display:none;}
 * {-webkit-font-smoothing: antialiased;}
 html,
@@ -148,6 +149,7 @@ input[type='checkbox'] {
 textarea {
   float:left;
   width:100%;
+  font-family:unifont;
   font-size:calc(.5vw + 16px);
   resize:none;
   border:1px;
