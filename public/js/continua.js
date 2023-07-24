@@ -474,11 +474,11 @@ function downloadSVGAndOTF() {
   }
   var valSpace = Number(document.getElementById('space').value);
   cat += `
-<glyph glyph-name="space" unicode="&#x20;" horiz-adv-x="[[XSPACE]]" vert-adv-y="[[YSPACE]]" />
-<glyph glyph-name="plus" unicode="&#x2b;" horiz-adv-x="1872" vert-adv-y="2808" />
-<glyph glyph-name="hyphenminus" unicode="&#x2d;" horiz-adv-x="187.2" vert-adv-y="280.2" />
-<glyph glyph-name="vbar" unicode="&#x7c;" horiz-adv-x="936" vert-adv-y="1404" />
-<glyph glyph-name="nbsp" unicode="&#xa0;" horiz-adv-x="[[XSPACE]]" vert-adv-y="[[YSPACE]]" />
+<glyph glyph-name="space" unicode="&#x20;" horiz-adv-x="[[XSPACE]]" vert-adv-y="[[YSPACE]]" d=""/>
+<glyph glyph-name="plus" unicode="&#x2b;" horiz-adv-x="1872" vert-adv-y="2808" d=""/>
+<glyph glyph-name="hyphenminus" unicode="&#x2d;" horiz-adv-x="187.2" vert-adv-y="280.2" d=""/>
+<glyph glyph-name="vbar" unicode="&#x7c;" horiz-adv-x="936" vert-adv-y="1404" d=""/>
+<glyph glyph-name="nbsp" unicode="&#xa0;" horiz-adv-x="[[XSPACE]]" vert-adv-y="[[YSPACE]]" d=""/>
 </font></defs></svg>`.replace(/\[\[XSPACE\]\]/g,1872 * valSpace).replace(/\[\[YSPACE\]\]/g, 1872 * valSpace);
   //If vertical font, change horizontal kerning to vertical
   if (valDirect==='down-right' || valDirect==='down-left') {
